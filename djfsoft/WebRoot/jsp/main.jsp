@@ -52,27 +52,7 @@
 	</style>
 	<script type="text/javascript">
 		$(function(){
-			$("#product_category_tree").tree({      
-		        url: "productCategory/getProductCategoryTree",      
-		        loadFilter: function(data){      
-		            if (data.d){      
-		                return data.d;      
-		            } else {      
-		                return data;      
-		            }     
-		        }      
-		   });   
-		
 			setMainLayoutHeight();
-			$("ul").mousedown(function(e){
-				if(3 == e.which){
-					$("#mm").show();
-				}
-				return false;
-			}).on("contextmenu",function(){		//屏蔽页面右键事件
-				return false;
-			});
-			
 		})
 		function setMainLayoutHeight(){
 			var height = $(window).height()-40;  
@@ -90,11 +70,7 @@
 			<div class="nav" onclick="window.location='main'">库存</div>
 			<div class="nav" onclick="window.location='jsp/manage/product.jsp'">管理</div>
 		</div>
-		<div data-options="region:'west',split:true" title="类别" style="width:200px;">
-			<div class="easyui-panel" style="padding:5px;height:100%;">
-				<ul id="product_category_tree"></ul>
-			</div>
-		</div>
+		<%@include file="tree/product_category_tree.jsp"%>
 		<div data-options="region:'center'">
 			<div class="easyui-layout" style="height:100%;">
 				<div data-options="region:'center'">
@@ -178,20 +154,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div id="mm" class="easyui-menu" style="width:120px;">   
-		<div>New</div>   
-		<div>   
-			<span>Open</span>   
-			<div style="width:150px;">   
-				<div><b>Word</b></div>   
-				<div>Excel</div>   
-				<div>PowerPoint</div>   
-			</div>   
-		</div>   
-		<div data-options="iconCls:'icon-save'">Save</div>   
-		<div class="menu-sep"></div>   
-		<div>Exit</div>   
 	</div>
 </body>
 </html>

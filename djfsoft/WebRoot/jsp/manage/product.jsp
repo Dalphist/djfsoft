@@ -59,6 +59,14 @@
 	<script type="text/javascript">
 		$(function(){
 			setMainLayoutHeight();
+			$('#tt').tabs({
+		        tools: [{           //给选项卡头部设置工具栏，接收一个数组，数组里接收一个对象，对象里是键值对设置图标和点击事件
+		            iconCls: 'icon-save',
+		            handler: function () {
+		                alert('保存成功!');
+		            }
+		        }]
+		    });
 		})
 		function setMainLayoutHeight(){
 			var height = $(window).height()-40;  
@@ -76,6 +84,7 @@
 			<div class="nav" onclick="window.location='<%=projectName%>/main'">库存</div>
 			<div class="nav" onclick="window.location='<%=projectName%>/jsp/manage/product.jsp'">管理</div>
 		</div>
+		<%@include file="../tree/product_category_tree.jsp"%>
 		<div data-options="region:'center'">
 			<div class="easyui-layout" style="height:100%;">
 				<div data-options="region:'center'">
@@ -112,58 +121,58 @@
 				</div>
 				<div data-options="region:'south',split:true" style="height:45%;">
 					<div id="tt" class="easyui-tabs" style="width:100%;height:100%;">   
-						<div title="库存明细" style="display:none;">   
+						<div title="基本信息" style="display:none;"> 
 							<table class="table_list">   
-								<thead>   
-									<tr>   
-										<th>序号</th>   
-										<th>编码</th>   
-										<th>名称</th>   
-										<th>仓库</th>   
-										<th>仓位</th>   
-										<th>库存</th>   
-										<th>仓位容量</th>   
-									</tr>   
-								</thead>   
 								<tbody>   
 									<tr>   
-										<td>1</td><td>001</td><td>name1</td><td>2323</td><td>2323</td><td>2323</td><td>2323</td>
+										<td colspan="2">商品名称：<input value="" style="width: 60%;"/></td><td>简称：<input value=""/></td>
 									</tr>   
 									<tr>   
-										<td>2</td><td>002</td><td>name2</td><td>4612</td><td>2323</td><td>2323</td><td>2323</td>   
+										<td>类别：<input value=""/></td><td>商品编码：<input value=""/></td><td>条形码：<input value=""/></td>
 									</tr> 
+									<tr>   
+										<td>单位：<input value=""/></td><td>标准采购单价：<input value=""/></td><td>预警库存数量：<input value=""/></td>
+									</tr> 
+									<tr>   
+										<td><input type="checkbox" checked>启用商品</td><td colspan="2">备注：<input value="" style="width: 60%;"/></td>
+									</tr>
+									<tr style="height: 30px;">   
+									</tr>
+									<tr>   
+										<td>
+											<div>
+												多单位<input type="button" value="添加"><input type="button" value="删除">
+											</div>
+										</td>
+										<td>
+											<table class="table_list">   
+												<thead>
+													<tr>   
+														<th>单位名称</th>
+														<th>与基本单位比例</th>
+													</tr>  
+												</thead>
+												<tbody>   
+													<tr>   
+														<td><input value=""/></td><td><input value=""/></td>
+													</tr> 
+												</tbody>
+											</table>  
+										</td> 
+									</tr>
 								</tbody>   
 							</table>
-						</div>
-						<div title="执行中的销售" style="display:none;"> 
 						</div>   
-						<div title="执行中的采购" style="overflow:auto;display:none;">   
+						<div title="属性" style="overflow:auto;display:none;">   
 							tab2    
 						</div>   
-						<div title="执行中的退货" style="display:none;">   
-							tab3    
-						</div> 
-						<div title="执行中的调拨" style="display:none;">   
-							tab4    
-						</div> 						
+						<div title="图片" style="overflow:auto;display:none;">   
+							tab2    
+						</div>   
 					</div> 
 				</div>
 			</div>
 		</div>
-	</div>
-	<div id="mm" class="easyui-menu" style="width:120px;">   
-		<div>New</div>   
-		<div>   
-			<span>Open</span>   
-			<div style="width:150px;">   
-				<div><b>Word</b></div>   
-				<div>Excel</div>   
-				<div>PowerPoint</div>   
-			</div>   
-		</div>   
-		<div data-options="iconCls:'icon-save'">Save</div>   
-		<div class="menu-sep"></div>   
-		<div>Exit</div>   
 	</div>
 </body>
 </html>
