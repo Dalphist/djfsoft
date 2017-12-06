@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=projectName%>/easyui/themes/icon.css">   
 	<script type="text/javascript" src="<%=projectName%>/js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="<%=projectName%>/easyui/jquery.easyui.min.js"></script>
+	
 	<style type="text/css">
 		.table_list { 
 			width: 100%; 
@@ -39,33 +40,21 @@
 			color: #4f6b72; 
 			text-align: center; 
 		}
-		.nav{
-			width:50px;
-			height: 46px;
-			line-height: 46px;
-			text-align:center;
-			cursor: pointer;
-			border: 1px solid blue;
-			float: left;
-		}
-		.div_manage{
-			height: 50px;
-			line-height: 50px;
-			text-align:center;
-			cursor: pointer;
-			border: 1px solid blue;
-		}
 	</style>
 	<script type="text/javascript">
 		$(function(){
 			setMainLayoutHeight();
-			$('#tt').tabs({
+			$("#tab_product").tabs({
 		        tools: [{           //给选项卡头部设置工具栏，接收一个数组，数组里接收一个对象，对象里是键值对设置图标和点击事件
 		            iconCls: 'icon-save',
 		            handler: function () {
 		                alert('保存成功!');
 		            }
 		        }]
+		    });
+		    
+		    $("#input_product_add").click(function(){
+		    	$("#tab_product input").val("");
 		    });
 		})
 		function setMainLayoutHeight(){
@@ -80,16 +69,16 @@
   </head>
   <body>
 	<div id="main_layout" class="easyui-layout" style="width:100%;height:600px;">
+		
+		<%@include file="../common/nav.jsp"%>
 		<div data-options="region:'north'" style="height:50px">
-			<div class="nav" onclick="window.location='<%=projectName%>/main'">库存</div>
-			<div class="nav" onclick="window.location='<%=projectName%>/jsp/manage/product.jsp'">管理</div>
 		</div>
-		<%@include file="../tree/product_category_tree.jsp"%>
+		<%@include file="../common/product_category_tree.jsp"%>
 		<div data-options="region:'center'">
 			<div class="easyui-layout" style="height:100%;">
 				<div data-options="region:'center'">
 					<div style="height:30px;background-color:#e0ecff">
-						<input type="button" value="添加" />
+						<input id="input_product_add" type="button" value="添加" />
 						<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 					</div>
 					<div>
@@ -120,21 +109,27 @@
 					style="width:100%;background:#efefef;border:1px solid #ccc;position:absolute;bottom:0px;"></div> 
 				</div>
 				<div data-options="region:'south',split:true" style="height:45%;">
-					<div id="tt" class="easyui-tabs" style="width:100%;height:100%;">   
+					<div id="tab_product" class="easyui-tabs" style="width:100%;height:100%;">   
 						<div title="基本信息" style="display:none;"> 
 							<table class="table_list">   
 								<tbody>   
 									<tr>   
-										<td colspan="2">商品名称：<input value="" style="width: 60%;"/></td><td>简称：<input value=""/></td>
+										<td colspan="2">商品名称：<input id="input_product_name" value="" style="width: 60%;"/></td>
+										<td>简称：<input id="input_product_shortname" value=""/></td>
 									</tr>   
 									<tr>   
-										<td>类别：<input value=""/></td><td>商品编码：<input value=""/></td><td>条形码：<input value=""/></td>
+										<td>类别：<input id="input_product_category" value=""/></td>
+										<td>商品编码：<input id="input_product_code" value=""/></td>
+										<td>条形码：<input id="input_product_barcode" value=""/></td>
 									</tr> 
 									<tr>   
-										<td>单位：<input value=""/></td><td>标准采购单价：<input value=""/></td><td>预警库存数量：<input value=""/></td>
+										<td>单位：<input id="input_product_unit" value=""/></td>
+										<td>标准采购单价：<input id="input_product_normal_purchase_price" value=""/></td>
+										<td>预警库存数量：<input id="input_product_stock_warn" value=""/></td>
 									</tr> 
 									<tr>   
-										<td><input type="checkbox" checked>启用商品</td><td colspan="2">备注：<input value="" style="width: 60%;"/></td>
+										<td><input id="input_product_effective_flag" type="checkbox" checked>启用商品</td>
+										<td colspan="2">备注：<input id="input_product_effective_flag" value="" style="width: 60%;"/></td>
 									</tr>
 									<tr style="height: 30px;">   
 									</tr>

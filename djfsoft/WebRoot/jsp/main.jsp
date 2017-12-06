@@ -40,15 +40,6 @@
 			color: #4f6b72; 
 			text-align: center; 
 		}
-		.nav{
-			width:50px;
-			height: 46px;
-			line-height: 46px;
-			text-align:center;
-			cursor: pointer;
-			border: 1px solid blue;
-			float: left;
-		}
 	</style>
 	<script type="text/javascript">
 		$(function(){
@@ -66,11 +57,9 @@
   </head>
   <body>
 	<div id="main_layout" class="easyui-layout" style="width:100%;height:600px;">
-		<div data-options="region:'north'" style="height:50px">
-			<div class="nav" onclick="window.location='main'">库存</div>
-			<div class="nav" onclick="window.location='jsp/manage/product.jsp'">管理</div>
-		</div>
-		<%@include file="tree/product_category_tree.jsp"%>
+		<%@include file="common/nav.jsp"%>
+		<div data-options="region:'north'" style="height:50px"></div>
+		<%@include file="common/product_category_tree.jsp"%>
 		<div data-options="region:'center'">
 			<div class="easyui-layout" style="height:100%;">
 				<div data-options="region:'center'">

@@ -11,14 +11,11 @@
 		});
 			
 		$("#product_category_tree").tree({      
-	        url: "<%=projectName%>/productCategory/getProductCategoryTree",      
-	        loadFilter: function(data){      
-	            if (data.d){      
-	                return data.d;      
-	            } else {      
-	                return data;      
-	            }     
-	        }      
+	        url: "<%=projectName%>/productCategory/getProductCategoryTree",
+	        onClick: function(node){
+				$("#input_product_category").val(node.text);	//复制到隐藏域
+			}
+	             
 	   });   
 	})
 </script>
@@ -26,6 +23,7 @@
 	<div class="easyui-panel" style="padding:5px;height:100%;">
 		<ul id="product_category_tree"></ul>
 	</div>
+	<input id="input_product_category" style="display: none;"/>
 	<div id="mm" class="easyui-menu" style="width:120px;">   
 		<div>New</div>   
 		<div>   
