@@ -41,7 +41,7 @@ public class ProductController {
 		Product product = new Product();
 		product = getProductFromInfo(productInfo);
 		// 添加商品时，设置当前时间为添加时间。
-		product.setGmtCreate(LocalDate.now());
+//		product.setGmtCreate(LocalDate.now());
 		productService.addProduct(product);
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);

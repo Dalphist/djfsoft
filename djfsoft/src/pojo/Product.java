@@ -1,6 +1,6 @@
 package pojo;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class Product {
 	private Integer id;
@@ -16,8 +16,8 @@ public class Product {
 	private Double stockWarn;
 	private String productUnit;
 	private String productPlace;
-	private LocalDate gmtCreate;
-	private LocalDate gmtModified;
+	private Date gmtCreate;
+	private Date gmtModified;
 	private Integer effectiveFlag;
 
 	public Integer getId() {
@@ -124,19 +124,19 @@ public class Product {
 		this.productPlace = productPlace;
 	}
 
-	public LocalDate getGmtCreate() {
+	public Date getGmtCreate() {
 		return gmtCreate;
 	}
 
-	public void setGmtCreate(LocalDate gmtCreate) {
+	public void setGmtCreate(Date gmtCreate) {
 		this.gmtCreate = gmtCreate;
 	}
 
-	public LocalDate getGmtModified() {
+	public Date getGmtModified() {
 		return gmtModified;
 	}
 
-	public void setGmtModified(LocalDate gmtModified) {
+	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
 	}
 
