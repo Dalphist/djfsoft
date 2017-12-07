@@ -56,8 +56,17 @@
 							</li>
 							<li id="menu-item-155">
 							<a onclick="window.location='<%=projectName%>/main'">库存</a></li>
-							<li id="menu-item-155">
-							<a onclick="window.location='<%=projectName%>/jsp/manage/product.jsp'">管理</a></li>
+							<li id="menu-item-8">
+								<a href="1">管理</a>
+								<ul class="sub-menu">
+									<li>
+										<a href="1">用户</a>
+									</li>
+									<li>
+										<a href="<%=projectName%>/manage/product">商品</a>
+									</li>
+								</ul>
+							</li>
 							<li id="menu-item-155">
 							<a >Download</a></li>
 							<li id="menu-item-155">

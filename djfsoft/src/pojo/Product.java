@@ -1,6 +1,5 @@
 package pojo;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class Product {

@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,djfsoft.pojo.*" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -129,6 +130,32 @@
 									<th>备注</th>
 								</tr>
 							</thead>
+							<tbody>
+								<c:forEach var="product" items="${productList}" varStatus="status">  
+								    <tr>
+								    	<td>${status.count}</td>
+								    	<td>${product.productCode}</td>
+								    	<td>${product.productName}</td>
+								    	<td>${product.barCode}</td>
+								    	<td>${product.normalPurchasePrice}</td>
+								    	<td>${product.cost}</td>
+								    	<td>${product.lastPurchasePrice}</td>
+								    	<td></td>
+								    	<td></td>
+								    	<td></td>
+								    	<td></td>
+								    	<td>
+								    		<c:if test="${product.stockWarn != -1}">
+												${product.stockWarn}
+											</c:if>
+								    	</td>
+								    	<td></td>
+								    	<td></td>
+								    	<td></td>
+								    	<td></td>
+								    </tr>
+								</c:forEach> 
+							</tbody>
 						</table>
 					</div>
 					<div id="pp" class="easyui-pagination" data-options="total:2000,pageSize:10" 

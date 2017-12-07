@@ -1,5 +1,7 @@
 package service.impl;
 
+import java.util.List;
+
 import mapper.ProductMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void addProduct(Product product) {
 		productMapper.add(product);
+	}
+
+	@Override
+	public List<Product> getProductList() {
+		return productMapper.list();
 	}
 
 }
