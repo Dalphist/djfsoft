@@ -48,7 +48,7 @@
 		        tools: [{           //给选项卡头部设置工具栏，接收一个数组，数组里接收一个对象，对象里是键值对设置图标和点击事件
 		            iconCls: 'icon-save',
 		            handler: function () {
-		                alert('保存成功!');
+		                productSave();
 		            }
 		        }]
 		    });
@@ -65,13 +65,39 @@
 				height:height+"px"  
 			});
 		}
+		
+		function productSave(){
+			var productInfo = {};
+			productInfo.productCode = $("#input_product_code").val();
+			productInfo.barCode = $("#input_product_bar_code").val();
+			productInfo.productName = $("#input_product_name").val();
+			productInfo.productShortName = $("#input_product_shortname").val();
+			productInfo.normalPurchasePrice = $("#input_product_normal_purchase_price").val();
+			productInfo.stockWarn = $("#input_product_stock_warn").val();
+			productInfo.productUnit = $("#input_product_unit").val();
+			productInfo.productPlace = $("#input_product_place").val();
+			var flag = $("#input_product_effective_flag").attr('checked')?1:0;
+			productInfo.effectiveFlag = flag;
+			$.ajax({
+				url:"<%=projectName%>/manage/product/addProduct",
+				type:"post",
+				dataType:"json",
+                data:{"productInfo":JSON.stringify(productInfo)},
+                success:function(result){
+                	alert(result.msg);
+                },
+                error:function(){
+                }				
+			})
+		}
+		
 	</script>
   </head>
   <body>
 	<div id="main_layout" class="easyui-layout" style="width:100%;height:600px;">
 		
 		<%@include file="../common/nav.jsp"%>
-		<div data-options="region:'north'" style="height:50px">
+		<div data-options="region:'north'" style="height:51px">
 		</div>
 		<%@include file="../common/product_category_tree.jsp"%>
 		<div data-options="region:'center'">
@@ -114,13 +140,13 @@
 							<table class="table_list">   
 								<tbody>   
 									<tr>   
-										<td colspan="2">商品名称：<input id="input_product_name" value="" style="width: 60%;"/></td>
+										<td colspan="2"> 商品名称：<input id="input_product_name" value="" style="width: 60%;"/></td>
 										<td>简称：<input id="input_product_shortname" value=""/></td>
 									</tr>   
 									<tr>   
 										<td>类别：<input id="input_product_category" value=""/></td>
 										<td>商品编码：<input id="input_product_code" value=""/></td>
-										<td>条形码：<input id="input_product_barcode" value=""/></td>
+										<td>条形码：<input id="input_product_bar_code" value=""/></td>
 									</tr> 
 									<tr>   
 										<td>单位：<input id="input_product_unit" value=""/></td>
@@ -129,7 +155,7 @@
 									</tr> 
 									<tr>   
 										<td><input id="input_product_effective_flag" type="checkbox" checked>启用商品</td>
-										<td colspan="2">备注：<input id="input_product_effective_flag" value="" style="width: 60%;"/></td>
+										<td colspan="2">备注：<input id="input_product_aa" value="" style="width: 60%;"/></td>
 									</tr>
 									<tr style="height: 30px;">   
 									</tr>

@@ -1,5 +1,7 @@
 package test;
 
+import java.time.LocalDate;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
@@ -13,6 +15,7 @@ public class LogTest {
 	}
 	@Test
 	public void test2(){
-		
+		LocalDate d = LocalDate.now();
+		System.out.println(d);
 	}
 }

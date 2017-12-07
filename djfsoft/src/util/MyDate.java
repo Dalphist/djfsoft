@@ -1,6 +1,7 @@
 package util;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class MyDate {
@@ -10,5 +11,8 @@ public class MyDate {
 		Date date = new Date(System.currentTimeMillis());
 		time = sdf.format(date);
 		return time;
+	}
+	public static LocalDateTime getCurrentDate(){
+		return null;
 	}
 }

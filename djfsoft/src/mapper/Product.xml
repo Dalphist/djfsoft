@@ -6,11 +6,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="mapper.ProductMapper">
     <insert id="add" parameterType="Product" >
     	INSERT INTO t_product 
-    	( product_code,bar_code,product_name,product_short_name,category_id,normal_purchase_price,
-    	cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,add_date,effective_flag) 
+    	(product_code,bar_code,product_name,product_short_name,category_id,normal_purchase_price,
+    	cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,gmt_create,effective_flag) 
     	VALUES 
     	(#{productCode},#{barCode},#{productName},#{productShortName},#{categoryId},#{normalPurchasePrice},
-    	#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{addDate},#{effectiveFlag)
+    	#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{gmtCreate},#{effectiveFlag})
     </insert>
      
     <delete id="delete" parameterType="int" >
@@ -24,10 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="update" parameterType="Product" >
         update t_product 
         ( product_code,bar_code,product_name,product_short_name,category_id,normal_purchase_price,
-    	cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,add_date,effective_flag) 
+    	cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,gmt_create,effective_flag) 
     	VALUES 
     	(#{productCode},#{barCode},#{productName},#{productShortName},#{categoryId},#{normalPurchasePrice},
-    	#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{addDate},#{effectiveFlag) 
+    	#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{gmtCreate},#{effectiveFlag) 
         where id=#{id}    
     </update>
     <select id="list" resultType="Product">
