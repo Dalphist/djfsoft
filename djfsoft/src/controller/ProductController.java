@@ -1,6 +1,5 @@
 package controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pojo.Product;
 import pojo.ResultBean;
 import service.ProductService;
+import util.DateUtil;
 
 @Controller
 @RequestMapping("manage/product")
@@ -24,12 +24,20 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@RequestMapping("")
-	public ModelAndView loginSuccess() {
+	@RequestMapping("index")
+	public ModelAndView productIndex() {
+		ModelAndView mav = new ModelAndView();
+		String url = "manage/product/index";
+		mav.setViewName(url);
+		return mav;
+	}
+	
+	@RequestMapping("list")
+	public ModelAndView productList(String categoryId) {
 		ModelAndView mav = new ModelAndView();
 		List<Product> list = new ArrayList<Product>();
-		list = productService.getProductList();
-		String url = "manage/product";
+		list = productService.getProductList(categoryId);
+		String url = "manage/product/list";
 		mav.setViewName(url);
 		mav.addObject("productList", list);
 		return mav;
@@ -41,7 +49,7 @@ public class ProductController {
 		Product product = new Product();
 		product = getProductFromInfo(productInfo);
 		// 添加商品时，设置当前时间为添加时间。
-//		product.setGmtCreate(LocalDate.now());
+		product.setGmtCreate(DateUtil.getNowDate());
 		productService.addProduct(product);
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);

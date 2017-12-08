@@ -1,0 +1,24 @@
+.table_list { 
+	width: 100%; 
+	padding: 0; 
+	margin: 0; 
+	border: 1px solid #95B8E7; 
+	border-collapse:collapse;
+}
+.table_list th { 
+	font: 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+	color: #0E2D5F; 
+	border: 1px solid #dddddd; 
+	letter-spacing: 2px;
+	text-align: center; 
+	padding: 3px 3px 3px 6px; 
+	background: #efefef  no-repeat; 
+}
+.table_list td { 
+	border: 1px solid #dddddd; 
+	background: #fff; 
+	font-size:10px; 
+	padding: 3px 3px 3px 6px; 
+	color: #4f6b72; 
+	text-align: center; 
+}

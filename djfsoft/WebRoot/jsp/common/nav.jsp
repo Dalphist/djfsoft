@@ -63,7 +63,7 @@
 										<a href="1">用户</a>
 									</li>
 									<li>
-										<a href="<%=projectName%>/manage/product">商品</a>
+										<a href="<%=projectName%>/manage/product/index">商品</a>
 									</li>
 								</ul>
 							</li>

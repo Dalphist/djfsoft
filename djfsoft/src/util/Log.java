@@ -9,7 +9,7 @@ public class Log {
 	//登录时写入日志
 	public static void login(User user){
 		String name = user.getUser_name();
-		String now = MyDate.getCurrentTime();
+		String now = DateUtil.getNowDateStr();
 		logger.info("*******************************************************************");
 		logger.info(name+"登录于： "+now);
 	}

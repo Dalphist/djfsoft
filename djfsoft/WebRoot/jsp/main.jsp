@@ -42,21 +42,10 @@
 		}
 	</style>
 	<script type="text/javascript">
-		$(function(){
-			setMainLayoutHeight();
-		})
-		function setMainLayoutHeight(){
-			var height = $(window).height()-40;  
-			$("#main_layout").attr("style","width:100%;height:"+height+"px");  
-			$("#main_layout").layout("resize",{  
-				width:"100%",  
-				height:height+"px"  
-			});
-		}
 	</script>
   </head>
   <body>
-	<div id="main_layout" class="easyui-layout" style="width:100%;height:600px;">
+	<div id="main_layout" class="easyui-layout" style="width:100%;height:100%;">
 		<%@include file="common/nav.jsp"%>
 		<div data-options="region:'north'" style="height:50px"></div>
 		<%@include file="common/product_category_tree.jsp"%>

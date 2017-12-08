@@ -7,5 +7,5 @@ import pojo.Product;
 
 public interface ProductService {
 	void addProduct(Product product);
-	List<Product> getProductList();
+	List<Product> getProductList(String categoryId);
 }

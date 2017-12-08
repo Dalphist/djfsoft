@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{gmtCreate},#{effectiveFlag) 
         where id=#{id}    
     </update>
-    <select id="list" resultType="Product">
-        select * from t_product      
+    <select id="list" parameterType="int" resultType="Product">
+        select * from t_product where FIND_IN_SET(category_id, queryChildrenCategoryInfo(#{categoryId}));       
     </select>     
 </mapper>

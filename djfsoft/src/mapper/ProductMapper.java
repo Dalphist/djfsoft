@@ -1,6 +1,7 @@
 package mapper;
 
 import java.util.List;
+
 import pojo.Product;
 
 public interface ProductMapper {
@@ -12,6 +13,6 @@ public interface ProductMapper {
 
 	public Product get(int id);
 
-	public List<Product> list();
+	public List<Product> list(String categoryId);
 
 }

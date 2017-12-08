@@ -1,6 +1,7 @@
 package pojo;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 public class Product {
 	private Integer id;

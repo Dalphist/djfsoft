@@ -21,8 +21,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getProductList() {
-		return productMapper.list();
+	public List<Product> getProductList(String categoryId) {
+		return productMapper.list(categoryId);
 	}
 
 }
