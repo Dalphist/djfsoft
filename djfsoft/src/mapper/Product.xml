@@ -4,33 +4,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.ProductMapper">
-    <insert id="add" parameterType="Product" >
-    	INSERT INTO t_product 
-    	(product_code,bar_code,product_name,product_short_name,category_id,normal_purchase_price,
-    	cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,gmt_create,effective_flag) 
-    	VALUES 
-    	(#{productCode},#{barCode},#{productName},#{productShortName},#{categoryId},#{normalPurchasePrice},
-    	#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{gmtCreate},#{effectiveFlag})
-    </insert>
-     
-    <delete id="delete" parameterType="int" >
-        delete from t_product where id= #{id}   
-    </delete>
-     
-    <select id="get" parameterType="int" resultType="Product">
-        select * from t_product  where id= #{id}  
-    </select>
+	<insert id="add" parameterType="Product">
+		INSERT INTO t_product
+		(product_code,bar_code,product_name,product_short_name,category_id,normal_purchase_price,
+		cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,gmt_create,effective_flag)
+		VALUES
+		(#{productCode},#{barCode},#{productName},#{productShortName},#{categoryId},#{normalPurchasePrice},
+		#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{gmtCreate},#{effectiveFlag})
+	</insert>
 
-    <update id="update" parameterType="Product" >
-        update t_product 
-        ( product_code,bar_code,product_name,product_short_name,category_id,normal_purchase_price,
-    	cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,gmt_create,effective_flag) 
-    	VALUES 
-    	(#{productCode},#{barCode},#{productName},#{productShortName},#{categoryId},#{normalPurchasePrice},
-    	#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{gmtCreate},#{effectiveFlag) 
-        where id=#{id}    
-    </update>
-    <select id="list" parameterType="int" resultType="Product">
-        select * from t_product where FIND_IN_SET(category_id, queryChildrenCategoryInfo(#{categoryId}));       
-    </select>     
+	<delete id="delete" parameterType="String">
+		delete from t_product where id= #{id}
+	</delete>
+
+	<update id="update" parameterType="Product">
+		update t_product
+		(product_code,bar_code,product_name,product_short_name,category_id,normal_purchase_price,
+		cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,gmt_create,effective_flag)
+		VALUES
+		(#{productCode},#{barCode},#{productName},#{productShortName},#{categoryId},#{normalPurchasePrice},
+		#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{gmtCreate},#{effectiveFlag)
+		where id=#{id}
+	</update>
+
+	<select id="get" parameterType="String" resultType="ProductInfo">
+		select p.*,(select pc.category_name from t_product_category pc where pc.id = p.category_id) as category_name
+		from t_product p WHERE p.id = #{id}
+	</select>
+
+	<select id="list" parameterType="int" resultType="Product">
+		select * from t_product 
+		where FIND_IN_SET(category_id,queryChildrenCategoryInfo(#{categoryId}));
+	</select>
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pojo.Product;
+import pojo.ProductInfo;
 import pojo.ResultBean;
 import service.ProductService;
 import util.DateUtil;
@@ -41,6 +42,17 @@ public class ProductController {
 		mav.setViewName(url);
 		mav.addObject("productList", list);
 		return mav;
+	}
+	
+	
+	@RequestMapping("getProductById")
+	@ResponseBody
+	public ResultBean<ProductInfo> getProductById(String productId) {
+		ProductInfo product = new ProductInfo();
+		product = productService.getProductById(productId);
+		ResultBean<ProductInfo> result = new ResultBean<ProductInfo>();
+		result.setData(product);
+		return result;
 	}
 	
 	@RequestMapping("addProduct")

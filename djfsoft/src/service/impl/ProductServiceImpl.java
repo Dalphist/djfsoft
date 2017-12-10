@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pojo.Product;
+import pojo.ProductInfo;
 import service.ProductService;
 
 @Service
@@ -23,6 +24,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getProductList(String categoryId) {
 		return productMapper.list(categoryId);
+	}
+
+	@Override
+	public ProductInfo getProductById(String productId) {
+		return productMapper.get(productId);
 	}
 
 }

@@ -1,12 +1,4 @@
-/aop/
-/applicationContext.xml
 /controller/
-/interceptor/
-/log4j.properties
-/mapper/
-/mybatisConfig.xml
-/pojo/
 /service/
-/springMVC.xml
-/test/
-/util/
+/mapper/
+/pojo/

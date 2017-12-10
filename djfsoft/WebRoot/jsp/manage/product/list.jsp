@@ -17,15 +17,69 @@
 	<script type="text/javascript" src="<%=projectName%>/easyui/jquery.easyui.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="<%=projectName%>/css/style.css"> 
 	
-	<style type="text/css"></style>
+	<style type="text/css">
+	.select_tr{
+		background-color: #c4e8f5;
+	}
+	</style>
 	<script type="text/javascript">
+	var product_category_id;
+	var product_category_text;
 		$(function(){
+			product_category_id = $("#product_category_id",window.parent.document).val();
+			product_category_text = $("#product_category_text",window.parent.document).val();
+			$("#product_category_id").val(product_category_id);
+			$(".product_category_text").val(product_category_text);
+			
+			$("#table_product_list tbody tr").click(function() {  
+			   $(this).addClass("select_tr").siblings().removeClass("select_tr");  
+			   var product_id = $(this).find(".td_product_id").text().trim();
+			   $("#input_product_id").val(product_id);
+			   getProductInfo(product_id);
+			}); 
+			
+			$('#tab_product').tabs({
+				toolPosition:'left',
+				tools:[{
+					iconCls:'icon-save',
+					handler:function(){
+						productSave();
+					}
+				}]
+			});
+			
 		    $("#input_product_add").click(function(){
 		    	$("#tab_product input").val("");
+		    	$(".product_category_text").val(product_category_text);
 		    });
-		})
+		});
 		
-		function productSave(){
+		//获取商品信息并显示在信息栏
+		function getProductInfo(product_id){
+			$.ajax({
+				url:"<%=projectName%>/manage/product/getProductById",
+				type:"post",
+				dataType:"json",
+                data:{"productId":product_id},
+                success:function(result){
+                	var product = result.data;  
+                	$("#input_product_code").val(product.productCode);
+					$("#input_product_bar_code").val(product.barCode);
+					$(".product_category_text").val(product.categoryName);
+					$("#input_product_name").val(product.productName);
+					$("#input_product_shortname").val(product.productShortName);
+					$("#input_product_normal_purchase_price").val(product.normalPurchasePrice);
+					$("#input_product_stock_warn").val(product.stockWarn == -1?"":product.stockWarn);
+					$("#input_product_unit").val(product.productUnit);
+					$("#input_product_place").val(product.productPlace);
+                },
+                error:function(){
+                }
+			})
+		}
+		
+		//获取所有input框的商品信息，返回json
+		function getInputProductInfo(){
 			var productInfo = {};
 			productInfo.productCode = $("#input_product_code").val();
 			productInfo.barCode = $("#input_product_bar_code").val();
@@ -37,6 +91,13 @@
 			productInfo.productUnit = $("#input_product_unit").val();
 			productInfo.productPlace = $("#input_product_place").val();
 			productInfo.effectiveFlag = $("#input_product_effective_flag").attr('checked')?1:0;
+			return productInfo;
+		}
+		
+		//商品保存
+		function productSave(){
+			var productInfo = getInputProductInfo();
+			var canSave = checkProductInput(productInfo);
 			//todo 需再加校验
 			$.ajax({
 				url:"<%=projectName%>/manage/product/addProduct",
@@ -53,9 +114,16 @@
 			})
 		}
 		
+		//检查商品信息是否填写合格
+		function checkProductInput(productInfo){
+			
+		}
+		
 	</script>
   </head>
   <body style="margin: 0px;">
+  <input id="product_category_id" style="display: none;">
+  <input id="input_product_id" style="display: none;">
   <div class="easyui-layout" style="height:100%;">
   	<div data-options="region:'center'" style="height:70%;">
 		<div style="height:30px;background-color:#e0ecff">
@@ -63,9 +131,10 @@
 			<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 		</div>
 		<div>
-			<table id="table_stock" class="table_list" cellspacing="0">
+			<table id="table_product_list" class="table_list" cellspacing="0">
 				<thead>
 					<tr>
+						<th style="display: none;">ID</th>
 						<th style="width:30px;">序号</th>
 						<th>编码</th>
 						<th style="width:150px;">名称</th>
@@ -87,6 +156,7 @@
 				<tbody>
 					<c:forEach var="product" items="${productList}" varStatus="status">  
 					    <tr>
+					    	<td style="display: none;" class="td_product_id">${product.id}</td>
 					    	<td>${status.count}</td>
 					    	<td>${product.productCode}</td>
 					    	<td>${product.productName}</td>
@@ -126,7 +196,7 @@
 							<td>简称：<input id="input_product_shortname" value=""/></td>
 						</tr>   
 						<tr>   
-							<td>类别：<input class="product_category_text" value=""/></td>
+							<td>类别：<input class="product_category_text" value="" readonly="readonly"/></td>
 							<td>商品编码：<input id="input_product_code" value=""/></td>
 							<td>条形码：<input id="input_product_bar_code" value=""/></td>
 						</tr> 
