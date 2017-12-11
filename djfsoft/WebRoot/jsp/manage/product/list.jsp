@@ -21,6 +21,10 @@
 	.select_tr{
 		background-color: #c4e8f5;
 	}
+	span.required {
+	 color: #999;
+	 font-size: 150%;
+	}
 	</style>
 	<script type="text/javascript">
 	var product_category_id;
@@ -71,7 +75,6 @@
 					$("#input_product_normal_purchase_price").val(product.normalPurchasePrice);
 					$("#input_product_stock_warn").val(product.stockWarn == -1?"":product.stockWarn);
 					$("#input_product_unit").val(product.productUnit);
-					$("#input_product_place").val(product.productPlace);
                 },
                 error:function(){
                 }
@@ -81,24 +84,51 @@
 		//获取所有input框的商品信息，返回json
 		function getInputProductInfo(){
 			var productInfo = {};
-			productInfo.productCode = $("#input_product_code").val();
-			productInfo.barCode = $("#input_product_bar_code").val();
-			productInfo.categoryId = $("#product_category_id").val();
-			productInfo.productName = $("#input_product_name").val();
-			productInfo.productShortName = $("#input_product_shortname").val();
-			productInfo.normalPurchasePrice = $("#input_product_normal_purchase_price").val();
-			productInfo.stockWarn = $("#input_product_stock_warn").val();
-			productInfo.productUnit = $("#input_product_unit").val();
-			productInfo.productPlace = $("#input_product_place").val();
+			productInfo.productCode = $("#input_product_code").val().trim();
+			productInfo.barCode = $("#input_product_bar_code").val().trim();
+			productInfo.categoryId = $("#product_category_id").val().trim();
+			productInfo.productName = $("#input_product_name").val().trim();
+			productInfo.productShortName = $("#input_product_shortname").val().trim();
+			productInfo.normalPurchasePrice = $("#input_product_normal_purchase_price").val().trim();
+			productInfo.stockWarn = $("#input_product_stock_warn").val().trim();
+			productInfo.productUnit = $("#input_product_unit").val().trim();
 			productInfo.effectiveFlag = $("#input_product_effective_flag").attr('checked')?1:0;
 			return productInfo;
 		}
-		
+		//检查商品信息是否填写合格
+		function validateProductInput(productInfo){
+			var validation = {};
+			validation.fail = false;
+			if(productInfo.productCode == "" || productInfo.barCode == "" ||productInfo.productName == "" || productInfo.productUnit == ""){
+				validation.fail = true;
+				validation.msg = "请填写必填项!";
+				return validation;
+			}
+			$.ajax({
+				url:"<%=projectName%>/manage/product/validateProduct",
+				type:"post",
+				async: false,
+				dataType:"json",
+                data:{"productInfo":JSON.stringify(productInfo)},
+                success:function(result){
+                	if(result.code == 1){	//有重复商品信息
+                		validation.fail = true;
+						validation.msg = result.msg;
+						return validation;
+                	}
+                }				
+			})
+			
+			return validation;
+		}
 		//商品保存
 		function productSave(){
 			var productInfo = getInputProductInfo();
-			var canSave = checkProductInput(productInfo);
-			//todo 需再加校验
+			var validation = validateProductInput(productInfo);
+			if(validation.fail){
+				$.messager.alert('提示',validation.msg,'info');
+				return false;
+			}
 			$.ajax({
 				url:"<%=projectName%>/manage/product/addProduct",
 				type:"post",
@@ -114,10 +144,7 @@
 			})
 		}
 		
-		//检查商品信息是否填写合格
-		function checkProductInput(productInfo){
-			
-		}
+		
 		
 	</script>
   </head>
@@ -128,6 +155,7 @@
   	<div data-options="region:'center'" style="height:70%;">
 		<div style="height:30px;background-color:#e0ecff">
 			<input id="input_product_add" type="button" value="添加" />
+			<input id="input_product_del" type="button" value="删除" />
 			<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 		</div>
 		<div>
@@ -135,6 +163,7 @@
 				<thead>
 					<tr>
 						<th style="display: none;">ID</th>
+						<th style="width:10px;"><input type="checkbox"/></th>
 						<th style="width:30px;">序号</th>
 						<th>编码</th>
 						<th style="width:150px;">名称</th>
@@ -157,6 +186,7 @@
 					<c:forEach var="product" items="${productList}" varStatus="status">  
 					    <tr>
 					    	<td style="display: none;" class="td_product_id">${product.id}</td>
+					    	<td><input type="checkbox"/></td>
 					    	<td>${status.count}</td>
 					    	<td>${product.productCode}</td>
 					    	<td>${product.productName}</td>
@@ -192,22 +222,22 @@
 				<table class="table_list">   
 					<tbody>   
 						<tr>   
-							<td colspan="2"> 商品名称：<input id="input_product_name" value="" style="width: 60%;"/></td>
-							<td>简称：<input id="input_product_shortname" value=""/></td>
+							<td colspan="2"> 商品名称<span class="required">*</span><input id="input_product_name" value="" style="width: 60%;"/></td>
+							<td>简称 <input id="input_product_shortname" value=""/></td>
 						</tr>   
 						<tr>   
-							<td>类别：<input class="product_category_text" value="" readonly="readonly"/></td>
-							<td>商品编码：<input id="input_product_code" value=""/></td>
-							<td>条形码：<input id="input_product_bar_code" value=""/></td>
+							<td>类别 <input class="product_category_text" value="" readonly="readonly"/></td>
+							<td>商品编码<span class="required">*</span><input id="input_product_code" value=""/></td>
+							<td>条形码<span class="required">*</span><input id="input_product_bar_code" class="easyui-numberbox" data-options="min:0" value=""/></td>
 						</tr> 
 						<tr>   
-							<td>单位：<input id="input_product_unit" value=""/></td>
-							<td>标准采购单价：<input id="input_product_normal_purchase_price" value=""/></td>
-							<td>预警库存数量：<input id="input_product_stock_warn" value=""/></td>
+							<td>单位<span class="required">*</span><input id="input_product_unit" value=""/></td>
+							<td>标准采购单价 <input id="input_product_normal_purchase_price" class="easyui-numberbox" data-options="min:0,precision:2" value=""/></td>
+							<td>预警库存数量 <input id="input_product_stock_warn" class="easyui-numberbox" data-options="min:0,precision:2" value=""/></td>
 						</tr> 
 						<tr>   
 							<td><input id="input_product_effective_flag" type="checkbox" checked>启用商品</td>
-							<td colspan="2">备注：<input id="input_product_aa" value="" style="width: 60%;"/></td>
+							<td colspan="2">备注 <input id="input_product_aa" value="" style="width: 60%;"/></td>
 						</tr>
 					</tbody>   
 				</table>

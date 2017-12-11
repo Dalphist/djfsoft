@@ -57,7 +57,7 @@ public class ProductController {
 	
 	@RequestMapping("addProduct")
 	@ResponseBody
-	public ResultBean<String> addProduct(String productInfo, HttpSession session) {
+	public ResultBean<String> addProduct(String productInfo) {
 		Product product = new Product();
 		product = getProductFromInfo(productInfo);
 		// 添加商品时，设置当前时间为添加时间。
@@ -66,6 +66,25 @@ public class ProductController {
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);
 		result.setMsg("添加成功！");
+		return result;
+	}
+	
+	@RequestMapping("validateProduct")
+	@ResponseBody
+	public ResultBean<String> validateProduct(String productInfo) {
+		Product product = new Product();
+		product = getProductFromInfo(productInfo);
+		ResultBean<String> result = new ResultBean<String>();
+		int a = productService.getProductByCode(product.getProductCode());
+		int b = productService.getProductByBarCode(product.getBarCode());
+		if(a>0){
+			result.setCode(ResultBean.FAIL);
+			result.setMsg("商品编码重复！");
+		}
+		if(b>0){
+			result.setCode(ResultBean.FAIL);
+			result.setMsg("商品条形码重复！");
+		}
 		return result;
 	}
 
