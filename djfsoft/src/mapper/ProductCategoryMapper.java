@@ -11,7 +11,7 @@ public interface ProductCategoryMapper {
 	
 	public void add(ProductCategory productCategory);  
     
-    public void delete(int id);  
+    public void delete(String categoryId);  
         
     public void update(ProductCategory productCategory);   
     

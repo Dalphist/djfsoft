@@ -11,17 +11,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pojo.ProductCategory;
+import pojo.ResultBean;
 import pojo.Tree;
 import pojo.User;
 import service.ProductCategoryService;
 import service.UserService;
+import util.BeanUtil;
+import util.DateUtil;
 
 @Controller
 @RequestMapping("productCategory")
 public class ProductCategoryController {
 	@Autowired
 	UserService userService;
-
+	
+	@Autowired
+	ProductCategoryService productCategoryService;
+	
 	@RequestMapping("getItemCategories")
 	@ResponseBody
 	public Map<String, String> getUser(String user_name, String password, HttpSession session) {
@@ -36,8 +43,24 @@ public class ProductCategoryController {
 	
 	@RequestMapping("addProductCategory")
 	@ResponseBody
-	public Map<String, String> addProductCategory(String categoryInfo) {
-		return null;
+	public ResultBean<String> addProductCategory(String categoryInfo) {
+		ProductCategory pc = (ProductCategory) BeanUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
+		pc.setGmtCreate(DateUtil.getNowDate());
+		productCategoryService.addProductCategory(pc);
+		ResultBean<String> result = new ResultBean<String>();
+		result.setCode(ResultBean.SUCCESS);
+		result.setMsg("添加成功！");
+		return result;
+	}
+	
+	@RequestMapping("delProductCategory")
+	@ResponseBody
+	public ResultBean<String> delProductCategory(String categoryId) {
+		productCategoryService.delProductCategory(categoryId);
+		ResultBean<String> result = new ResultBean<String>();
+		result.setCode(ResultBean.SUCCESS);
+		result.setMsg("删除成功！");
+		return result;
 	}
 
 	@RequestMapping("main")
@@ -51,9 +74,6 @@ public class ProductCategoryController {
 	 * 
 	 * @return
 	 */
-	@Autowired
-	ProductCategoryService productCategoryService;
-
 	@RequestMapping("getProductCategoryTree")
 	@ResponseBody
 	public List<Tree> getTree() {

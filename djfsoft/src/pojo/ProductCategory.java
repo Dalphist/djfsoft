@@ -1,5 +1,6 @@
 package pojo;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -8,7 +9,9 @@ public class ProductCategory {
 	private int parentId;
 	private String categoryName;
 	private String categoryCode;
-	private int order;
+	private int orderFlag;
+	private Date gmtCreate;
+	private Date gmtModified;
 	private List<ProductCategory> childrenCategories;
 	
 	public int getId() {
@@ -36,10 +39,10 @@ public class ProductCategory {
 		this.categoryCode = categoryCode;
 	}
 	public int getOrder() {
-		return order;
+		return orderFlag;
 	}
-	public void setOrder(int order) {
-		this.order = order;
+	public void setOrder(int orderFlag) {
+		this.orderFlag = orderFlag;
 	}
 	public List<ProductCategory> getChildrenCategories() {
 		return childrenCategories;
@@ -47,6 +50,17 @@ public class ProductCategory {
 	public void setChildrenCategories(List<ProductCategory> childrenCategories) {
 		this.childrenCategories = childrenCategories;
 	}
-	
+	public Date getGmtCreate() {
+		return gmtCreate;
+	}
+	public void setGmtCreate(Date gmtCreate) {
+		this.gmtCreate = gmtCreate;
+	}
+	public Date getGmtModified() {
+		return gmtModified;
+	}
+	public void setGmtModified(Date gmtModified) {
+		this.gmtModified = gmtModified;
+	}
 	
 }

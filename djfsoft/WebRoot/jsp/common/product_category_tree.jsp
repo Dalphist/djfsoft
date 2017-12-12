@@ -3,6 +3,7 @@
 	$(function(){
 		$("#product_category_tree").tree({      
 	        url: "<%=projectName%>/productCategory/getProductCategoryTree",
+	        //dnd: true,
 	        onContextMenu: function(e, node){
 				e.preventDefault();
 				// 查找节点
@@ -24,7 +25,7 @@
 		});
 	})
 	//添加分类事件
-	function add_category(){
+	function addCategory(){
 		$("#win").window("open");
 		$("#btn_category_save").attr("onclick","").attr("onclick","saveCategory()");
 	}
@@ -43,6 +44,27 @@
 			dataType:"json",
             data:{"categoryInfo":JSON.stringify(category)},
             success:function(result){
+            	$.messager.alert('提示',result.msg,'info',function(){    
+			        location.reload(); 
+				}); 
+            },
+            error:function(){
+            }
+		})
+	}
+	
+	//删除分类
+	function delCategory(){
+		var categoryId = $("#product_category_id").val();
+		$.ajax({
+			url:"<%=projectName%>/productCategory/delProductCategory",
+			type:"post",
+			dataType:"json",
+            data:{"categoryId":categoryId},
+            success:function(result){
+            	$.messager.alert('提示',result.msg,'info',function(){    
+			        location.reload(); 
+				}); 
             },
             error:function(){
             }
@@ -56,9 +78,9 @@
 	<input id="product_category_text" class="product_category_text" style="display: none;"/>
 	<input id="product_category_id" style="display: none;"/>
 	<div id="mm" class="easyui-menu" style="width:120px;">   
-		<div onclick="add_category();">新建</div>   
-		<div onclick="oper_code();">编辑</div>   
-		<div onclick="del_category();">删除</div>   
+		<div onclick="addCategory();">新建</div>   
+		<div onclick="operCode();">编辑</div>   
+		<div onclick="delCategory();">删除</div>   
 	</div>
 </div>
 <div id="win" class="easyui-window" title="类别" style="width:300px;height:300px;"   

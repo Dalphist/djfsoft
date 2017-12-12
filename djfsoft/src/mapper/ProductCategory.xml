@@ -5,11 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="mapper.ProductCategoryMapper">
     <insert id="add" parameterType="ProductCategory" >
-        insert into t_product_category (category_name) values (#{categoryName})    
+        insert into t_product_category 
+        (category_name,category_code,parent_id,order_flag,gmt_create) 
+        values 
+        (#{categoryName},#{categoryCode},#{parentId},#{orderFlag},#{gmtCreate})    
     </insert>
      
-    <delete id="delete" parameterType="int" >
-        delete from t_product_category where id= #{id}   
+    <delete id="delete" parameterType="String" >
+        delete from t_product_category where id= #{categoryId}
     </delete>
      
     <update id="update" parameterType="ProductCategory" >

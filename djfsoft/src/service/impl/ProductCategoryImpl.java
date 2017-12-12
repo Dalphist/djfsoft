@@ -31,4 +31,16 @@ public class ProductCategoryImpl implements ProductCategoryService{
 	public List<Tree> getTreeByCategoryId(int parent_id) {
 		return productCategoryMapper.getTreeByCategoryId(parent_id);
 	}
+
+	@Override
+	public void addProductCategory(ProductCategory productCategory) {
+		productCategoryMapper.add(productCategory);
+		return;
+	}
+
+	@Override
+	public void delProductCategory(String categoryId) {
+		productCategoryMapper.delete(categoryId);
+		return;
+	}
 }
