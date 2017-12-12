@@ -31,6 +31,7 @@
 	}
 	//添加分类
 	function saveCategory(){
+		$("#win").window("close");
 		var category = {};
 		var categoryId = $("#product_category_id").val();
 		var categoryName = $("#input_category_name").val();
@@ -45,7 +46,7 @@
             data:{"categoryInfo":JSON.stringify(category)},
             success:function(result){
             	$.messager.alert('提示',result.msg,'info',function(){    
-			        location.reload(); 
+			        $('#product_category_tree').tree('reload');
 				}); 
             },
             error:function(){
@@ -63,7 +64,7 @@
             data:{"categoryId":categoryId},
             success:function(result){
             	$.messager.alert('提示',result.msg,'info',function(){    
-			        location.reload(); 
+			        $('#product_category_tree').tree('reload');
 				}); 
             },
             error:function(){
