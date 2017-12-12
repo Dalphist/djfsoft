@@ -22,8 +22,8 @@
 		background-color: #c4e8f5;
 	}
 	span.required {
-	 color: #999;
-	 font-size: 150%;
+		color: #999;
+		font-size: 150%;
 	}
 	</style>
 	<script type="text/javascript">
@@ -36,12 +36,18 @@
 			$(".product_category_text").val(product_category_text);
 			
 			$("#table_product_list tbody tr").click(function() {  
-			   $(this).addClass("select_tr").siblings().removeClass("select_tr");  
+			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
+			   $(this).find(":checkbox").prop("checked",true);
+			   $(this).siblings().find(":checkbox").prop("checked",false); 
 			   var product_id = $(this).find(".td_product_id").text().trim();
 			   $("#input_product_id").val(product_id);
 			   getProductInfo(product_id);
 			}); 
-			
+			//复选框  阻止事件冒泡
+		    $("#table_product_list tbody .td_checkbox").on("click",function(event){
+		    	event.stopPropagation();    
+		    });
+			//tab栏添加按钮
 			$('#tab_product').tabs({
 				toolPosition:'left',
 				tools:[{
@@ -51,10 +57,19 @@
 					}
 				}]
 			});
-			
+			//添加
 		    $("#input_product_add").click(function(){
 		    	$("#tab_product input").val("");
 		    	$(".product_category_text").val(product_category_text);
+		    });
+		    
+		    //全选/取消全选
+		    $("#checkAll").on("click",function(event){
+		    	if($("#checkAll").prop("checked")){
+		    		$("#table_product_list tbody :checkbox").prop("checked", true);
+		    	}else{
+		    		$("#table_product_list tbody :checkbox").prop("checked", false);
+		    	}
 		    });
 		});
 		
@@ -143,8 +158,21 @@
                 }				
 			})
 		}
-		
-		
+		//获取所有已选择商品
+		function getSelectProduct(){
+			var checkboxes = $("#table_product_list tbody :checkbox");
+			var selectProductIds = [];
+			var i = 0;
+			$.each(function(j,checkbox){
+				if(checkbox.prop("checked")){
+					var productId = $(this).parents("tr").find(".td_product_id").text().trim();
+					selectProductIds[i] = productId;
+					i++;
+				}
+			});
+			return selectProductIds;
+		}
+		//删除所选商品
 		
 	</script>
   </head>
@@ -163,7 +191,7 @@
 				<thead>
 					<tr>
 						<th style="display: none;">ID</th>
-						<th style="width:10px;"><input type="checkbox"/></th>
+						<th style="width:10px;"><input id="checkAll" type="checkbox"/></th>
 						<th style="width:30px;">序号</th>
 						<th>编码</th>
 						<th style="width:150px;">名称</th>
@@ -186,7 +214,7 @@
 					<c:forEach var="product" items="${productList}" varStatus="status">  
 					    <tr>
 					    	<td style="display: none;" class="td_product_id">${product.id}</td>
-					    	<td><input type="checkbox"/></td>
+					    	<td class="td_checkbox"><input type="checkbox"/></td>
 					    	<td>${status.count}</td>
 					    	<td>${product.productCode}</td>
 					    	<td>${product.productName}</td>
