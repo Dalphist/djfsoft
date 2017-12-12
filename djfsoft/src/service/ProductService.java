@@ -8,6 +8,8 @@ import pojo.ProductInfo;
 public interface ProductService {
 	void addProduct(Product product);
 	
+	void delProduct(String productId);
+	
 	ProductInfo getProductById(String productId);
 	
 	List<Product> getProductList(String categoryId);

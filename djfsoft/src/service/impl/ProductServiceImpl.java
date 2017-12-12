@@ -19,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void addProduct(Product product) {
 		productMapper.add(product);
+		return;
 	}
 
 	@Override
@@ -39,6 +40,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int getProductByBarCode(String barCode) {
 		return productMapper.getProductByBarCode(barCode);
+	}
+
+	@Override
+	public void delProduct(String productId) {
+		productMapper.delete(productId);
+		return;
 	}
 
 }

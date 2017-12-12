@@ -1,10 +1,12 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ import util.DateUtil;
 public class ProductController {
 	@Autowired
 	ProductService productService;
-	
+
 	@RequestMapping("index")
 	public ModelAndView productIndex() {
 		ModelAndView mav = new ModelAndView();
@@ -32,7 +34,7 @@ public class ProductController {
 		mav.setViewName(url);
 		return mav;
 	}
-	
+
 	@RequestMapping("list")
 	public ModelAndView productList(String categoryId) {
 		ModelAndView mav = new ModelAndView();
@@ -43,8 +45,7 @@ public class ProductController {
 		mav.addObject("productList", list);
 		return mav;
 	}
-	
-	
+
 	@RequestMapping("getProductById")
 	@ResponseBody
 	public ResultBean<ProductInfo> getProductById(String productId) {
@@ -54,7 +55,7 @@ public class ProductController {
 		result.setData(product);
 		return result;
 	}
-	
+
 	@RequestMapping("addProduct")
 	@ResponseBody
 	public ResultBean<String> addProduct(String productInfo) {
@@ -69,6 +70,21 @@ public class ProductController {
 		return result;
 	}
 	
+	@RequestMapping("delProduct")
+	@ResponseBody
+	public ResultBean<String> delProduct(String selectProductList) {
+		JSONArray arr = JSONArray.fromObject(selectProductList);
+		for (int i = 0; i < arr.size(); i++) {
+			JSONObject product = (JSONObject) arr.get(i);
+			String id = product.getString("productId");
+			productService.delProduct(id);
+		}
+		ResultBean<String> result = new ResultBean<String>();
+		result.setCode(ResultBean.SUCCESS);
+		result.setMsg("删除成功！");
+		return result;
+	}
+
 	@RequestMapping("validateProduct")
 	@ResponseBody
 	public ResultBean<String> validateProduct(String productInfo) {
@@ -77,23 +93,27 @@ public class ProductController {
 		ResultBean<String> result = new ResultBean<String>();
 		int a = productService.getProductByCode(product.getProductCode());
 		int b = productService.getProductByBarCode(product.getBarCode());
-		if(a>0){
+		if (a > 0) {
 			result.setCode(ResultBean.FAIL);
 			result.setMsg("商品编码重复！");
 		}
-		if(b>0){
+		if (b > 0) {
 			result.setCode(ResultBean.FAIL);
 			result.setMsg("商品条形码重复！");
 		}
 		return result;
 	}
-
+	
+	/**
+	 * 通过商品信息字符串（前台传过来的）转换成商品Bean
+	 * @param productInfo
+	 * @return
+	 */
 	private Product getProductFromInfo(String productInfo) {
 		Product product = new Product();
 		JSONObject info = JSONObject.fromObject(productInfo);
 		product = (Product) JSONObject.toBean(info, Product.class);
-
 		return product;
 	}
-
+	
 }

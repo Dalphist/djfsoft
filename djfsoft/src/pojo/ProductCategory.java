@@ -7,6 +7,7 @@ public class ProductCategory {
 	private int id;
 	private int parentId;
 	private String categoryName;
+	private String categoryCode;
 	private int order;
 	private List<ProductCategory> childrenCategories;
 	
@@ -27,6 +28,12 @@ public class ProductCategory {
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	public String getCategoryCode() {
+		return categoryCode;
+	}
+	public void setCategoryCode(String categoryCode) {
+		this.categoryCode = categoryCode;
 	}
 	public int getOrder() {
 		return order;

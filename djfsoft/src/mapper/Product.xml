@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<delete id="delete" parameterType="String">
-		delete from t_product where id= #{id}
+		delete from t_product where id= #{productId}
 	</delete>
 
 	<update id="update" parameterType="Product">

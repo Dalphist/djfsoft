@@ -161,18 +161,44 @@
 		//获取所有已选择商品
 		function getSelectProduct(){
 			var checkboxes = $("#table_product_list tbody :checkbox");
-			var selectProductIds = [];
+			var selectDelProduct = [];
 			var i = 0;
-			$.each(function(j,checkbox){
-				if(checkbox.prop("checked")){
+			checkboxes.each(function(){
+				if($(this).prop("checked")){
+					var delProduct = {};
 					var productId = $(this).parents("tr").find(".td_product_id").text().trim();
-					selectProductIds[i] = productId;
+					delProduct.productId = productId
+					selectDelProduct[i] = delProduct;
 					i++;
 				}
 			});
-			return selectProductIds;
+			return selectDelProduct;
 		}
 		//删除所选商品
+		function delSelectProduct(){
+			var selectDelProduct = getSelectProduct();
+			if(selectDelProduct.length > 0){
+				$.messager.confirm('确认','您确认想要删除所选商品吗？',function(r){    
+				    if (r){    
+				        $.ajax({
+							url:"<%=projectName%>/manage/product/delProduct",
+							type:"post",
+							dataType:"json",
+			                data:{"selectProductList":JSON.stringify(selectDelProduct)},
+			                success:function(result){
+			                	$.messager.alert('提示',result.msg,'info',function(){    
+							        location.reload(); 
+								});  
+			                },
+			                error:function(){
+			                }				
+						})
+				    }    
+				});
+			}else{
+				$.messager.alert('提示','没有选择任何商品','info');
+			}
+		}
 		
 	</script>
   </head>
@@ -183,7 +209,7 @@
   	<div data-options="region:'center'" style="height:70%;">
 		<div style="height:30px;background-color:#e0ecff">
 			<input id="input_product_add" type="button" value="添加" />
-			<input id="input_product_del" type="button" value="删除" />
+			<input id="input_product_del" type="button" value="删除" onclick="delSelectProduct();"/>
 			<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 		</div>
 		<div>
@@ -196,6 +222,7 @@
 						<th>编码</th>
 						<th style="width:150px;">名称</th>
 						<th>条形码</th>
+						<th>单位</th>
 						<th>标准采购价</th>
 						<th>成本价</th>
 						<th>最后采购价</th>
@@ -219,6 +246,7 @@
 					    	<td>${product.productCode}</td>
 					    	<td>${product.productName}</td>
 					    	<td>${product.barCode}</td>
+					    	<td>${product.productUnit}</td>
 					    	<td>${product.normalPurchasePrice}</td>
 					    	<td>${product.cost}</td>
 					    	<td>${product.lastPurchasePrice}</td>

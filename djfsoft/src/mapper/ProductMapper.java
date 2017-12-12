@@ -8,7 +8,7 @@ import pojo.ProductInfo;
 public interface ProductMapper {
 	public void add(Product product);
 
-	public void delete(String id);
+	public void delete(String productId);
 
 	public void update(Product product);
 
