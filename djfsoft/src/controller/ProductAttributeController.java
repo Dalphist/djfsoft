@@ -44,7 +44,7 @@ public class ProductAttributeController {
 	
 	/**
 	 * @Title: productList
-	 * @Description: 根据分类Id获取商品列表
+	 * @Description: 获取所有商品规格列表
 	 * @param: @param categoryId
 	 * @param: @return   
 	 * @return: ModelAndView   
