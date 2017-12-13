@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.ProductAttributeMapper">
+    <insert id="add" parameterType="ProductAttribute" >
+        insert into t_product_attribute
+        (attribute_name,attribute_value,gmt_create) 
+        values 
+        (#{attributeName},#{attributeValue},#{gmtCreate})    
+    </insert>
+     
+    <delete id="delete" parameterType="String" >
+        delete from t_product_attribute where id= #{attributeId}
+    </delete>
+     
+    <update id="update" parameterType="ProductAttribute" >
+        update t_product_attribute 
+        set attribute_name=#{attributeName},attribute_value=#{attributeValue},gmt_modified=#{gmtModified}
+        where id=#{id}    
+    </update>
+    
+    <select id="getProductAttributes" resultType="ProductAttribute">
+        select * from t_product_attribute 
+    </select>  
+    
+    <select id="getProductAttributesByProductId" parameterType="String" resultType="ProductAttribute">
+        SELECT * FROM t_product_to_attribute pta 
+        JOIN t_product_attribute pa ON pta.attribute_id = pa.id
+		WHERE pta.product_id = #{productId}
+    </select>   
+      
+    <select id="getProductAttributesByCategoryId" parameterType="String" resultType="ProductAttribute">
+        SELECT * FROM t_category_to_attribute ca 
+        JOIN t_product_attribute pa ON ca.attribute_id = pa.id
+		WHERE ca.category_id = #{categoryId}
+    </select>  
+    
+</mapper>

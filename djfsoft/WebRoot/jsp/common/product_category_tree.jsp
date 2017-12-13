@@ -98,7 +98,10 @@
 			</div>    
 	    </div>   
 	    <div title="规格" style="overflow:auto;padding:20px;display:none;">   
-	        tab2    
+	    	<div id="cc" class="easyui-layout" style="width:100%;height:100px;">   
+			    <div data-options="region:'west',title:'全部规格',split:true" style="width:50%;">aa</div>   
+			    <div data-options="region:'center',title:'配置规格'" style="padding:5px;background:#eee;">bb</div>   
+			</div> 
 	    </div> 
     </div>  
     <div>
