@@ -46,6 +46,7 @@
 								<ul class="sub-menu">
 									<li><a href="1">用户</a></li>
 									<li><a href="<%=projectName%>/manage/product/index">商品</a></li>
+									<li><a href="<%=projectName%>/manage/productAttribute/index">规格</a></li>
 								</ul>
 							</li>
 							<li id="menu-item-155">

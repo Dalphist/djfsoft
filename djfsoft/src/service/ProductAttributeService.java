@@ -3,7 +3,6 @@ package service;
 import java.util.List;
 
 import pojo.ProductAttribute;
-
 public interface ProductAttributeService {
 	void addProductAttribute(ProductAttribute productAttribute);
 	
