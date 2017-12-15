@@ -3,23 +3,14 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import pojo.Product;
 import pojo.ProductAttribute;
-import pojo.ProductInfo;
-import pojo.ResultBean;
+import pojo.ProductAttributeValue;
 import service.ProductAttributeService;
-import service.ProductService;
-import util.BeanUtil;
-import util.DateUtil;
 
 @Controller
 @RequestMapping("manage/productAttribute")
@@ -43,9 +34,8 @@ public class ProductAttributeController {
 	}
 	
 	/**
-	 * @Title: productList
+	 * @Title: productAttributeList
 	 * @Description: 获取所有商品规格列表
-	 * @param: @param categoryId
 	 * @param: @return   
 	 * @return: ModelAndView   
 	 * @throws
@@ -61,5 +51,22 @@ public class ProductAttributeController {
 		return mav;
 	}
 	
-	
+	/**
+	 * @Title: productAttributeValueByAttributeId
+	 * @Description: 根据属性ID获取对应属性值
+	 * @param: @param attributeId
+	 * @param: @return   
+	 * @return: ModelAndView   
+	 * @throws
+	 */
+	@RequestMapping("getAttributeValue")
+	public ModelAndView productAttributeValueByAttributeId(String attributeId) {
+		ModelAndView mav = new ModelAndView();
+		List<ProductAttributeValue> list = new ArrayList<ProductAttributeValue>();
+//		list = productAttributeService.getProductAttributes();
+		String url = "manage/productAttribute/list";
+		mav.setViewName(url);
+		mav.addObject("productAttributeList", list);
+		return mav;
+	}
 }
