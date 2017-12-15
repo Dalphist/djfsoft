@@ -13,7 +13,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="#">采购</a>
+								<a>采购</a>
 								<ul class="sub-menu">
 									<li><a>采购计划</a></li>
 									<li><a>采购订单</a></li>
@@ -22,36 +22,39 @@
 								</ul>
 							</li>
 							<li>
-								<a href="#">销售</a>
+								<a>销售</a>
 								<ul class="sub-menu">
 									<li><a>销售订单</a></li>
 									<li><a>销售出库</a></li>
 									<li><a>销售退货</a></li>
 								</ul>
 							</li>
-							<li id="menu-item-144">
-							<a href="1">Support</a>
-							<ul class="sub-menu"></ul>
-							</li>
 							<li>
 								<a>仓库</a>
 								<ul class="sub-menu">
 									<li><a onclick="window.location='<%=projectName%>/main'">库存</a></li>
-									<li><a>入库</a></li>
-									<li><a>出库</a></li>
+									<li><a>调拨</a></li>
+									<li><a>调整</a></li>
 								</ul>
 							</li>
 							<li>
-								<a >管理</a>
+								<a>管理</a>
 								<ul class="sub-menu">
 									<li><a href="1">用户</a></li>
 									<li><a href="<%=projectName%>/manage/product/index">商品</a></li>
+									<li><a href="<%=projectName%>/manage/productAttribute/index">规格</a></li>
+								</ul>
+							</li>
+							<li>
+								<a>统计</a>
+								<ul class="sub-menu">
+									<li><a>aa</a></li>
+									<li><a>bb</a></li>
 								</ul>
 							</li>
 							<li id="menu-item-155">
-							<a >Download</a></li>
-							<li id="menu-item-155">
-							<a >Download</a></li>
+								<a >Download</a>
+							</li>
 							<li id="menu-item-165">
 							<a href="1">Blog</a></li>
 							<li id="menu-item-989">
