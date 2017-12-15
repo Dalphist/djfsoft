@@ -7,9 +7,10 @@ import java.util.Date;
 public class ProductAttribute {
 	private Integer id;
 	private String attributeName;
-	private String attributeValue;
+	private Integer effectiveFlag;
 	private Date gmtCreate;
 	private Date gmtModified;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -22,11 +23,12 @@ public class ProductAttribute {
 	public void setAttributeName(String attributeName) {
 		this.attributeName = attributeName;
 	}
-	public String getAttributeValue() {
-		return attributeValue;
+	
+	public Integer getEffectiveFlag() {
+		return effectiveFlag;
 	}
-	public void setAttributeValue(String attributeValue) {
-		this.attributeValue = attributeValue;
+	public void setEffectiveFlag(Integer effectiveFlag) {
+		this.effectiveFlag = effectiveFlag;
 	}
 	public Date getGmtCreate() {
 		return gmtCreate;
@@ -42,10 +44,8 @@ public class ProductAttribute {
 	}
 	@Override
 	public String toString() {
-		return "ProductAttribute [id=" + id + ", attributeName="
-				+ attributeName + ", attributeValue=" + attributeValue
-				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified
-				+ "]";
+		return "ProductAttribute [id=" + id + ", attributeName=" + attributeName + ", effectiveFlag=" + effectiveFlag
+				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + "]";
 	}
 	
 }

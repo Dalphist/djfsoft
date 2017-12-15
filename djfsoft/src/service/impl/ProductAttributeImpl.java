@@ -5,10 +5,12 @@ import java.util.List;
 import mapper.ProductAttributeMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import pojo.ProductAttribute;
 import service.ProductAttributeService;
 
+@Service
 public class ProductAttributeImpl implements ProductAttributeService {
 	@Autowired
 	ProductAttributeMapper productAttributeMapper;
