@@ -51,4 +51,9 @@ public class ProductAttributeImpl implements ProductAttributeService {
 		return list;
 	}
 
+	@Override
+	public int getProductAttributeByName(ProductAttribute productAttribute) {
+		return productAttributeMapper.getProductAttributeByName(productAttribute);
+	}
+
 }

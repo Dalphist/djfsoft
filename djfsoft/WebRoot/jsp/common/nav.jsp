@@ -38,7 +38,7 @@
 								</ul>
 							</li>
 							<li>
-								<a>管理</a>
+								<a>设置</a>
 								<ul class="sub-menu">
 									<li><a href="1">用户</a></li>
 									<li><a href="<%=projectName%>/manage/product/index">商品</a></li>

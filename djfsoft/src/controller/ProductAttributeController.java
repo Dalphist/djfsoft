@@ -6,11 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pojo.ProductAttribute;
 import pojo.ProductAttributeValue;
+import pojo.ResultBean;
 import service.ProductAttributeService;
+import util.BeanUtil;
+import util.DateUtil;
 
 @Controller
 @RequestMapping("manage/productAttribute")
@@ -60,7 +64,7 @@ public class ProductAttributeController {
 	 * @throws
 	 */
 	@RequestMapping("getAttributeValue")
-	public ModelAndView productAttributeValueByAttributeId(String attributeId) {
+	public ModelAndView getproductAttributeValueByAttributeId(String attributeId) {
 		ModelAndView mav = new ModelAndView();
 		List<ProductAttributeValue> list = new ArrayList<ProductAttributeValue>();
 //		list = productAttributeService.getProductAttributes();
@@ -69,4 +73,73 @@ public class ProductAttributeController {
 		mav.addObject("productAttributeList", list);
 		return mav;
 	}
+	
+	/**
+	 * @Title: validateAttribute
+	 * @Description: 校验规格名称是否重复，用在添加和修改规格
+	 * @param: @param attributeInfo
+	 * @param: @return   
+	 * @return: ResultBean<String>   
+	 * @throws
+	 */
+	@RequestMapping("validateAttribute")
+	@ResponseBody
+	public ResultBean<String> validateAttribute(String attributeInfo) {
+		ProductAttribute productAttribute = new ProductAttribute();
+		productAttribute = (ProductAttribute)BeanUtil.getBeanFromStr(attributeInfo, "pojo.ProductAttribute");
+		ResultBean<String> result = new ResultBean<String>();
+		int a = productAttributeService.getProductAttributeByName(productAttribute);
+		if (a > 0) {
+			result.setCode(ResultBean.FAIL);
+			result.setMsg("规格名称重复！");
+		}
+		return result;
+	}
+	
+	/**
+	 * @Title: saveAttribute
+	 * @Description: 规格信息保存，包括新加和修改
+	 * @param: @param attributeInfo
+	 * @param: @return   
+	 * @return: ResultBean<String>   
+	 * @throws
+	 */
+	@RequestMapping("saveAttribute")
+	@ResponseBody
+	public ResultBean<String> saveAttribute(String attributeInfo) {
+		ProductAttribute productAttribute = new ProductAttribute();
+		productAttribute = (ProductAttribute)BeanUtil.getBeanFromStr(attributeInfo, "pojo.ProductAttribute");
+		ResultBean<String> result = new ResultBean<String>();
+		//添加
+		if(productAttribute.getId() == null){
+			productAttribute.setGmtCreate(DateUtil.getNowDate());
+			productAttributeService.addProductAttribute(productAttribute);
+		}else{	//修改
+			productAttribute.setGmtModified(DateUtil.getNowDate());
+			productAttributeService.update(productAttribute);
+		}
+		result.setCode(ResultBean.SUCCESS);
+		result.setMsg("添加成功！");
+		return result;
+	}
+	
+	/**
+	 * @Title: delProductAttribute
+	 * @Description: 删除
+	 * @param: @param attributeId
+	 * @param: @return   
+	 * @return: ResultBean<String>   
+	 * @throws
+	 */
+	@RequestMapping("delProductAttribute")
+	@ResponseBody
+	public ResultBean<String> delProductAttribute(String attributeId) {
+		productAttributeService.delProductAttribute(attributeId);
+		ResultBean<String> result = new ResultBean<String>();
+		result.setCode(ResultBean.SUCCESS);
+		result.setMsg("删除成功！");
+		return result;
+	}
+	
+	
 }

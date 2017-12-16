@@ -9,6 +9,8 @@ public interface ProductAttributeService {
 	void delProductAttribute(String attributeId);
 
 	void update(ProductAttribute productAttribute);   
+	
+	int getProductAttributeByName(ProductAttribute productAttribute);
     
     List<ProductAttribute> getProductAttributes();
     

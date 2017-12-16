@@ -24,148 +24,56 @@
 	</style>
 	<script type="text/javascript">
 		$(function(){
+			//单击行
 			$("#table_attribute_list tbody tr").click(function() {  
 			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
 			   $(this).find(":checkbox").prop("checked",true);
 			   $(this).siblings().find(":checkbox").prop("checked",false); 
-			   var product_id = $(this).find(".td_product_id").text().trim();
-			   $("#input_product_id").val(product_id);
-			   getProductInfo(product_id);
+			   var attribute_id = $(this).find(".td_attribute_id").text().trim();
+			   $("#input_select_attribute").val(attribute_id);
+			   getAttributeValues(attribute_id);
+			}); 
+			//双击行
+			$("#table_attribute_list tbody tr").dblclick(function() {  
+				$("#input_attribute_update").click();
 			}); 
 			//复选框  阻止事件冒泡
 		    $("#table_attribute_list tbody .td_checkbox").on("click",function(event){
 		    	event.stopPropagation();    
 		    });
-			//添加
-		    $("#input_product_add").click(function(){
-		    	$("#tab_product input").val("");
-		    	$(".product_category_text").val(product_category_text);
+			//添加按钮
+		    $("#input_attribute_add").click(function(){
+		    	$("#input_select_attribute").val("");
+		    	$("#win_attribute").window("open");
 		    });
 		    
-		    //全选/取消全选
-		    $("#checkAll").on("click",function(event){
-		    	if($("#checkAll").prop("checked")){
-		    		$("#table_attribute_list tbody :checkbox").prop("checked", true);
-		    	}else{
-		    		$("#table_attribute_list tbody :checkbox").prop("checked", false);
+			//修改按钮
+		    $("#input_attribute_update").click(function(){
+		    	var attribute_id = $("#input_select_attribute").val();
+		    	if(attribute_id == ""){
+		    		$.messager.alert('提示','请选择要修改的规格','info');
+					return false;
 		    	}
+		    	var select_tr = $("#tr"+attribute_id);
+		    	$("#win_attribute").window("open");
+		    	$("#input_attribute_name").textbox("setValue",(select_tr.find(".td_attribute_name").text().trim())); 
+		    	$("#input_effective_flag").prop("checked",select_tr.find(".td_effective_flag").text().trim() == "是");
 		    });
-		});
-		
-		
-		/*************************************************************************************/
-		//获取商品信息并显示在信息栏
-		function getProductInfo(product_id){
-			$.ajax({
-				url:"<%=projectName%>/manage/product/getProductById",
-				type:"post",
-				dataType:"json",
-                data:{"productId":product_id},
-                success:function(result){
-                	var product = result.data;  
-                	$("#input_product_code").val(product.productCode);
-					$("#input_product_bar_code").val(product.barCode);
-					$(".product_category_text").val(product.categoryName);
-					$("#input_product_name").val(product.productName);
-					$("#input_product_shortname").val(product.productShortName);
-					$("#input_product_normal_purchase_price").val(product.normalPurchasePrice);
-					$("#input_product_stock_warn").val(product.stockWarn == -1?"":product.stockWarn);
-					$("#input_product_unit").val(product.productUnit);
-                },
-                error:function(){
-                }
-			})
-		}
-		
-		//获取所有input框的商品信息，返回json
-		function getInputProductInfo(){
-			var productInfo = {};
-			productInfo.productCode = $("#input_product_code").val().trim();
-			productInfo.barCode = $("#input_product_bar_code").val().trim();
-			productInfo.categoryId = $("#product_category_id").val().trim();
-			productInfo.productName = $("#input_product_name").val().trim();
-			productInfo.productShortName = $("#input_product_shortname").val().trim();
-			productInfo.normalPurchasePrice = $("#input_product_normal_purchase_price").val().trim();
-			productInfo.stockWarn = $("#input_product_stock_warn").val().trim();
-			productInfo.productUnit = $("#input_product_unit").val().trim();
-			productInfo.effectiveFlag = $("#input_product_effective_flag").attr('checked')?1:0;
-			return productInfo;
-		}
-		//检查商品信息是否填写合格
-		function validateProductInput(productInfo){
-			var validation = {};
-			validation.fail = false;
-			if(productInfo.productCode == "" || productInfo.barCode == "" ||productInfo.productName == "" || productInfo.productUnit == ""){
-				validation.fail = true;
-				validation.msg = "请填写必填项!";
-				return validation;
-			}
-			$.ajax({
-				url:"<%=projectName%>/manage/product/validateProduct",
-				type:"post",
-				async: false,
-				dataType:"json",
-                data:{"productInfo":JSON.stringify(productInfo)},
-                success:function(result){
-                	if(result.code == 1){	//有重复商品信息
-                		validation.fail = true;
-						validation.msg = result.msg;
-						return validation;
-                	}
-                }				
-			})
-			
-			return validation;
-		}
-		//商品保存
-		function productSave(){
-			var productInfo = getInputProductInfo();
-			var validation = validateProductInput(productInfo);
-			if(validation.fail){
-				$.messager.alert('提示',validation.msg,'info');
-				return false;
-			}
-			$.ajax({
-				url:"<%=projectName%>/manage/product/addProduct",
-				type:"post",
-				dataType:"json",
-                data:{"productInfo":JSON.stringify(productInfo)},
-                success:function(result){
-                	$.messager.alert('提示',result.msg,'info',function(){    
-				        location.reload(); 
-					});  
-                },
-                error:function(){
-                }				
-			})
-		}
-		//获取所有已选择商品
-		function getSelectProduct(){
-			var checkboxes = $("#table_attribute_list tbody :checkbox");
-			var selectDelProduct = [];
-			var i = 0;
-			checkboxes.each(function(){
-				if($(this).prop("checked")){
-					var delProduct = {};
-					var productId = $(this).parents("tr").find(".td_product_id").text().trim();
-					delProduct.productId = productId
-					selectDelProduct[i] = delProduct;
-					i++;
-				}
-			});
-			return selectDelProduct;
-		}
-		//删除所选商品
-		function delSelectProduct(){
-			var selectDelProduct = getSelectProduct();
-			if(selectDelProduct.length > 0){
-				$.messager.confirm('确认','您确认想要删除所选商品吗？',function(r){    
+		    
+		    //删除按钮
+		    $("#input_attribute_del").click(function(){
+		    	var attribute_id = $("#input_select_attribute").val();
+		    	if(attribute_id == ""){
+		    		$.messager.alert('提示','请选择要删除的规格','info');
+					return false;
+		    	}
+		    	$.messager.confirm('确认','您确认想要删除所选规格吗？',function(r){    
 				    if (r){    
 				        $.ajax({
-							url:"<%=projectName%>/manage/product/delProduct",
+							url:"<%=projectName%>/manage/productAttribute/delProductAttribute",
 							type:"post",
 							dataType:"json",
-			                data:{"selectProductList":JSON.stringify(selectDelProduct)},
+			                data:{"attributeId":attribute_id},
 			                success:function(result){
 			                	$.messager.alert('提示',result.msg,'info',function(){    
 							        location.reload(); 
@@ -176,27 +84,100 @@
 						})
 				    }    
 				});
-			}else{
-				$.messager.alert('提示','没有选择任何商品','info');
+		    });
+		});
+		
+		//获取规格信息，返回json
+		function getAttributeInfo(){
+			var attributeInfo = {};
+			attributeInfo.id = $("#input_select_attribute").val();
+			attributeInfo.attributeName = $("#input_attribute_name").val().trim();
+			attributeInfo.effectiveFlag = $("#input_effective_flag").prop("checked")?1:0;
+			return attributeInfo;
+		}
+		
+		//校验规格信息
+		function validateAttributeInput(attributeInfo){
+			var validation = {};
+			validation.fail = false;
+			if(attributeInfo.attributeName == ""){
+				validation.fail = true;
+				validation.msg = "名称不能为空!";
+				return validation;
 			}
+			$.ajax({
+				url:"<%=projectName%>/manage/productAttribute/validateAttribute",
+				type:"post",
+				async: false,
+				dataType:"json",
+                data:{"attributeInfo":JSON.stringify(attributeInfo)},
+                success:function(result){
+                	if(result.code == 1){	//名称重复
+                		validation.fail = true;
+						validation.msg = result.msg;
+						return validation;
+                	}
+                }				
+			})
+			
+			return validation;
+		}
+		
+		//规格保存
+		function savettribute(){
+			var attributeInfo = getAttributeInfo();
+			var validation = validateAttributeInput(attributeInfo);
+			if(validation.fail){
+				$.messager.alert('提示',validation.msg,'info');
+				return false;
+			}
+			$.ajax({
+				url:"<%=projectName%>/manage/productAttribute/saveAttribute",
+				type:"post",
+				dataType:"json",
+                data:{"attributeInfo":JSON.stringify(attributeInfo)},
+                success:function(result){
+                	$.messager.alert('提示',result.msg,'info',function(){    
+				        location.reload(); 
+					});  
+                },
+                error:function(){
+                }				
+			});
+		};
+		
+		//获取规格对应的值列表
+		function getAttributeValues(attribute_id){
+			$.ajax({
+				url:"<%=projectName%>/manage/productAttribute/getValuesByAttributeId",
+				type:"post",
+				dataType:"json",
+                data:{"attribute_id":attribute_id},
+                success:function(result){
+                	$.messager.alert('提示',result.msg,'info',function(){    
+				        location.reload(); 
+					});  
+                },
+                error:function(){
+                }				
+			});
 		}
 		
 	</script>
   </head>
   <body style="margin: 0px;">
-  <div class="easyui-layout" style="height:100%;">
+  <input id="input_select_attribute" type="text" style="display: none;"> 
+  <div class="easyui-layout">
 	<div style="height:30px;background-color:#e0ecff">
-		<input id="input_product_add" type="button" value="添加" />
-		<input id="input_product_update" type="button" value="修改" />
-		<input id="input_product_del" type="button" value="删除" onclick="delSelectProduct();"/>
-		<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
+		<input id="input_attribute_add" type="button" value="添加"/>
+		<input id="input_attribute_update" type="button" value="修改" />
+		<input id="input_attribute_del" type="button" value="删除"/>
 	</div>
 	<div>
 		<table id="table_attribute_list" class="table_list" cellspacing="0">
 			<thead>
 				<tr>
 					<th style="display: none;">ID</th>
-					<th><input id="checkAll" type="checkbox"/></th>
 					<th>序号</th>
 					<th>名称</th>
 					<th>可用</th>
@@ -204,21 +185,39 @@
 			</thead>
 			<tbody>
 				<c:forEach var="attribute" items="${productAttributeList}" varStatus="status">  
-				    <tr>
-				    	<td style="display: none;" class="td_product_id">${attribute.id}</td>
-				    	<td class="td_checkbox"><input type="checkbox"/></td>
+				    <tr id="tr${attribute.id}">
+				    	<td style="display: none;" class="td_attribute_id">${attribute.id}</td>
 				    	<td>${status.count}</td>
-				    	<td>${attribute.attributeName}</td>
-				    	<td></td>
+				    	<td class="td_attribute_name">${attribute.attributeName}</td>
+				    	<td class="td_effective_flag">
+				    		<c:choose> 
+							     <c:when test="${attribute.effectiveFlag == 1}">是 </c:when>      
+							     <c:otherwise>否</c:otherwise> 
+							</c:choose>
+				    	</td>
 				    </tr>
 				</c:forEach> 
 			</tbody>
 		</table>
 	</div>
-	<div id="pp" class="easyui-pagination" data-options="total:2000,pageSize:10" 
-	style="width:100%;background:#efefef;border:1px solid #ccc;position:absolute;bottom:1px;">
-	</div> 
 </div>
+
+<div id="win_attribute" class="easyui-window" title="规格" style="width:300px;height:140px;"   
+        data-options="iconCls:'icon-save',modal:true,closed:true">   
+    <div style="margin-left:20px;margin-top: 12px;">
+		规格名称:<input id="input_attribute_name" class="easyui-textbox" style="width:150px;height:30px">
+		<input id="input_effective_flag" type="checkbox" checked="checked">可用
+	</div>
+    <div>
+    	<div style="float: right;padding-right: 10px;padding-top: 10px;">
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#win_attribute').window('close');">取消</a>  
+		</div>
+    	<div style="float: right;padding-right: 10px;padding-top: 10px;" onclick="savettribute();">
+	    	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >保存</a>  
+    	</div>
+    	
+    </div>
+</div> 
 </body>
 </html>
 

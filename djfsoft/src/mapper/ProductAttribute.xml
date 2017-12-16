@@ -6,9 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="mapper.ProductAttributeMapper">
     <insert id="add" parameterType="ProductAttribute" >
         insert into t_product_attribute
-        (attribute_name,attribute_value,gmt_create) 
+        (attribute_name,effective_flag,gmt_create) 
         values 
-        (#{attributeName},#{attributeValue},#{gmtCreate})    
+        (#{attributeName},#{effectiveFlag},#{gmtCreate})    
     </insert>
      
     <delete id="delete" parameterType="String" >
@@ -17,9 +17,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      
     <update id="update" parameterType="ProductAttribute" >
         update t_product_attribute 
-        set attribute_name=#{attributeName},attribute_value=#{attributeValue},gmt_modified=#{gmtModified}
+        set attribute_name=#{attributeName},effective_flag=#{effectiveFlag},gmt_modified=#{gmtModified}
         where id=#{id}    
     </update>
+    
+    <select id="getProductAttributeByName" parameterType="ProductAttribute" resultType="int">
+        select count(*) from t_product_attribute where attribute_name = #{attributeName} 
+        <if test="id != null">  
+        and id != #{id}
+    	</if>
+    </select>  
     
     <select id="getProductAttributes" resultType="ProductAttribute">
         select * from t_product_attribute 

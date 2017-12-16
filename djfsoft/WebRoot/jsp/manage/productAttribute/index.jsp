@@ -24,10 +24,10 @@
 		<%@include file="../../common/nav.jsp"%>
 		<div data-options="region:'north'" style="height:51px">
 		</div>
-		<div data-options="region:'west'" style="width: 50%;">
+		<div data-options="region:'west'" title="规格" style="width: 50%;">
 			<iframe id="iframe_product_attribute_name" src="<%=projectName%>/manage/productAttribute/list" style="width: 99%;height: 99%;"></iframe>
 		</div>
-		<div data-options="region:'center'">
+		<div data-options="region:'center'" title="值">
 			<iframe id="iframe_product_attribute_value"  style="width: 99%;height: 99%;"></iframe>
 		</div>
 	</div>

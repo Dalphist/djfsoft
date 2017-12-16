@@ -14,6 +14,8 @@ public interface ProductAttributeMapper {
         
     public void update(ProductAttribute productAttribute);   
     
+    public int getProductAttributeByName(ProductAttribute productAttribute);
+    
     public List<ProductAttribute> getProductAttributes();
     
     public List<ProductAttribute> getProductAttributesByProductId(String productId);
