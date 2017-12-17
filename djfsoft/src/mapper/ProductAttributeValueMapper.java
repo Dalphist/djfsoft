@@ -17,4 +17,6 @@ public interface ProductAttributeValueMapper {
     public List<ProductAttributeValue> getProductAttributeValuesByProductId(String productId);
     
     public List<ProductAttributeValue> getProductAttributeValuesByAttributeId(String attributeId);
+    
+    public int getValueByNameAndAttribute(ProductAttributeValue productAttributeValue);
 }

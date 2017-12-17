@@ -6,9 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="mapper.ProductAttributeValueMapper">
     <insert id="add" parameterType="ProductAttributeValue" >
         insert into t_product_attribute_value
-        (attribute_value_name,effective_flag,gmt_create) 
+        (attribute_id,attribute_value_name,effective_flag,gmt_create) 
         values 
-        (#{attributeName},#{effectiveFlag},#{gmtCreate})    
+        (#{attributeId},#{attributeValueName},#{effectiveFlag},#{gmtCreate})    
     </insert>
      
     <delete id="delete" parameterType="String" >
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      
     <update id="update" parameterType="ProductAttributeValue" >
         update t_product_attribute_value 
-        set attribute_value_name=#{attributeName},effective_flag=#{effectiveFlag},gmt_modified=#{gmtModified}
+        set attribute_value_name=#{attributeValueName},effective_flag=#{effectiveFlag},gmt_modified=#{gmtModified}
         where id=#{id}    
     </update>
     
@@ -28,9 +28,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>   
       
     <select id="getProductAttributeValuesByAttributeId" parameterType="String" resultType="ProductAttributeValue">
-        SELECT * FROM t_product_attribute_value pav
-		JOIN t_attribute_to_value atv ON pav.id = atv.attribute_value_id
-		WHERE atv.attribute_id = #{attributeId}
+        SELECT * FROM t_product_attribute_value 
+		WHERE attribute_id = #{attributeId}
+    </select>  
+    
+    <select id="getValueByNameAndAttribute" parameterType="ProductAttributeValue" resultType="int">
+        select count(*) from t_product_attribute_value 
+		WHERE attribute_id = #{attributeId} and attribute_value_name = #{attributeValueName} 
+		<if test="id != null">  
+        and id != #{id}
+    	</if>
     </select>  
     
 </mapper>

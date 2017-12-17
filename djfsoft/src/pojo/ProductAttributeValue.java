@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class ProductAttributeValue {
 	private Integer id;
+	private Integer attributeId;
 	private String attributeValueName;
 	private Integer effectiveFlag;
 	private Date gmtCreate;
@@ -16,6 +17,12 @@ public class ProductAttributeValue {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public Integer getAttributeId() {
+		return attributeId;
+	}
+	public void setAttributeId(Integer attributeId) {
+		this.attributeId = attributeId;
 	}
 	public String getAttributeValueName() {
 		return attributeValueName;
@@ -43,10 +50,9 @@ public class ProductAttributeValue {
 	}
 	@Override
 	public String toString() {
-		return "ProductAttributeValue [id=" + id + ", attributeValueName="
-				+ attributeValueName + ", effectiveFlag=" + effectiveFlag
-				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified
-				+ "]";
+		return "ProductAttributeValue [id=" + id + ", attributeId=" + attributeId + ", attributeValueName="
+				+ attributeValueName + ", effectiveFlag=" + effectiveFlag + ", gmtCreate=" + gmtCreate
+				+ ", gmtModified=" + gmtModified + "]";
 	}
 	
 }

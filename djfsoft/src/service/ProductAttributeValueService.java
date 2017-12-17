@@ -10,9 +10,11 @@ public interface ProductAttributeValueService {
 	void delete(String valueId);
 
 	void update(ProductAttributeValue productAttributeValue);
-
+	
 	List<ProductAttributeValue> getProductAttributeValuesByProductId(String productId);
 
 	List<ProductAttributeValue> getProductAttributeValuesByAttributeId(String attributeId);
+	
+	int getValueByNameAndAttribute(ProductAttributeValue productAttributeValue);
 
 }

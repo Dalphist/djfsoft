@@ -27,53 +27,50 @@
 			//单击行
 			$("#table_attribute_list tbody tr").click(function() {  
 			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
-			   $(this).find(":checkbox").prop("checked",true);
-			   $(this).siblings().find(":checkbox").prop("checked",false); 
-			   var attribute_id = $(this).find(".td_attribute_id").text().trim();
-			   $("#input_select_attribute").val(attribute_id);
-			   getAttributeValues(attribute_id);
+			   var value_id = $(this).find(".td_value_id").text().trim();
+			   $("#input_select_value").val(value_id);
 			}); 
 			//双击行
 			$("#table_attribute_list tbody tr").dblclick(function() {  
-				$("#input_attribute_update").click();
+				$("#input_value_update").click();
 			}); 
 			//复选框  阻止事件冒泡
 		    $("#table_attribute_list tbody .td_checkbox").on("click",function(event){
 		    	event.stopPropagation();    
 		    });
 			//添加按钮
-		    $("#input_attribute_add").click(function(){
-		    	$("#input_select_attribute").val("");
+		    $("#input_value_add").click(function(){
+		    	$("#input_select_value").val("");
 		    	$("#win_attribute").window("open");
 		    });
 		    
 			//修改按钮
-		    $("#input_attribute_update").click(function(){
-		    	var attribute_id = $("#input_select_attribute").val();
+		    $("#input_value_update").click(function(){
+		    	var attribute_id = $("#input_select_value").val();
 		    	if(attribute_id == ""){
-		    		$.messager.alert('提示','请选择要修改的规格','info');
+		    		$.messager.alert('提示','请选择要修改的行','info');
 					return false;
 		    	}
 		    	var select_tr = $("#tr"+attribute_id);
 		    	$("#win_attribute").window("open");
-		    	$("#input_attribute_name").textbox("setValue",(select_tr.find(".td_attribute_name").text().trim())); 
+		    	$("#input_value_name").textbox("setValue",(select_tr.find(".td_value_name").text().trim())); 
 		    	$("#input_effective_flag").prop("checked",select_tr.find(".td_effective_flag").text().trim() == "是");
 		    });
 		    
 		    //删除按钮
-		    $("#input_attribute_del").click(function(){
-		    	var attribute_id = $("#input_select_attribute").val();
-		    	if(attribute_id == ""){
-		    		$.messager.alert('提示','请选择要删除的规格','info');
+		    $("#input_value_del").click(function(){
+		    	var value_id = $("#input_select_value").val();
+		    	if(value_id == ""){
+		    		$.messager.alert('提示','请选择要删除的行','info');
 					return false;
 		    	}
-		    	$.messager.confirm('确认','您确认想要删除所选规格吗？',function(r){    
+		    	$.messager.confirm('确认','您确认想要删除所选内容吗？',function(r){    
 				    if (r){    
 				        $.ajax({
-							url:"<%=projectName%>/manage/productAttribute/delProductAttribute",
+							url:"<%=projectName%>/manage/productAttributeValue/delValue",
 							type:"post",
 							dataType:"json",
-			                data:{"attributeId":attribute_id},
+			                data:{"valueId":value_id},
 			                success:function(result){
 			                	$.messager.alert('提示',result.msg,'info',function(){    
 							        location.reload(); 
@@ -88,29 +85,30 @@
 		});
 		
 		//获取规格信息，返回json
-		function getAttributeInfo(){
-			var attributeInfo = {};
-			attributeInfo.id = $("#input_select_attribute").val();
-			attributeInfo.attributeName = $("#input_attribute_name").val().trim();
-			attributeInfo.effectiveFlag = $("#input_effective_flag").prop("checked")?1:0;
-			return attributeInfo;
+		function getValueInfo(){
+			var valueInfo = {};
+			valueInfo.id = $("#input_select_value").val();
+			valueInfo.attributeId = parseInt($("#input_attribute_id").val().trim());
+			valueInfo.attributeValueName = $("#input_value_name").val().trim();
+			valueInfo.effectiveFlag = $("#input_effective_flag").prop("checked")?1:0;
+			return valueInfo;
 		}
 		
 		//校验规格信息
-		function validateAttributeInput(attributeInfo){
+		function validateValueInput(valueInfo){
 			var validation = {};
 			validation.fail = false;
-			if(attributeInfo.attributeName == ""){
+			if(valueInfo.attributeName == ""){
 				validation.fail = true;
 				validation.msg = "名称不能为空!";
 				return validation;
 			}
 			$.ajax({
-				url:"<%=projectName%>/manage/productAttribute/validateAttribute",
+				url:"<%=projectName%>/manage/productAttributeValue/validateAttributeValue",
 				type:"post",
 				async: false,
 				dataType:"json",
-                data:{"attributeInfo":JSON.stringify(attributeInfo)},
+                data:{"valueInfo":JSON.stringify(valueInfo)},
                 success:function(result){
                 	if(result.code == 1){	//名称重复
                 		validation.fail = true;
@@ -125,17 +123,17 @@
 		
 		//规格保存
 		function savettribute(){
-			var attributeInfo = getAttributeInfo();
-			var validation = validateAttributeInput(attributeInfo);
+			var valueInfo = getValueInfo();
+			var validation = validateValueInput(valueInfo);
 			if(validation.fail){
 				$.messager.alert('提示',validation.msg,'info');
 				return false;
 			}
 			$.ajax({
-				url:"<%=projectName%>/manage/productAttribute/saveAttribute",
+				url:"<%=projectName%>/manage/productAttributeValue/saveAttributeValue",
 				type:"post",
 				dataType:"json",
-                data:{"attributeInfo":JSON.stringify(attributeInfo)},
+                data:{"valueInfo":JSON.stringify(valueInfo)},
                 success:function(result){
                 	$.messager.alert('提示',result.msg,'info',function(){    
 				        location.reload(); 
@@ -146,21 +144,16 @@
 			});
 		};
 		
-		//获取规格对应的值列表
-		function getAttributeValues(attribute_id){
-			$("#iframe_product_attribute_value",window.parent.document)
-			.attr("src", "<%=projectName%>/manage/productAttributeValue/getValueListByAttribute?attributeId="+attribute_id);
-		}
-		
 	</script>
   </head>
   <body style="margin: 0px;">
-  <input id="input_select_attribute" type="text" style="display: none;"> 
+  <input id="input_attribute_id" type="text" value="${attributeId}" style="display: none;"> 
+  <input id="input_select_value" type="text" style="display: none;"> 
   <div class="easyui-layout">
 	<div style="height:30px;background-color:#e0ecff">
-		<input id="input_attribute_add" type="button" value="添加"/>
-		<input id="input_attribute_update" type="button" value="修改" />
-		<input id="input_attribute_del" type="button" value="删除"/>
+		<input id="input_value_add" type="button" value="添加"/>
+		<input id="input_value_update" type="button" value="修改" />
+		<input id="input_value_del" type="button" value="删除"/>
 	</div>
 	<div>
 		<table id="table_attribute_list" class="table_list" cellspacing="0">
@@ -173,14 +166,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="attribute" items="${productAttributeList}" varStatus="status">  
-				    <tr id="tr${attribute.id}">
-				    	<td style="display: none;" class="td_attribute_id">${attribute.id}</td>
+				<c:forEach var="value" items="${ValueList}" varStatus="status">  
+				    <tr id="tr${value.id}">
+				    	<td style="display: none;" class="td_value_id">${value.id}</td>
 				    	<td>${status.count}</td>
-				    	<td class="td_attribute_name">${attribute.attributeName}</td>
+				    	<td class="td_value_name">${value.attributeValueName}</td>
 				    	<td class="td_effective_flag">
 				    		<c:choose> 
-							     <c:when test="${attribute.effectiveFlag == 1}">是 </c:when>      
+							     <c:when test="${value.effectiveFlag == 1}">是 </c:when>      
 							     <c:otherwise>否</c:otherwise> 
 							</c:choose>
 				    	</td>
@@ -194,7 +187,7 @@
 <div id="win_attribute" class="easyui-window" title="规格" style="width:300px;height:140px;"   
         data-options="iconCls:'icon-save',modal:true,closed:true">   
     <div style="margin-left:20px;margin-top: 12px;">
-		规格名称:<input id="input_attribute_name" class="easyui-textbox" style="width:150px;height:30px">
+		规格名称:<input id="input_value_name" class="easyui-textbox" style="width:150px;height:30px">
 		<input id="input_effective_flag" type="checkbox" checked="checked">可用
 	</div>
     <div>

@@ -42,6 +42,11 @@ public class ProductAttributeValueImpl implements ProductAttributeValueService {
 	public List<ProductAttributeValue> getProductAttributeValuesByAttributeId(String attributeId) {
 		return productAttributeValueMapper.getProductAttributeValuesByAttributeId(attributeId);
 	}
+
+	@Override
+	public int getValueByNameAndAttribute(ProductAttributeValue productAttributeValue) {
+		return productAttributeValueMapper.getValueByNameAndAttribute(productAttributeValue);
+	}
 	
 
 }

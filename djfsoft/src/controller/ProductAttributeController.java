@@ -114,12 +114,13 @@ public class ProductAttributeController {
 		if(productAttribute.getId() == null){
 			productAttribute.setGmtCreate(DateUtil.getNowDate());
 			productAttributeService.addProductAttribute(productAttribute);
+			result.setMsg("添加成功！");
 		}else{	//修改
 			productAttribute.setGmtModified(DateUtil.getNowDate());
 			productAttributeService.update(productAttribute);
+			result.setMsg("修改成功！");
 		}
 		result.setCode(ResultBean.SUCCESS);
-		result.setMsg("添加成功！");
 		return result;
 	}
 	
