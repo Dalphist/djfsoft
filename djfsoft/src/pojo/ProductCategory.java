@@ -5,26 +5,33 @@ import java.util.List;
 
 
 public class ProductCategory {
-	private int id;
-	private int parentId;
+	private Integer id;
+	private Integer parentId;
 	private String categoryName;
 	private String categoryCode;
-	private int orderFlag;
+	private Integer orderFlag;
 	private Date gmtCreate;
 	private Date gmtModified;
 	private List<ProductCategory> childrenCategories;
 	
-	public int getId() {
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getParentId() {
+	public Integer getParentId() {
 		return parentId;
 	}
-	public void setParentId(int parentId) {
+	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
+	}
+	public Integer getOrderFlag() {
+		return orderFlag;
+	}
+	public void setOrderFlag(Integer orderFlag) {
+		this.orderFlag = orderFlag;
 	}
 	public String getCategoryName() {
 		return categoryName;
@@ -37,12 +44,6 @@ public class ProductCategory {
 	}
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
-	}
-	public int getOrder() {
-		return orderFlag;
-	}
-	public void setOrder(int orderFlag) {
-		this.orderFlag = orderFlag;
 	}
 	public List<ProductCategory> getChildrenCategories() {
 		return childrenCategories;

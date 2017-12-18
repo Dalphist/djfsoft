@@ -41,15 +41,47 @@ public class ProductCategoryController {
 		return map;
 	}
 	
+	@RequestMapping("validateCategory")
+	@ResponseBody
+	public ResultBean<String> validateCategory(String categoryInfo) {
+		ProductCategory productCategory = new ProductCategory();
+		productCategory = (ProductCategory)BeanUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
+		ResultBean<String> result = new ResultBean<String>();
+		int a = productCategoryService.getCategoryCountByInfo(productCategory);
+		if (a > 0) {
+			result.setCode(ResultBean.FAIL);
+			result.setMsg("分类名称重复！");
+		}
+		return result;
+	}
+	
 	@RequestMapping("addProductCategory")
 	@ResponseBody
-	public ResultBean<String> addProductCategory(String categoryInfo) {
+	public ResultBean<String> saveProductCategory(String categoryInfo,String attributeIdStr) {
+		//保存基本信息
 		ProductCategory pc = (ProductCategory) BeanUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
 		pc.setGmtCreate(DateUtil.getNowDate());
 		productCategoryService.addProductCategory(pc);
+		//保存规格信息
+		if(attributeIdStr.length() > 0){
+			String[] attributeIdArray = attributeIdStr.split(",");
+			for (int i = 0; i < attributeIdArray.length; i++) {
+			    String attributeId = attributeIdArray[i];
+			}
+		}
+		
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);
-		result.setMsg("添加成功！");
+		result.setMsg("保存成功！");
+		return result;
+	}
+	
+	@RequestMapping("getProductCategory")
+	@ResponseBody
+	public ResultBean<ProductCategory> getCategoryById(String categoryId) {
+		ProductCategory productCategory = productCategoryService.getProductCategoryById(categoryId);
+		ResultBean<ProductCategory> result = new ResultBean<ProductCategory>();
+		result.setData(productCategory);
 		return result;
 	}
 	

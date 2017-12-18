@@ -1,6 +1,7 @@
 package pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ResultBean<T> implements Serializable{
 
@@ -17,6 +18,8 @@ public class ResultBean<T> implements Serializable{
 	private int code = SUCCESS;
 
 	private T data;
+	
+	private List<T> dataList;
 
 	public ResultBean() {
 	    super();
@@ -72,6 +75,13 @@ public class ResultBean<T> implements Serializable{
 	public static int getNoPermission() {
 		return NO_PERMISSION;
 	}
-	
+
+	public List<T> getDataList() {
+		return dataList;
+	}
+
+	public void setDataList(List<T> dataList) {
+		this.dataList = dataList;
+	}
 	
 }

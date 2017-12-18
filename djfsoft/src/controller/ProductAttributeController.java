@@ -55,6 +55,26 @@ public class ProductAttributeController {
 		return mav;
 	}
 	
+	@RequestMapping("getAllAttribute")
+	@ResponseBody
+	public ResultBean<ProductAttribute> getAllAttribute() {
+		ResultBean<ProductAttribute> result = new ResultBean<ProductAttribute>();
+		List<ProductAttribute> list = new ArrayList<ProductAttribute>();
+		list = productAttributeService.getProductAttributes();
+		result.setDataList(list);
+		return result;
+	}
+	
+	@RequestMapping("getOwnAttribute")
+	@ResponseBody
+	public ResultBean<ProductAttribute> getOwnAttribute(String categoryId) {
+		ResultBean<ProductAttribute> result = new ResultBean<ProductAttribute>();
+		List<ProductAttribute> list = new ArrayList<ProductAttribute>();
+		list = productAttributeService.getProductAttributesByCategoryId(categoryId);
+		result.setDataList(list);
+		return result;
+	}
+	
 	/**
 	 * @Title: productAttributeValueByAttributeId
 	 * @Description: 根据属性ID获取对应属性值

@@ -10,6 +10,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         values 
         (#{categoryName},#{categoryCode},#{parentId},#{orderFlag},#{gmtCreate})    
     </insert>
+    
+    <insert id="addCategoryToAttribute" parameterType="String" >
+        insert into t_category_to_attribute 
+        (category_id,attribute_id) 
+        values 
+        (#{categoryId},#{attributeId})    
+    </insert>
      
     <delete id="delete" parameterType="String" >
         delete from t_product_category where id= #{categoryId}
@@ -20,7 +27,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id=#{id}    
     </update>
     
-    <select id="getProductCategoryById" parameterType="int"  resultType="ProductCategory">
+    <select id="getCategoryCountByInfo" parameterType="ProductCategory"  resultType="int">
+        select count(*) from t_product_category
+		WHERE category_name = #{categoryName}
+		<if test="id != null">
+			and id = #{id}
+		</if>
+		<if test="parentId != null">
+			and parent_id = #{parentId}
+		</if>
+    </select>  
+    
+    <select id="getProductCategoryById" parameterType="String"  resultType="ProductCategory">
         select * from t_product_category where id = #{id}
     </select>  
     

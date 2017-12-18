@@ -10,12 +10,16 @@ import pojo.Tree;
 public interface ProductCategoryMapper {
 	
 	public void add(ProductCategory productCategory);  
+	
+	public void addCategoryToAttribute(String categoryId,String attributeId);
     
     public void delete(String categoryId);  
         
-    public void update(ProductCategory productCategory);   
+    public void update(ProductCategory productCategory);  
     
-    public ProductCategory getProductCategoryById(int id);
+    public int getCategoryCountByInfo(ProductCategory productCategory);
+    
+    public ProductCategory getProductCategoryById(String id);
     
     public List<ProductCategory> getProductCategories();
     

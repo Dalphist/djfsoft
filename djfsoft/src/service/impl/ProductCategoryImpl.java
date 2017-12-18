@@ -23,7 +23,7 @@ public class ProductCategoryImpl implements ProductCategoryService{
 	}
 
 	@Override
-	public ProductCategory getProductCategoryById(int id) {
+	public ProductCategory getProductCategoryById(String id) {
 		return productCategoryMapper.getProductCategoryById(id);
 	}
 
@@ -37,10 +37,22 @@ public class ProductCategoryImpl implements ProductCategoryService{
 		productCategoryMapper.add(productCategory);
 		return;
 	}
+	
+	@Override
+	public void addCategoryToAttribute(String categoryId, String attributeId) {
+		productCategoryMapper.addCategoryToAttribute(categoryId, attributeId);
+		return;
+	}
 
 	@Override
 	public void delProductCategory(String categoryId) {
 		productCategoryMapper.delete(categoryId);
 		return;
 	}
+
+	@Override
+	public int getCategoryCountByInfo(ProductCategory productCategory) {
+		return productCategoryMapper.getCategoryCountByInfo(productCategory);
+	}
+
 }
