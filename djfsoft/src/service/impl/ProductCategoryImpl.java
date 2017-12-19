@@ -18,21 +18,6 @@ public class ProductCategoryImpl implements ProductCategoryService{
 	ProductCategoryMapper productCategoryMapper;
 
 	@Override
-	public List<ProductCategory> getProductCategoryByParentId(int parent_id) {
-		return productCategoryMapper.getProductCategoryByParentId(parent_id);
-	}
-
-	@Override
-	public ProductCategory getProductCategoryById(String id) {
-		return productCategoryMapper.getProductCategoryById(id);
-	}
-
-	@Override
-	public List<Tree> getTreeByCategoryId(int parent_id) {
-		return productCategoryMapper.getTreeByCategoryId(parent_id);
-	}
-
-	@Override
 	public void addProductCategory(ProductCategory productCategory) {
 		productCategoryMapper.add(productCategory);
 		return;
@@ -49,10 +34,42 @@ public class ProductCategoryImpl implements ProductCategoryService{
 		productCategoryMapper.delete(categoryId);
 		return;
 	}
-
+	
+	@Override
+	public void delCategoryToAttribute(String categoryId) {
+		productCategoryMapper.delCategoryToAttribute(categoryId);
+		return;
+	}
+	
+	@Override
+	public void update(ProductCategory productCategory) {
+		productCategoryMapper.update(productCategory);
+		return;
+	}
+	
 	@Override
 	public int getCategoryCountByInfo(ProductCategory productCategory) {
 		return productCategoryMapper.getCategoryCountByInfo(productCategory);
+	}
+	
+	@Override
+	public List<ProductCategory> getProductCategoryByParentId(int parent_id) {
+		return productCategoryMapper.getProductCategoryByParentId(parent_id);
+	}
+
+	@Override
+	public ProductCategory getProductCategoryById(String id) {
+		return productCategoryMapper.getProductCategoryById(id);
+	}
+
+	@Override
+	public List<Tree> getTreeByCategoryId(int parent_id) {
+		return productCategoryMapper.getTreeByCategoryId(parent_id);
+	}
+	
+	@Override
+	public List<ProductCategory> getChildrenCategoryById(String categoryId) {
+		return productCategoryMapper.getChildrenCategoryById(categoryId);
 	}
 
 }

@@ -5,6 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="mapper.ProductCategoryMapper">
     <insert id="add" parameterType="ProductCategory" >
+    	<selectKey keyProperty='id' resultType='int' order='AFTER'  >  
+	        select LAST_INSERT_ID();  
+	    </selectKey> 
         insert into t_product_category 
         (category_name,category_code,parent_id,order_flag,gmt_create) 
         values 
@@ -21,9 +24,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="delete" parameterType="String" >
         delete from t_product_category where id= #{categoryId}
     </delete>
+    
+    <delete id="delCategoryToAttribute" parameterType="String" >
+        delete from t_category_to_attribute where category_id= #{categoryId}
+    </delete>
      
     <update id="update" parameterType="ProductCategory" >
-        update t_product_category set category_name=#{categoryName},parent_id=#{parent_id}
+        update t_product_category set 
+        category_name = #{categoryName},
+        category_code = #{categoryCode},order_flag = #{orderFlag},gmt_modified = #{gmtModified}
         where id=#{id}    
     </update>
     
@@ -31,10 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select count(*) from t_product_category
 		WHERE category_name = #{categoryName}
 		<if test="id != null">
-			and id = #{id}
+			and id != #{id}
 		</if>
 		<if test="parentId != null">
-			and parent_id = #{parentId}
+			and parent_id != #{parentId}
 		</if>
     </select>  
     
@@ -48,6 +57,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       
     <select id="getProductCategoryByParentId" parameterType="int" resultType="ProductCategory">
         select * from t_product_category where parent_id = #{parentId}
+    </select>  
+    
+    <select id="getChildrenCategoryById" parameterType="String" resultType="ProductCategory">
+        select * from t_product_category 
+		where FIND_IN_SET(id,queryChildrenCategoryInfo(#{categoryId}));
     </select>  
     
     <select id="getTreeByCategoryId" parameterType="int" resultType="Tree">

@@ -12,8 +12,10 @@
 	        onContextMenu: function(e, node){
 				e.preventDefault();
 				// 查找节点
-				$('#product_category_tree').tree('select', node.target);
+				$("#product_category_tree").tree("select", node.target);
 				$("#product_category_id").val(node.id);
+				//查找父节点
+				//var father = $("#product_category_tree").tree("getParent",node.target);
 				$("#product_category_parent_id").val(node.id);	
 				// 显示快捷菜单
 				$('#mm').menu('show', {
@@ -37,14 +39,12 @@
 		$("#win").window("open");
 		$("#tt_category").tabs("select",0);
 		//新加分类，只需要父类Id
-		$("#product_category_parent_id").val("");
+		$("#product_category_id").val("");
 	}
 	//编辑分类
 	function editCategory(){
 		$("#win").window("open");
 		$("#tt_category").tabs("select",0);
-		//编辑分类，只需要本身Id
-		$("#product_category_parent_id").val("");
 		//赋值
 		var category_id = $("#product_category_id").val();
 		ReadCategoryInfo(category_id);
@@ -65,14 +65,16 @@
 	}
 	//获取分类所选规格
 	function getCategoryAttribute(){
-		var trs = $("#table_all_attribute").find(":checkbox:checked");
+		var inputs = $("#table_all_attribute").find(":checkbox:checked");
 		var ids_str = "";
-		$.each(trs,function(i,tr){
+		var i = 0;
+		inputs.each(function(){
 			if(i > 0){
 				ids_str += ",";
 			}
-			var attribute_id = tr.find(".td_attribute_id").text().trim();
+			var attribute_id = $(this).parents("tr").find(".td_attribute_id").text().trim();
 			ids_str += attribute_id;
+			i++;
 		});
 		return ids_str;
 	}

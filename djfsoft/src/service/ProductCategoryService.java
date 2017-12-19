@@ -12,11 +12,17 @@ public interface ProductCategoryService {
 	
 	void delProductCategory(String categoryId);
 	
+	void delCategoryToAttribute(String categoryId);
+	
+	void update(ProductCategory productCategory);
+	
 	int getCategoryCountByInfo(ProductCategory productCategory);
 
 	ProductCategory getProductCategoryById(String id);
 
 	List<ProductCategory> getProductCategoryByParentId(int parent_id);
+	
+	List<ProductCategory> getChildrenCategoryById(String categoryId);
 
 	List<Tree> getTreeByCategoryId(int parent_id);
 	

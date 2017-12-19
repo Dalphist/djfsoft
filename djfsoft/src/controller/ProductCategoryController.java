@@ -55,25 +55,49 @@ public class ProductCategoryController {
 		return result;
 	}
 	
-	@RequestMapping("addProductCategory")
+	@RequestMapping("saveProductCategory")
 	@ResponseBody
 	public ResultBean<String> saveProductCategory(String categoryInfo,String attributeIdStr) {
 		//保存基本信息
 		ProductCategory pc = (ProductCategory) BeanUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
-		pc.setGmtCreate(DateUtil.getNowDate());
-		productCategoryService.addProductCategory(pc);
+		if(pc.getId() == null){		//新加
+			pc.setGmtCreate(DateUtil.getNowDate());
+			productCategoryService.addProductCategory(pc);
+		}else{		//修改
+			pc.setGmtModified(DateUtil.getNowDate());
+			productCategoryService.update(pc);
+		}
+		String categoryId = String.valueOf(pc.getId());
+		//获取本分类及所有子分类
+		List<ProductCategory> children = productCategoryService.getChildrenCategoryById(categoryId);
+		//删除本分类及子分类所有规格信息
+		delChildrenAttribute(categoryId,children);
 		//保存规格信息
 		if(attributeIdStr.length() > 0){
-			String[] attributeIdArray = attributeIdStr.split(",");
-			for (int i = 0; i < attributeIdArray.length; i++) {
-			    String attributeId = attributeIdArray[i];
-			}
+			saveChildrenAttribute(attributeIdStr, children);
 		}
-		
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);
 		result.setMsg("保存成功！");
 		return result;
+	}
+
+	private void saveChildrenAttribute(String attributeIdStr,List<ProductCategory> children) {
+		String[] attributeIdArray = attributeIdStr.split(",");
+		for (int i = 0; i < attributeIdArray.length; i++) {
+		    String attributeId = attributeIdArray[i];
+		    for(ProductCategory child :children){
+		    	String id = child.getId().toString();
+		    	productCategoryService.addCategoryToAttribute(id, attributeId);
+		    }
+		}
+	}
+
+	private void delChildrenAttribute(String categoryId,List<ProductCategory> children) {
+		for(ProductCategory child : children){
+			String id = child.getId().toString();
+			productCategoryService.delCategoryToAttribute(id);
+		}
 	}
 	
 	@RequestMapping("getProductCategory")
