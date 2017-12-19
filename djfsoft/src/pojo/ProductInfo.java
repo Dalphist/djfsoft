@@ -1,6 +1,7 @@
 package pojo;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class ProductInfo {
@@ -21,6 +22,7 @@ public class ProductInfo {
 	private Date gmtCreate;
 	private Date gmtModified;
 	private Integer effectiveFlag;
+	private List<ProductAttributeValueInfo> valueList; 
 
 	public Integer getId() {
 		return id;
@@ -157,15 +159,28 @@ public class ProductInfo {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+	
+	public List<ProductAttributeValueInfo> getValueList() {
+		return valueList;
+	}
+
+	public void setValueList(List<ProductAttributeValueInfo> valueList) {
+		this.valueList = valueList;
+	}
 
 	@Override
 	public String toString() {
-		return "ProductInfo [id=" + id + ", productCode=" + productCode + ", barCode=" + barCode + ", productName="
-				+ productName + ", productShortName=" + productShortName + ", categoryId=" + categoryId
-				+ ", categoryName=" + categoryName + ", normalPurchasePrice=" + normalPurchasePrice + ", cost=" + cost
-				+ ", lastPurchasePrice=" + lastPurchasePrice + ", salePrice=" + salePrice + ", stockWarn=" + stockWarn
-				+ ", productUnit=" + productUnit + ", productPlace=" + productPlace + ", gmtCreate=" + gmtCreate
-				+ ", gmtModified=" + gmtModified + ", effectiveFlag=" + effectiveFlag + "]";
+		return "ProductInfo [id=" + id + ", productCode=" + productCode
+				+ ", barCode=" + barCode + ", productName=" + productName
+				+ ", productShortName=" + productShortName + ", categoryId="
+				+ categoryId + ", categoryName=" + categoryName
+				+ ", normalPurchasePrice=" + normalPurchasePrice + ", cost="
+				+ cost + ", lastPurchasePrice=" + lastPurchasePrice
+				+ ", salePrice=" + salePrice + ", stockWarn=" + stockWarn
+				+ ", productUnit=" + productUnit + ", productPlace="
+				+ productPlace + ", gmtCreate=" + gmtCreate + ", gmtModified="
+				+ gmtModified + ", effectiveFlag=" + effectiveFlag
+				+ ", valueList=" + valueList + "]";
 	}
 
 }

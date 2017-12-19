@@ -34,7 +34,7 @@
 			product_category_text = $("#product_category_text",window.parent.document).val();
 			$("#product_category_id").val(product_category_id);
 			$(".product_category_text").val(product_category_text);
-			
+			//单击行变色及获取商品信息
 			$("#table_product_list tbody tr").click(function() {  
 			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
 			   $(this).find(":checkbox").prop("checked",true);
@@ -82,6 +82,7 @@
                 data:{"productId":product_id},
                 success:function(result){
                 	var product = result.data;  
+                	//基本信息
                 	$("#input_product_code").val(product.productCode);
 					$("#input_product_bar_code").val(product.barCode);
 					$(".product_category_text").val(product.categoryName);
@@ -90,6 +91,17 @@
 					$("#input_product_normal_purchase_price").val(product.normalPurchasePrice);
 					$("#input_product_stock_warn").val(product.stockWarn == -1?"":product.stockWarn);
 					$("#input_product_unit").val(product.productUnit);
+					//规格信息
+					var valueList = product.valueList;
+					$.each(valueList,function(i,value){
+	     				var tr = 
+	     				'<tr id="tr_'+value.id+'">'
+		      				+'<td hidden="true" class="td_value_id">'+value.id+'</td>'
+		      				+'<td>'+value.attributeName+'</td>'
+		      				+'<td>'+value.attributeValueName+'</td>'
+	      				+'</tr>';
+	     				$("#table_value_list").append(tr);
+	     			});
                 },
                 error:function(){
                 }
@@ -299,7 +311,7 @@
 				</table>
 			</div>   
 			<div title="属性" style="overflow:auto;display:none;">   
-				tab2    
+				<table id="table_value_list"></table>  
 			</div>   
 			<div title="图片" style="overflow:auto;display:none;">   
 				tab2    

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pojo.ProductAttributeValue;
+import pojo.ProductAttributeValueInfo;
 import service.ProductAttributeValueService;
 
 @Service
@@ -34,7 +35,7 @@ public class ProductAttributeValueImpl implements ProductAttributeValueService {
 	}
 
 	@Override
-	public List<ProductAttributeValue> getProductAttributeValuesByProductId(String productId) {
+	public List<ProductAttributeValueInfo> getProductAttributeValuesByProductId(String productId) {
 		return productAttributeValueMapper.getProductAttributeValuesByProductId(productId);
 	}
 

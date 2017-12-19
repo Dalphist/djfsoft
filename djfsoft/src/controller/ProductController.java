@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pojo.Product;
+import pojo.ProductAttributeValueInfo;
 import pojo.ProductInfo;
 import pojo.ResultBean;
+import service.ProductAttributeValueService;
 import service.ProductService;
 import util.BeanUtil;
 import util.DateUtil;
@@ -67,13 +69,18 @@ public class ProductController {
 	 * @return: ResultBean<ProductInfo>   
 	 * @throws
 	 */
+	@Autowired
+	ProductAttributeValueService productAttributeValueService;
+	
 	@RequestMapping("getProductById")
 	@ResponseBody
 	public ResultBean<ProductInfo> getProductById(String productId) {
-		ProductInfo product = new ProductInfo();
-		product = productService.getProductById(productId);
+		ProductInfo productInfo = new ProductInfo();
+		productInfo = productService.getProductById(productId);
+		List<ProductAttributeValueInfo> valueList = productAttributeValueService.getProductAttributeValuesByProductId(productId);
+		productInfo.setValueList(valueList);
 		ResultBean<ProductInfo> result = new ResultBean<ProductInfo>();
-		result.setData(product);
+		result.setData(productInfo);
 		return result;
 	}
 	

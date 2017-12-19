@@ -21,10 +21,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id=#{id}    
     </update>
     
-    <select id="getProductAttributeValuesByProductId" parameterType="String" resultType="ProductAttributeValue">
-        SELECT * FROM t_product_to_attribute pta 
-        JOIN t_product_attribute_value pa ON pta.attribute_id = pa.id
-		WHERE pta.product_id = #{productId}
+    <select id="getProductAttributeValuesByProductId" parameterType="String" resultType="ProductAttributeValueInfo">
+        SELECT pa.attribute_name,pav.* FROM 
+		t_product_attribute_value pav
+		JOIN t_product_to_value ptv ON ptv.attribute_value_id = pav.id 
+		JOIN t_product_attribute pa ON pav.attribute_id = pa.id
+		WHERE ptv.product_id = #{productId}
     </select>   
       
     <select id="getProductAttributeValuesByAttributeId" parameterType="String" resultType="ProductAttributeValue">
