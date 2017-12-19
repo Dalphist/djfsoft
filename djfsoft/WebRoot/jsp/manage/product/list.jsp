@@ -311,7 +311,7 @@
 				</table>
 			</div>   
 			<div title="属性" style="overflow:auto;display:none;">   
-				<table id="table_value_list"></table>  
+				<table id="table_value_list" class="table_list" ></table>  
 			</div>   
 			<div title="图片" style="overflow:auto;display:none;">   
 				tab2    
