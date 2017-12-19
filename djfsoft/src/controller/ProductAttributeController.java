@@ -65,6 +65,14 @@ public class ProductAttributeController {
 		return result;
 	}
 	
+	/**
+	 * @Title: getOwnAttribute
+	 * @Description: 获取分类下拥有的规格
+	 * @param: @param categoryId
+	 * @param: @return   
+	 * @return: ResultBean<ProductAttribute>   
+	 * @throws
+	 */
 	@RequestMapping("getOwnAttribute")
 	@ResponseBody
 	public ResultBean<ProductAttribute> getOwnAttribute(String categoryId) {

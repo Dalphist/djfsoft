@@ -59,8 +59,15 @@
 			});
 			//添加
 		    $("#input_product_add").click(function(){
+		    	var category_id = $("#product_category_id",window.parent.document).val();
+		    	if( category_id == ""){
+		    		$.messager.alert('提示','请先选择分类','info');
+					return false;
+		    	}
 		    	$("#tab_product input").val("");
 		    	$(".product_category_text").val(product_category_text);
+		    	$("#tab_product").tab("select",0);
+		    	getCategoryAttribute(category_id);
 		    });
 		    
 		    //全选/取消全选
@@ -72,6 +79,23 @@
 		    	}
 		    });
 		});
+		
+		//获取分类下的规格信息，并显示在规格栏里（添加商品时）
+		function getCategoryAttribute(category_id){
+			$.ajax({
+				url:"<%=projectName%>/manage/productAttribute/getCategoryAttribute",
+				type:"get",
+				dataType:"json",
+                data:{"categoryId":category_id},
+                success:function(result){
+                	if(result.code == 1){	//有重复商品信息
+                		validation.fail = true;
+						validation.msg = result.msg;
+						return validation;
+                	}
+                }				
+			});
+		}
 		
 		//获取商品信息并显示在信息栏
 		function getProductInfo(product_id){
@@ -144,7 +168,7 @@
 						return validation;
                 	}
                 }				
-			})
+			});
 			
 			return validation;
 		}
