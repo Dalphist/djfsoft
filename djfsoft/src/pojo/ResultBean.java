@@ -83,5 +83,5 @@ public class ResultBean<T> implements Serializable{
 	public void setDataList(List<T> dataList) {
 		this.dataList = dataList;
 	}
-	
+
 }

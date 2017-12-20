@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pojo.ProductAttribute;
+import pojo.ProductAttributeInfo;
 import pojo.ProductAttributeValue;
 import pojo.ResultBean;
 import service.ProductAttributeService;

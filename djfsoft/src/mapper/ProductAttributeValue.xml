@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id=#{id}    
     </update>
     
-    <select id="getProductAttributeValuesByProductId" parameterType="String" resultType="ProductAttributeValueInfo">
+    <select id="getProductAttributeValuesByProductId" parameterType="String" resultType="ProductAttributeValue">
         SELECT pa.attribute_name,pav.* FROM 
 		t_product_attribute_value pav
 		JOIN t_product_to_value ptv ON ptv.attribute_value_id = pav.id 

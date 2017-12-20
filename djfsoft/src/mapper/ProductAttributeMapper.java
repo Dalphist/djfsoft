@@ -3,6 +3,7 @@ package mapper;
 import java.util.List;
 
 import pojo.ProductAttribute;
+import pojo.ProductAttributeInfo;
 
 
 
@@ -18,7 +19,7 @@ public interface ProductAttributeMapper {
     
     public List<ProductAttribute> getProductAttributes();
     
-    public List<ProductAttribute> getProductAttributesByProductId(String productId);
+    public List<ProductAttributeInfo> getProductAttributesByProductId(String productId);
     
     public List<ProductAttribute> getProductAttributesByCategoryId(String categoryId);
 }

@@ -22,7 +22,7 @@ public class ProductInfo {
 	private Date gmtCreate;
 	private Date gmtModified;
 	private Integer effectiveFlag;
-	private List<ProductAttributeValueInfo> valueList; 
+	private List<ProductAttributeInfo> valueList; 
 
 	public Integer getId() {
 		return id;
@@ -160,11 +160,11 @@ public class ProductInfo {
 		this.categoryName = categoryName;
 	}
 	
-	public List<ProductAttributeValueInfo> getValueList() {
+	public List<ProductAttributeInfo> getValueList() {
 		return valueList;
 	}
 
-	public void setValueList(List<ProductAttributeValueInfo> valueList) {
+	public void setValueList(List<ProductAttributeInfo> valueList) {
 		this.valueList = valueList;
 	}
 

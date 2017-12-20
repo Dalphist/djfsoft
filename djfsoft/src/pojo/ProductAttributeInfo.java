@@ -1,15 +1,21 @@
 package pojo;
 
 import java.util.Date;
+import java.util.List;
 
-public class ProductAttributeValueInfo {
+/**
+ * 比正常的实体类多出了规格值的列表和选中的值的id
+ * @author DJF
+ */
+
+public class ProductAttributeInfo {
 	private Integer id;
-	private Integer attributeId;
+	private Integer valueId;
 	private String attributeName;
-	private String attributeValueName;
 	private Integer effectiveFlag;
 	private Date gmtCreate;
 	private Date gmtModified;
+	private List<ProductAttributeValue> valueList;
 	
 	public Integer getId() {
 		return id;
@@ -17,24 +23,13 @@ public class ProductAttributeValueInfo {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getAttributeId() {
-		return attributeId;
-	}
-	public void setAttributeId(Integer attributeId) {
-		this.attributeId = attributeId;
-	}
 	public String getAttributeName() {
 		return attributeName;
 	}
 	public void setAttributeName(String attributeName) {
 		this.attributeName = attributeName;
 	}
-	public String getAttributeValueName() {
-		return attributeValueName;
-	}
-	public void setAttributeValueName(String attributeValueName) {
-		this.attributeValueName = attributeValueName;
-	}
+	
 	public Integer getEffectiveFlag() {
 		return effectiveFlag;
 	}
@@ -53,13 +48,25 @@ public class ProductAttributeValueInfo {
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
 	}
+	
+	public Integer getValueId() {
+		return valueId;
+	}
+	public void setValueId(Integer valueId) {
+		this.valueId = valueId;
+	}
+	public List<ProductAttributeValue> getValueList() {
+		return valueList;
+	}
+	public void setValueList(List<ProductAttributeValue> valueList) {
+		this.valueList = valueList;
+	}
 	@Override
 	public String toString() {
-		return "ProductAttributeValueInfo [id=" + id + ", attributeId="
-				+ attributeId + ", attributeName=" + attributeName
-				+ ", attributeValueName=" + attributeValueName
-				+ ", effectiveFlag=" + effectiveFlag + ", gmtCreate="
-				+ gmtCreate + ", gmtModified=" + gmtModified + "]";
+		return "ProductAttributeInfo [id=" + id + ", valueId=" + valueId
+				+ ", attributeName=" + attributeName + ", effectiveFlag="
+				+ effectiveFlag + ", gmtCreate=" + gmtCreate + ", gmtModified="
+				+ gmtModified + ", valueList=" + valueList + "]";
 	}
 	
 }

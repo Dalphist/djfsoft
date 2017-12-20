@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import pojo.ProductAttribute;
+import pojo.ProductAttributeInfo;
 public interface ProductAttributeService {
 	void addProductAttribute(ProductAttribute productAttribute);
 	
@@ -14,7 +15,7 @@ public interface ProductAttributeService {
     
     List<ProductAttribute> getProductAttributes();
     
-    List<ProductAttribute> getProductAttributesByProductId(String productId);
+    List<ProductAttributeInfo> getProductAttributesByProductId(String productId);
     
     List<ProductAttribute> getProductAttributesByCategoryId(String categoryId);
 
