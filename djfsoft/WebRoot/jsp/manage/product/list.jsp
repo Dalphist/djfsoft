@@ -264,6 +264,17 @@
 				$.messager.alert('提示','没有选择任何商品','info');
 			}
 		}
+		//规格列表添加行
+		function addAttribute(){
+			
+			$("#table_value_list tbody").append(tr);
+		}
+		//获取所有规格，组成select
+		function getAllAttribute(){
+			var select = "<select>"
+			return select;
+		}
+		
 	</script>
   </head>
   <body style="margin: 0px;">
