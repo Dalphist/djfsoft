@@ -33,14 +33,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>  
     
     <select id="getProductAttributesByProductId" parameterType="String" resultType="ProductAttributeInfo">
-        SELECT  pa.*,ptv.id as value_id FROM 
+        SELECT  pa.*,ptv.attribute_value_id as value_id FROM 
 		t_product_attribute_value pav
 		JOIN t_product_to_value ptv ON ptv.attribute_value_id = pav.id 
 		JOIN t_product_attribute pa ON pav.attribute_id = pa.id
 		WHERE ptv.product_id = #{productId}
     </select>   
       
-    <select id="getProductAttributesByCategoryId" parameterType="String" resultType="ProductAttribute">
+    <select id="getProductAttributesByCategoryId" parameterType="String" resultType="ProductAttributeInfo">
         SELECT pa.* FROM t_category_to_attribute ca 
         JOIN t_product_attribute pa ON ca.attribute_id = pa.id
 		WHERE ca.category_id = #{categoryId}

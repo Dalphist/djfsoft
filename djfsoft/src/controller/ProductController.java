@@ -14,9 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pojo.Product;
 import pojo.ProductAttributeInfo;
+import pojo.ProductAttributeValue;
 import pojo.ProductInfo;
 import pojo.ResultBean;
 import service.ProductAttributeService;
+import service.ProductAttributeValueService;
 import service.ProductService;
 import util.BeanUtil;
 import util.DateUtil;
@@ -71,14 +73,21 @@ public class ProductController {
 	 */
 	@Autowired
 	ProductAttributeService productAttributeService;
+	@Autowired
+	ProductAttributeValueService productAttributeValueService;
 	
 	@RequestMapping("getProductById")
 	@ResponseBody
 	public ResultBean<ProductInfo> getProductById(String productId) {
 		ProductInfo productInfo = new ProductInfo();
 		productInfo = productService.getProductById(productId);
-		List<ProductAttributeInfo> valueList = productAttributeService.getProductAttributesByProductId(productId);
-		productInfo.setValueList(valueList);
+		List<ProductAttributeInfo> attributeList = productAttributeService.getProductAttributesByProductId(productId);
+		for(ProductAttributeInfo attribute :attributeList){
+			String attributeId = attribute.getId().toString();
+			List<ProductAttributeValue> valueList = productAttributeValueService.getProductAttributeValuesByAttributeId(attributeId);
+			attribute.setValueList(valueList);
+		}
+		productInfo.setAttributeList(attributeList);
 		ResultBean<ProductInfo> result = new ResultBean<ProductInfo>();
 		result.setData(productInfo);
 		return result;

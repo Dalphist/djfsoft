@@ -188,7 +188,7 @@
 		//规格
 		$("#table_all_attribute").find(":checkbox").prop("checked",false);
 		$.ajax({
-			url:"<%=projectName%>/manage/productAttribute/getOwnAttribute",
+			url:"<%=projectName%>/manage/productAttribute/getCategoryAttribute",
 			type:"get",
 			data:{"categoryId":category_id},
 			dataType:"json",

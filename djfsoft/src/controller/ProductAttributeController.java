@@ -14,6 +14,7 @@ import pojo.ProductAttributeInfo;
 import pojo.ProductAttributeValue;
 import pojo.ResultBean;
 import service.ProductAttributeService;
+import service.ProductAttributeValueService;
 import util.BeanUtil;
 import util.DateUtil;
 
@@ -67,20 +68,28 @@ public class ProductAttributeController {
 	}
 	
 	/**
-	 * @Title: getOwnAttribute
+	 * @Title: getCategoryAttribute
 	 * @Description: 获取分类下拥有的规格
 	 * @param: @param categoryId
 	 * @param: @return   
 	 * @return: ResultBean<ProductAttribute>   
 	 * @throws
 	 */
-	@RequestMapping("getOwnAttribute")
+	@Autowired
+	ProductAttributeValueService productAttributeValueService;
+	
+	@RequestMapping("getCategoryAttribute")
 	@ResponseBody
-	public ResultBean<ProductAttribute> getOwnAttribute(String categoryId) {
-		ResultBean<ProductAttribute> result = new ResultBean<ProductAttribute>();
-		List<ProductAttribute> list = new ArrayList<ProductAttribute>();
-		list = productAttributeService.getProductAttributesByCategoryId(categoryId);
-		result.setDataList(list);
+	public ResultBean<ProductAttributeInfo> getCategoryAttribute(String categoryId) {
+		ResultBean<ProductAttributeInfo> result = new ResultBean<ProductAttributeInfo>();
+		List<ProductAttributeInfo> attributeList = new ArrayList<ProductAttributeInfo>();
+		attributeList = productAttributeService.getProductAttributesByCategoryId(categoryId);
+		for(ProductAttributeInfo attribute :attributeList){
+			String attributeId = attribute.getId().toString();
+			List<ProductAttributeValue> valueList = productAttributeValueService.getProductAttributeValuesByAttributeId(attributeId);
+			attribute.setValueList(valueList);
+		}
+		result.setDataList(attributeList);
 		return result;
 	}
 	
@@ -92,7 +101,7 @@ public class ProductAttributeController {
 	 * @return: ModelAndView   
 	 * @throws
 	 */
-	@RequestMapping("getAttributeValue")
+	/*@RequestMapping("getAttributeValue")
 	public ModelAndView getproductAttributeValueByAttributeId(String attributeId) {
 		ModelAndView mav = new ModelAndView();
 		List<ProductAttributeValue> list = new ArrayList<ProductAttributeValue>();
@@ -101,7 +110,7 @@ public class ProductAttributeController {
 		mav.setViewName(url);
 		mav.addObject("productAttributeList", list);
 		return mav;
-	}
+	}*/
 	
 	/**
 	 * @Title: validateAttribute

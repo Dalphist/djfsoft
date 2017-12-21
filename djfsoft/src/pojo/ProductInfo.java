@@ -22,7 +22,7 @@ public class ProductInfo {
 	private Date gmtCreate;
 	private Date gmtModified;
 	private Integer effectiveFlag;
-	private List<ProductAttributeInfo> valueList; 
+	private List<ProductAttributeInfo> attributeList; 
 
 	public Integer getId() {
 		return id;
@@ -160,12 +160,12 @@ public class ProductInfo {
 		this.categoryName = categoryName;
 	}
 	
-	public List<ProductAttributeInfo> getValueList() {
-		return valueList;
+	public List<ProductAttributeInfo> getAttributeList() {
+		return attributeList;
 	}
 
-	public void setValueList(List<ProductAttributeInfo> valueList) {
-		this.valueList = valueList;
+	public void setAttributeList(List<ProductAttributeInfo> attributeList) {
+		this.attributeList = attributeList;
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public class ProductInfo {
 				+ ", productUnit=" + productUnit + ", productPlace="
 				+ productPlace + ", gmtCreate=" + gmtCreate + ", gmtModified="
 				+ gmtModified + ", effectiveFlag=" + effectiveFlag
-				+ ", valueList=" + valueList + "]";
+				+ ", attributeList=" + attributeList + "]";
 	}
 
 }

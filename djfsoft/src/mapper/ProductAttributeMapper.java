@@ -21,5 +21,5 @@ public interface ProductAttributeMapper {
     
     public List<ProductAttributeInfo> getProductAttributesByProductId(String productId);
     
-    public List<ProductAttribute> getProductAttributesByCategoryId(String categoryId);
+    public List<ProductAttributeInfo> getProductAttributesByCategoryId(String categoryId);
 }

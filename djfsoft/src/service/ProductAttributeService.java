@@ -17,6 +17,6 @@ public interface ProductAttributeService {
     
     List<ProductAttributeInfo> getProductAttributesByProductId(String productId);
     
-    List<ProductAttribute> getProductAttributesByCategoryId(String categoryId);
+    List<ProductAttributeInfo> getProductAttributesByCategoryId(String categoryId);
 
 }

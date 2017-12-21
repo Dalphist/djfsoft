@@ -43,6 +43,11 @@
 			   $("#input_product_id").val(product_id);
 			   getProductInfo(product_id);
 			}); 
+			//单击规格行变色并选定
+			$("#table_value_list tbody").on("click","tr",function(){
+				$(this).addClass("select_tr").siblings().removeClass("select_tr"); 
+			});
+			
 			//复选框  阻止事件冒泡
 		    $("#table_product_list tbody .td_checkbox").on("click",function(event){
 		    	event.stopPropagation();    
@@ -66,7 +71,7 @@
 		    	}
 		    	$("#tab_product input").val("");
 		    	$(".product_category_text").val(product_category_text);
-		    	$("#tab_product").tab("select",0);
+		    	$("#tab_product").tabs("select",0);
 		    	getCategoryAttribute(category_id);
 		    });
 		    
@@ -88,11 +93,12 @@
 				dataType:"json",
                 data:{"categoryId":category_id},
                 success:function(result){
-                	if(result.code == 1){	//有重复商品信息
-                		validation.fail = true;
-						validation.msg = result.msg;
-						return validation;
-                	}
+                	var attributeList = result.dataList;
+					$.each(attributeList,function(i,attribute){
+						var select = concatSelect("",attribute);
+	     				var tr = concatTr(select,attribute);
+	     				$("#table_value_list tbody").append(tr);
+	     			});
                 }				
 			});
 		}
@@ -116,20 +122,43 @@
 					$("#input_product_stock_warn").val(product.stockWarn == -1?"":product.stockWarn);
 					$("#input_product_unit").val(product.productUnit);
 					//规格信息
-					var valueList = product.valueList;
-					$.each(valueList,function(i,value){
-	     				var tr = 
-	     				'<tr id="tr_'+value.id+'">'
-		      				+'<td hidden="true" class="td_value_id">'+value.id+'</td>'
-		      				+'<td>'+value.attributeName+'</td>'
-		      				+'<td>'+value.attributeValueName+'</td>'
-	      				+'</tr>';
-	     				$("#table_value_list").append(tr);
+					$("#table_value_list tbody").empty();
+					var attributeList = product.attributeList;
+					$.each(attributeList,function(i,attribute){
+						var value_id = attribute.valueId;
+						var select = concatSelect(value_id,attribute);
+	     				var tr = concatTr(select,attribute);
+	     				$("#table_value_list tbody").append(tr);
 	     			});
                 },
                 error:function(){
                 }
 			})
+		}
+		
+		//根据规格json 拼接处select 下拉框规格值的内容，和value_id相同的值默认选中
+		function concatSelect(value_id,attribute){
+			var select = "<select><option>请选择--</option>";
+			var valueList = attribute.valueList;
+			$.each(valueList,function(i,value){
+				var selected = "";
+				if(value_id == value.id){
+					selected = "selected='selected'"
+				}
+				select += "<option value='"+ value.id +"'"+ selected+">"+ value.attributeValueName +"</option>";
+			});
+			select += "</select>";
+			return select;
+		}
+		//拼接规格行
+		function concatTr(select,attribute){
+			var tr = 
+			'<tr id="tr_'+attribute.id+'">'
+				+'<td hidden="true" class="td_attribute_id">'+attribute.id+'</td>'
+				+'<td>'+attribute.attributeName+'</td>'
+				+'<td>'+select+'</td>'
+			+'</tr>';
+			return tr;
 		}
 		
 		//获取所有input框的商品信息，返回json
@@ -235,7 +264,6 @@
 				$.messager.alert('提示','没有选择任何商品','info');
 			}
 		}
-		
 	</script>
   </head>
   <body style="margin: 0px;">
@@ -334,8 +362,20 @@
 					</tbody>   
 				</table>
 			</div>   
-			<div title="属性" style="overflow:auto;display:none;">   
-				<table id="table_value_list" class="table_list" ></table>  
+			<div title="规格" style="overflow:auto;display:none;">   
+				<div style="width: 500px;float: left;"">
+					<table id="table_value_list" class="table_list" >
+						<thead>
+							<th style="width: 40%;">规格</th>
+							<th style="width: 40%;">属性</th>
+						</thead>
+						<tbody></tbody>
+					</table> 
+				</div> 
+				<div style="float: left;">
+					<a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addAttribute();">添加</a>
+					<a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="delAttribute();">删除</a>
+				</div>
 			</div>   
 			<div title="图片" style="overflow:auto;display:none;">   
 				tab2    

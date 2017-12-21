@@ -47,8 +47,8 @@ public class ProductAttributeImpl implements ProductAttributeService {
 	}
 
 	@Override
-	public List<ProductAttribute> getProductAttributesByCategoryId(	String categoryId) {
-		List<ProductAttribute> list = productAttributeMapper.getProductAttributesByCategoryId(categoryId);
+	public List<ProductAttributeInfo> getProductAttributesByCategoryId(	String categoryId) {
+		List<ProductAttributeInfo> list = productAttributeMapper.getProductAttributesByCategoryId(categoryId);
 		return list;
 	}
 
