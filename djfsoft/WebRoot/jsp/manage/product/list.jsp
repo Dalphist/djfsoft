@@ -83,6 +83,26 @@
 		    		$("#table_product_list tbody :checkbox").prop("checked", false);
 		    	}
 		    });
+		    
+		    //选择规格时，连带属性显示
+		    $("#table_value_list tbody").on("change",".select_attribute",function(){
+		    	var attribute_id = $(this).val();
+		    	var td = $(this).parents("tr").find(".td_value");
+		    	$.ajax({
+					url:"<%=projectName%>/manage/productAttributeValue/getValueList",
+					type:"get",
+	                data:{"attributeId":attribute_id},
+	                success:function(result){
+	                	var valueList = result.dataList;
+	                	var select = "<select class='select_value'><option>请选择--</option>";
+						$.each(valueList,function(i,value){
+							select += "<option value='"+ value.id +"'>"+value.attributeValueName + "</option>";
+		     			});
+		     			select += "</select>";
+		     			td.html(select);
+	                }				
+				});
+		    });
 		});
 		
 		//获取分类下的规格信息，并显示在规格栏里（添加商品时）
@@ -130,6 +150,13 @@
 	     				var tr = concatTr(select,attribute);
 	     				$("#table_value_list tbody").append(tr);
 	     			});
+	     			//选择规格
+	     			var trs = $("#table_value_list tbody").find("tr");
+	     			trs.each(function(){
+	     				var attribute_id = $(this).find(".td_attribute_id").text().trim();
+	     				var attribute_select = $(this).find(".select_attribute");
+	     				attribute_select.val(attribute_id);
+	     			});
                 },
                 error:function(){
                 }
@@ -152,10 +179,11 @@
 		}
 		//拼接规格行
 		function concatTr(select,attribute){
+			var select_attribute = getAllAttribute();
 			var tr = 
 			'<tr id="tr_'+attribute.id+'">'
 				+'<td hidden="true" class="td_attribute_id">'+attribute.id+'</td>'
-				+'<td>'+attribute.attributeName+'</td>'
+				+'<td>'+select_attribute+'</td>'
 				+'<td>'+select+'</td>'
 			+'</tr>';
 			return tr;
@@ -266,15 +294,51 @@
 		}
 		//规格列表添加行
 		function addAttribute(){
-			
+			var select = getAllAttribute();
+			var tr = 
+			"<tr>"
+				+"<td>"+select+"</td>"
+				+"<td class='td_value'></td>"
+			+"</tr>";
 			$("#table_value_list tbody").append(tr);
+			var $tr = $("#table_value_list tbody tr:last");
+			$tr.find(".select_attribute").change();
 		}
 		//获取所有规格，组成select
 		function getAllAttribute(){
-			var select = "<select>"
+			var select = "<select class='select_attribute'>"
+			$.ajax({
+				url:"<%=projectName%>/manage/productAttribute/getAllAttribute",
+				type:"get",
+				async: false,
+				dataType:"json",
+	            success:function(result){
+	            	var allAttributes = result.dataList; 
+	            	$.each(allAttributes,function(i,attribute){
+	     				select += '<option value="'+ attribute.id +'">'+attribute.attributeName+'</option>';
+	     			});
+	     			select += '</select>';
+	            },
+	            error:function(){
+	            	alert("获取所有规格出错！");
+	            }				
+			});
 			return select;
 		}
-		
+		//规格表删除行
+		function delAttribute(){
+			var trs = $("#table_value_list tbody tr").find(".select_tr");
+			if(trs.length == 0){
+				$.messager.alert('提示','没有选择规格','info');
+			}else{
+				$.messager.confirm('确认','您确认想要删除所选规格吗？',function(r){    
+				    if (r){   
+						var tr = trs[0];
+						tr.remove();
+				    }    
+				});
+			}
+		}
 	</script>
   </head>
   <body style="margin: 0px;">

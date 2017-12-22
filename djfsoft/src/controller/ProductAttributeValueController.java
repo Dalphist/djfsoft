@@ -41,6 +41,16 @@ public class ProductAttributeValueController {
 		return mav;
 	}
 	
+	@RequestMapping("getValueList")
+	@ResponseBody
+	public ResultBean<ProductAttributeValue> getValueListByAttribute(String attributeId) {
+		ResultBean<ProductAttributeValue> result = new ResultBean<ProductAttributeValue>();
+		List<ProductAttributeValue> list = new ArrayList<ProductAttributeValue>();
+		list = productAttributeValueService.getProductAttributeValuesByAttributeId(attributeId);
+		result.setDataList(list);
+		return result;
+	}
+	
 	/**
 	 * @Title: validateAttributeValue
 	 * @Description: 校验要添加或修改的内容是否同名
