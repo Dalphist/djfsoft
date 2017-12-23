@@ -17,7 +17,7 @@ import pojo.Tree;
 import pojo.User;
 import service.ProductCategoryService;
 import service.UserService;
-import util.BeanUtil;
+import util.ParseUtil;
 import util.DateUtil;
 
 @Controller
@@ -45,7 +45,7 @@ public class ProductCategoryController {
 	@ResponseBody
 	public ResultBean<String> validateCategory(String categoryInfo) {
 		ProductCategory productCategory = new ProductCategory();
-		productCategory = (ProductCategory)BeanUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
+		productCategory = (ProductCategory)ParseUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
 		ResultBean<String> result = new ResultBean<String>();
 		int a = productCategoryService.getCategoryCountByInfo(productCategory);
 		if (a > 0) {
@@ -59,7 +59,7 @@ public class ProductCategoryController {
 	@ResponseBody
 	public ResultBean<String> saveProductCategory(String categoryInfo,String attributeIdStr) {
 		//保存基本信息
-		ProductCategory pc = (ProductCategory) BeanUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
+		ProductCategory pc = (ProductCategory) ParseUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
 		if(pc.getId() == null){		//新加
 			pc.setGmtCreate(DateUtil.getNowDate());
 			productCategoryService.addProductCategory(pc);

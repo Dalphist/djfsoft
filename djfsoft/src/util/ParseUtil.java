@@ -2,7 +2,7 @@ package util;
 
 import net.sf.json.JSONObject;
 
-public class BeanUtil {
+public class ParseUtil {
 	public static Object getBeanFromStr(String beanStr,String className){
 		Object obj = null;
 		try {

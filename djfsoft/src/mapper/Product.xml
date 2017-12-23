@@ -19,11 +19,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="update" parameterType="Product">
 		update t_product
-		(product_code,bar_code,product_name,product_short_name,category_id,normal_purchase_price,
-		cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,gmt_create,effective_flag)
-		VALUES
-		(#{productCode},#{barCode},#{productName},#{productShortName},#{categoryId},#{normalPurchasePrice},
-		#{cost},#{lastPurchasePrice},#{salePrice},#{stockWarn},#{productUnit},#{productPlace},#{gmtCreate},#{effectiveFlag)
+		set product_code = #{productCode},bar_code = #{barCode},product_name = #{productName},product_short_name = #{productShortName},
+		category_id = #{categoryId},normal_purchase_price = #{normalPurchasePrice},cost = #{cost},last_purchase_price = #{lastPurchasePrice},
+		sale_price = #{salePrice},stock_warn = #{stockWarn},product_unit = #{productUnit},product_place = #{productPlace},
+		gmt_modified = #{gmtModified},effective_flag = #{effectiveFlag}
 		where id=#{id}
 	</update>
 
@@ -37,12 +36,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where FIND_IN_SET(category_id,queryChildrenCategoryInfo(#{categoryId}));
 	</select>
 	
-	<select id="getProductByCode" parameterType="String" resultType="int">
-		select count(*) from t_product where product_code = #{code}
+	<select id="getProductByCode" parameterType="Product" resultType="int">
+		select count(*) from t_product where product_code = #{productCode}
+		<if test="id != null">
+			and id != #{id}
+		</if>
 	</select>
 	
-	<select id="getProductByBarCode" parameterType="String" resultType="int">
+	<select id="getProductByBarCode" parameterType="Product" resultType="int">
 		select count(*) from t_product where bar_code = #{barCode}
+		<if test="id != null">
+			and id != #{id}
+		</if>
 	</select>
 	
 	

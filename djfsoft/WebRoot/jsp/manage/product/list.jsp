@@ -72,6 +72,7 @@
 		    	$("#tab_product input").val("");
 		    	$(".product_category_text").val(product_category_text);
 		    	$("#tab_product").tabs("select",0);
+		    	$("#input_product_id").val("");
 		    	getCategoryAttribute(category_id);
 		    });
 		    
@@ -94,7 +95,7 @@
 	                data:{"attributeId":attribute_id},
 	                success:function(result){
 	                	var valueList = result.dataList;
-	                	var select = "<select class='select_value'><option>请选择--</option>";
+	                	var select = "<select class='select_value'><option value='0'>请选择--</option>";
 						$.each(valueList,function(i,value){
 							select += "<option value='"+ value.id +"'>"+value.attributeValueName + "</option>";
 		     			});
@@ -115,7 +116,7 @@
                 success:function(result){
                 	var attributeList = result.dataList;
 					$.each(attributeList,function(i,attribute){
-						var select = concatSelect("",attribute);
+						var select = concatValueSelect("",attribute);
 	     				var tr = concatTr(select,attribute);
 	     				$("#table_value_list tbody").append(tr);
 	     			});
@@ -133,20 +134,21 @@
                 success:function(result){
                 	var product = result.data;  
                 	//基本信息
+                	$("#product_category_id").val(product.categoryId);
                 	$("#input_product_code").val(product.productCode);
-					$("#input_product_bar_code").val(product.barCode);
+					$("#input_product_bar_code").textbox("setValue",product.barCode);
 					$(".product_category_text").val(product.categoryName);
 					$("#input_product_name").val(product.productName);
 					$("#input_product_shortname").val(product.productShortName);
-					$("#input_product_normal_purchase_price").val(product.normalPurchasePrice);
-					$("#input_product_stock_warn").val(product.stockWarn == -1?"":product.stockWarn);
+					$("#input_product_normal_purchase_price").textbox("setValue",product.normalPurchasePrice);
+					$("#input_product_stock_warn").textbox("setValue",product.stockWarn == -1?"":product.stockWarn);
 					$("#input_product_unit").val(product.productUnit);
 					//规格信息
 					$("#table_value_list tbody").empty();
 					var attributeList = product.attributeList;
 					$.each(attributeList,function(i,attribute){
 						var value_id = attribute.valueId;
-						var select = concatSelect(value_id,attribute);
+						var select = concatValueSelect(value_id,attribute);
 	     				var tr = concatTr(select,attribute);
 	     				$("#table_value_list tbody").append(tr);
 	     			});
@@ -164,8 +166,8 @@
 		}
 		
 		//根据规格json 拼接处select 下拉框规格值的内容，和value_id相同的值默认选中
-		function concatSelect(value_id,attribute){
-			var select = "<select><option>请选择--</option>";
+		function concatValueSelect(value_id,attribute){
+			var select = "<select><option value='0'>请选择--</option>";
 			var valueList = attribute.valueList;
 			$.each(valueList,function(i,value){
 				var selected = "";
@@ -192,6 +194,7 @@
 		//获取所有input框的商品信息，返回json
 		function getInputProductInfo(){
 			var productInfo = {};
+			productInfo.id = $("#input_product_id").val().trim();
 			productInfo.productCode = $("#input_product_code").val().trim();
 			productInfo.barCode = $("#input_product_bar_code").val().trim();
 			productInfo.categoryId = $("#product_category_id").val().trim();
@@ -207,6 +210,11 @@
 		function validateProductInput(productInfo){
 			var validation = {};
 			validation.fail = false;
+			if(product_category_id == "" && $("#input_product_id").val().trim() == ""){
+				validation.msg = "请先选择分类！";
+				validation.fail = true;
+				return validation;
+			}
 			if(productInfo.productCode == "" || productInfo.barCode == "" ||productInfo.productName == "" || productInfo.productUnit == ""){
 				validation.fail = true;
 				validation.msg = "请填写必填项!";
@@ -229,6 +237,24 @@
 			
 			return validation;
 		}
+		//获取要保存的规格属性信息,用逗号隔开的字符串。
+		function getAttributeInfo(){
+			var trs = $("#table_value_list tbody").find("tr");
+			var attribute_id_str = "";
+			var i = 0;
+			var attributeInfo = [];
+			trs.each(function(){
+				var attribute_id = $(this).find(".select_value").val();
+				/*if(i > 0){
+					attribute_id_str += ",";
+				}
+				attribute_id_str += attribute_id;
+				i++;*/
+				attributeInfo.push(attribute_id);
+			});
+			return attributeInfo;
+		}
+		
 		//商品保存
 		function productSave(){
 			var productInfo = getInputProductInfo();
@@ -237,11 +263,12 @@
 				$.messager.alert('提示',validation.msg,'info');
 				return false;
 			}
+			var attribute_id_str = getAttributeInfo();
 			$.ajax({
-				url:"<%=projectName%>/manage/product/addProduct",
+				url:"<%=projectName%>/manage/product/saveProduct",
 				type:"post",
 				dataType:"json",
-                data:{"productInfo":JSON.stringify(productInfo)},
+                data:{"productInfo":JSON.stringify(productInfo),"attributeIdStr":JSON.stringify(attribute_id_str)},
                 success:function(result){
                 	$.messager.alert('提示',result.msg,'info',function(){    
 				        location.reload(); 
@@ -327,7 +354,7 @@
 		}
 		//规格表删除行
 		function delAttribute(){
-			var trs = $("#table_value_list tbody tr").find(".select_tr");
+			var trs = $("#table_value_list tbody").find(".select_tr");
 			if(trs.length == 0){
 				$.messager.alert('提示','没有选择规格','info');
 			}else{

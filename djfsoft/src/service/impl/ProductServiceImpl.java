@@ -21,6 +21,13 @@ public class ProductServiceImpl implements ProductService {
 		productMapper.add(product);
 		return;
 	}
+	
+
+	@Override
+	public void updateProduct(Product product) {
+		productMapper.update(product);
+		return;
+	}
 
 	@Override
 	public List<Product> getProductList(String categoryId) {
@@ -33,13 +40,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int getProductByCode(String code) {
-		return productMapper.getProductByCode(code);
+	public int getProductByCode(Product product) {
+		return productMapper.getProductByCode(product);
 	}
 
 	@Override
-	public int getProductByBarCode(String barCode) {
-		return productMapper.getProductByBarCode(barCode);
+	public int getProductByBarCode(Product product) {
+		return productMapper.getProductByBarCode(product);
 	}
 
 	@Override

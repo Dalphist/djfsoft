@@ -20,7 +20,7 @@ import pojo.ResultBean;
 import service.ProductAttributeService;
 import service.ProductAttributeValueService;
 import service.ProductService;
-import util.BeanUtil;
+import util.ParseUtil;
 import util.DateUtil;
 
 @Controller
@@ -94,24 +94,31 @@ public class ProductController {
 	}
 	
 	/**
-	 * @Title: addProduct
-	 * @Description: 根据前台传过来的商品信息添加商品
+	 * @Title: saveProduct
+	 * @Description: 商品保存，包括添加和修改
 	 * @param: @param productInfo
+	 * @param: @param attributeIdStr	规格id拼接的用逗号隔开的字符串
 	 * @param: @return   
 	 * @return: ResultBean<String>   
 	 * @throws
 	 */
-	@RequestMapping("addProduct")
+	@RequestMapping("saveProduct")
 	@ResponseBody
-	public ResultBean<String> addProduct(String productInfo) {
+	public ResultBean<String> saveProduct(String productInfo,String attributeIdStr) {
 		Product product = new Product();
-		product = (Product)BeanUtil.getBeanFromStr(productInfo, "pojo.Product");
-		// 添加商品时，设置当前时间为添加时间。
-		product.setGmtCreate(DateUtil.getNowDate());
-		productService.addProduct(product);
+		product = (Product)ParseUtil.getBeanFromStr(productInfo, "pojo.Product");
 		ResultBean<String> result = new ResultBean<String>();
+		if(product.getId() == null){
+			// 添加商品时，设置当前时间为添加时间。
+			product.setGmtCreate(DateUtil.getNowDate());
+			productService.addProduct(product);
+			result.setMsg("添加成功！");
+		}else{
+			product.setGmtModified(DateUtil.getNowDate());
+			productService.updateProduct(product);
+			result.setMsg("修改成功！");
+		}
 		result.setCode(ResultBean.SUCCESS);
-		result.setMsg("添加成功！");
 		return result;
 	}
 	
@@ -150,10 +157,10 @@ public class ProductController {
 	@ResponseBody
 	public ResultBean<String> validateProduct(String productInfo) {
 		Product product = new Product();
-		product = (Product)BeanUtil.getBeanFromStr(productInfo, "pojo.Product");
+		product = (Product)ParseUtil.getBeanFromStr(productInfo, "pojo.Product");
 		ResultBean<String> result = new ResultBean<String>();
-		int a = productService.getProductByCode(product.getProductCode());
-		int b = productService.getProductByBarCode(product.getBarCode());
+		int a = productService.getProductByCode(product);
+		int b = productService.getProductByBarCode(product);
 		if (a > 0) {
 			result.setCode(ResultBean.FAIL);
 			result.setMsg("商品编码重复！");

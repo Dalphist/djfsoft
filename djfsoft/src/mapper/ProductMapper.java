@@ -16,7 +16,7 @@ public interface ProductMapper {
 
 	public List<Product> list(String categoryId);
 
-	public int getProductByCode(String code);
+	public int getProductByCode(Product product);
 
-	public int getProductByBarCode(String barCode);
+	public int getProductByBarCode(Product product);
 }
