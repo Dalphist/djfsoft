@@ -2,6 +2,8 @@ package mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import pojo.ProductAttributeValue;
 
 
@@ -9,6 +11,8 @@ import pojo.ProductAttributeValue;
 public interface ProductAttributeValueMapper {
 	
 	public void add(ProductAttributeValue productAttributeValue);  
+	
+	public void addProductToValue(@Param("productId") String productId,@Param("valueId") String valueId);
     
     public void delete(String valueId);  
         

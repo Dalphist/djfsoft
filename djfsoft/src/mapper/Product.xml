@@ -5,6 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="mapper.ProductMapper">
 	<insert id="add" parameterType="Product">
+		<selectKey keyProperty='id' resultType='int' order='AFTER'  >  
+	        select LAST_INSERT_ID();  
+	    </selectKey> 
 		INSERT INTO t_product
 		(product_code,bar_code,product_name,product_short_name,category_id,normal_purchase_price,
 		cost,last_purchase_price,sale_price,stock_warn,product_unit,product_place,gmt_create,effective_flag)
@@ -15,6 +18,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<delete id="delete" parameterType="String">
 		delete from t_product where id= #{productId}
+	</delete>
+	
+	<delete id="delProductValue" parameterType="String">
+		delete from t_product_to_value where product_id= #{productId}
 	</delete>
 
 	<update id="update" parameterType="Product">

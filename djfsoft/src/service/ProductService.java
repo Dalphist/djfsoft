@@ -10,6 +10,8 @@ public interface ProductService {
 	
 	void delProduct(String productId);
 	
+	void delProductValue(String productId);
+	
 	void updateProduct(Product product);
 	
 	ProductInfo getProductById(String productId);

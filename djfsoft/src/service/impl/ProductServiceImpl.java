@@ -21,8 +21,18 @@ public class ProductServiceImpl implements ProductService {
 		productMapper.add(product);
 		return;
 	}
-	
 
+	@Override
+	public void delProduct(String productId) {
+		productMapper.delete(productId);
+		return;
+	}
+
+	@Override
+	public void delProductValue(String productId) {
+		productMapper.delProductValue(productId);
+		return;
+	}
 	@Override
 	public void updateProduct(Product product) {
 		productMapper.update(product);
@@ -47,12 +57,6 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int getProductByBarCode(Product product) {
 		return productMapper.getProductByBarCode(product);
-	}
-
-	@Override
-	public void delProduct(String productId) {
-		productMapper.delete(productId);
-		return;
 	}
 
 }

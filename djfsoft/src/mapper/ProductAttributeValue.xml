@@ -10,6 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         values 
         (#{attributeId},#{attributeValueName},#{effectiveFlag},#{gmtCreate})    
     </insert>
+    <insert id="addProductToValue" parameterType="String" >
+        insert into t_product_to_value
+        (product_id,attribute_value_id) 
+        values 
+        (#{productId},#{valueId})    
+    </insert>
      
     <delete id="delete" parameterType="String" >
         delete from t_product_attribute_value where id= #{valueId}

@@ -104,7 +104,7 @@ public class ProductController {
 	 */
 	@RequestMapping("saveProduct")
 	@ResponseBody
-	public ResultBean<String> saveProduct(String productInfo,String attributeIdStr) {
+	public ResultBean<String> saveProduct(String productInfo,String valueIdStr) {
 		Product product = new Product();
 		product = (Product)ParseUtil.getBeanFromStr(productInfo, "pojo.Product");
 		ResultBean<String> result = new ResultBean<String>();
@@ -117,6 +117,13 @@ public class ProductController {
 			product.setGmtModified(DateUtil.getNowDate());
 			productService.updateProduct(product);
 			result.setMsg("修改成功！");
+		}
+		String productId = String.valueOf(product.getId());
+		productService.delProductValue(productId);//删除已有规格
+		//保存规格
+		List<String> ids = ParseUtil.parseFromStrArray(valueIdStr);
+		for(String valueId : ids){
+			productAttributeValueService.addProductToValue(productId, valueId);
 		}
 		result.setCode(ResultBean.SUCCESS);
 		return result;

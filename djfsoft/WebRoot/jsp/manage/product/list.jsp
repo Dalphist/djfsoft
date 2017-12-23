@@ -167,7 +167,7 @@
 		
 		//根据规格json 拼接处select 下拉框规格值的内容，和value_id相同的值默认选中
 		function concatValueSelect(value_id,attribute){
-			var select = "<select><option value='0'>请选择--</option>";
+			var select = "<select class='select_value'><option value='0'>请选择--</option>";
 			var valueList = attribute.valueList;
 			$.each(valueList,function(i,value){
 				var selected = "";
@@ -186,7 +186,7 @@
 			'<tr id="tr_'+attribute.id+'">'
 				+'<td hidden="true" class="td_attribute_id">'+attribute.id+'</td>'
 				+'<td>'+select_attribute+'</td>'
-				+'<td>'+select+'</td>'
+				+'<td class="td_value">'+select+'</td>'
 			+'</tr>';
 			return tr;
 		}
@@ -238,21 +238,16 @@
 			return validation;
 		}
 		//获取要保存的规格属性信息,用逗号隔开的字符串。
-		function getAttributeInfo(){
+		function getValueInfo(){
 			var trs = $("#table_value_list tbody").find("tr");
-			var attribute_id_str = "";
-			var i = 0;
-			var attributeInfo = [];
+			var valueInfo = [];
 			trs.each(function(){
 				var attribute_id = $(this).find(".select_value").val();
-				/*if(i > 0){
-					attribute_id_str += ",";
+				if(attribute_id != 0){
+					valueInfo.push(attribute_id);
 				}
-				attribute_id_str += attribute_id;
-				i++;*/
-				attributeInfo.push(attribute_id);
 			});
-			return attributeInfo;
+			return valueInfo;	//去重
 		}
 		
 		//商品保存
@@ -263,12 +258,12 @@
 				$.messager.alert('提示',validation.msg,'info');
 				return false;
 			}
-			var attribute_id_str = getAttributeInfo();
+			var valueInfo = getValueInfo();
 			$.ajax({
 				url:"<%=projectName%>/manage/product/saveProduct",
 				type:"post",
 				dataType:"json",
-                data:{"productInfo":JSON.stringify(productInfo),"attributeIdStr":JSON.stringify(attribute_id_str)},
+                data:{"productInfo":JSON.stringify(productInfo),"valueIdStr":JSON.stringify(valueInfo)},
                 success:function(result){
                 	$.messager.alert('提示',result.msg,'info',function(){    
 				        location.reload(); 

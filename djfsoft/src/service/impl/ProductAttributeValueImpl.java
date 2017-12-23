@@ -22,6 +22,11 @@ public class ProductAttributeValueImpl implements ProductAttributeValueService {
 	}
 
 	@Override
+	public void addProductToValue(String productId, String valueId) {
+		productAttributeValueMapper.addProductToValue(productId, valueId);
+		return;
+	}
+	@Override
 	public void delete(String valueId) {
 		productAttributeValueMapper.delete(valueId);
 		return;
@@ -47,6 +52,4 @@ public class ProductAttributeValueImpl implements ProductAttributeValueService {
 	public int getValueByNameAndAttribute(ProductAttributeValue productAttributeValue) {
 		return productAttributeValueMapper.getValueByNameAndAttribute(productAttributeValue);
 	}
-	
-
 }

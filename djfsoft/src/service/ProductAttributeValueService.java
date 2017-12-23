@@ -6,6 +6,8 @@ import pojo.ProductAttributeValue;
 
 public interface ProductAttributeValueService {
 	void add(ProductAttributeValue productAttributeValue);
+	
+	void addProductToValue(String productId,String valueId);
 
 	void delete(String valueId);
 
