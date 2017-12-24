@@ -381,20 +381,13 @@
 						<th style="width:10px;"><input id="checkAll" type="checkbox"/></th>
 						<th style="width:30px;">序号</th>
 						<th>编码</th>
-						<th style="width:150px;">名称</th>
+						<th style="width:200px;">名称</th>
 						<th>条形码</th>
 						<th>单位</th>
 						<th>标准采购价</th>
 						<th>成本价</th>
 						<th>最后采购价</th>
-						<th style="width:70px;">标准品库存</th>
-						<th style="width:70px;">缺陷品库存</th>
-						<th style="width:60px;">可销售量</th>
-						<th style="width:60px;">可发货量</th>
 						<th style="width:60px;">预警数量</th>
-						<th style="width:60px;">月销量</th>
-						<th style="width:60px;">周销量</th>
-						<th style="width:60px;">日销量</th>
 						<th>备注</th>
 					</tr>
 				</thead>
@@ -411,18 +404,11 @@
 					    	<td>${product.normalPurchasePrice}</td>
 					    	<td>${product.cost}</td>
 					    	<td>${product.lastPurchasePrice}</td>
-					    	<td></td>
-					    	<td></td>
-					    	<td></td>
-					    	<td></td>
 					    	<td>
 					    		<c:if test="${product.stockWarn != -1}">
 									${product.stockWarn}
 								</c:if>
 					    	</td>
-					    	<td></td>
-					    	<td></td>
-					    	<td></td>
 					    	<td></td>
 					    </tr>
 					</c:forEach> 

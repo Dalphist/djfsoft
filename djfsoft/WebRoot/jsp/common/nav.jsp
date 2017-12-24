@@ -16,7 +16,7 @@
 								<a>采购</a>
 								<ul class="sub-menu">
 									<li><a>采购计划</a></li>
-									<li><a>采购订单</a></li>
+									<li><a onclick="window.location='<%=projectName%>/purchase/purchaseOrder/index'">采购订单</a></li>
 									<li><a>采购入库</a></li>
 									<li><a>采购退货</a></li>
 								</ul>
