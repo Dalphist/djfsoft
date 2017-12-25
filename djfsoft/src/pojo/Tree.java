@@ -4,8 +4,8 @@ import java.util.List;
 
 
 public class Tree {
-	private int id;
-	private int parentId;
+	private String id;
+	private String parentId;
 	private String text;
 	private String state;
 	private List<Tree> children;
@@ -13,16 +13,17 @@ public class Tree {
 	private String barCode;
 	private Double stock;
 	
-	public int getId() {
+	
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public int getParentId() {
+	public String getParentId() {
 		return parentId;
 	}
-	public void setParentId(int parentId) {
+	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 	public String getText() {

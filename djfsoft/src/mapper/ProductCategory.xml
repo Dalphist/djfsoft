@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from t_product_category
     </select>   
       
-    <select id="getProductCategoryByParentId" parameterType="int" resultType="ProductCategory">
+    <select id="getProductCategoryByParentId" parameterType="String" resultType="ProductCategory">
         select * from t_product_category where parent_id = #{parentId}
     </select>  
     

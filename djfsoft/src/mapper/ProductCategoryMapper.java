@@ -31,5 +31,5 @@ public interface ProductCategoryMapper {
     
     public List<ProductCategory> getChildrenCategoryById(String categoryId);
     
-    public List<Tree> getTreeByCategoryId(int parentId);
+    public List<Tree> getTreeByCategoryId(String parentId);
 }

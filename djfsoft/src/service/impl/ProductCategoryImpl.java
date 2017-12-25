@@ -63,7 +63,7 @@ public class ProductCategoryImpl implements ProductCategoryService{
 	}
 
 	@Override
-	public List<Tree> getTreeByCategoryId(int parent_id) {
+	public List<Tree> getTreeByCategoryId(String parent_id) {
 		return productCategoryMapper.getTreeByCategoryId(parent_id);
 	}
 	

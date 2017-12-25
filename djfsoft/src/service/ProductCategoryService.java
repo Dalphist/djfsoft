@@ -24,7 +24,7 @@ public interface ProductCategoryService {
 	
 	List<ProductCategory> getChildrenCategoryById(String categoryId);
 
-	List<Tree> getTreeByCategoryId(int parent_id);
+	List<Tree> getTreeByCategoryId(String parent_id);
 	
 	
 }

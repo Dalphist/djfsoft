@@ -138,7 +138,7 @@ public class ProductCategoryController {
 	public List<Tree> getTree() {
 //		List<ProductCategory> rootList = productCategoryService.getProductCategoryByParentId(0); // 根节点
 //		List<ProductCategory> list = buildTree(rootList);
-		List<Tree> root = productCategoryService.getTreeByCategoryId(0); // 根节点
+		List<Tree> root = productCategoryService.getTreeByCategoryId("0"); // 根节点
 		List<Tree> list = buildTree(root);
 		return list;
 	}
@@ -155,7 +155,7 @@ public class ProductCategoryController {
 	@RequestMapping("getCategoryToProductTree")
 	@ResponseBody
 	public List<Tree> getCategoryToProductTree() {
-		List<Tree> root = productCategoryService.getTreeByCategoryId(0); // 根节点
+		List<Tree> root = productCategoryService.getTreeByCategoryId("0"); // 根节点
 		List<Tree> list = buildProductTree(root);
 		return list;
 	}
@@ -174,12 +174,11 @@ public class ProductCategoryController {
 				List<Tree> list = new ArrayList<Tree>();
 				for(ProductInfo p : productInfoList){
 					Tree t = new Tree();
-					t.setId(p.getId()+1000);
+					t.setId("p"+p.getId());
 					t.setParentId(tree.getId());
 					t.setBarCode(p.getBarCode());
 					t.setProductCode(p.getProductCode());
 					t.setText(p.getProductName());
-					t.setChildren(null);
 					list.add(t);
 				}
 				tree.setChildren(list);
