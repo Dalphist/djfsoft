@@ -16,6 +16,17 @@
 	<style type="text/css"></style>
 	<script type="text/javascript">
 		$(function(){
+			$("#tt").treegrid({    
+			    url:"<%=projectName%>/productCategory/getCategoryToProductTree",    
+			    idField:'id',    
+			    treeField:'text',   
+			    checkbox: true,
+				rownumbers: true, 
+			    columns:[[   
+			    	{field:'id',title:'id',width:300,hidden:true}, 
+            		{field:'text',title:'名称',width:300,iconCls:"icon-sum"},         
+			    ]]    
+			});
 		})
 	</script>
   </head>
@@ -27,9 +38,14 @@
 		<div data-options="region:'center'">
 			<iframe id="iframe_order_list" src="<%=projectName%>/purchase/purchaseOrder/orderList" style="width: 99%;height: 99%;"></iframe>
 		</div>
-		<div data-options="region:'south'" style="height: 50%;">
-			<iframe id="iframe_order_detail" src="" style="width: 99%;height: 99%;"></iframe>
+		<div data-options="region:'south'" style="height: 40%;">
+			<iframe id="iframe_order_detail" src="<%=projectName%>/purchase/purchaseOrder/orderDetail" style="width: 99%;height: 99%;"></iframe>
 		</div>
+		
+		<div id="win_product" class="easyui-window" title="My Window" style="width:600px;height:400px"   
+	        data-options="iconCls:'icon-save',modal:true">   
+		    <table id="tt" style="width:600px;height:400px"></table> 
+		</div>  
 	</div>
 </body>
 </html>

@@ -43,6 +43,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where FIND_IN_SET(category_id,queryChildrenCategoryInfo(#{categoryId}));
 	</select>
 	
+	<select id="productInfolist" parameterType="String" resultType="ProductInfo">
+		SELECT p.*,IFNULL(s.normal_quantity,0) as stock from 
+		t_product p
+		LEFT JOIN t_stock s ON s.product_id = p.id 
+		WHERE p.category_id = #{categoryId};
+	</select>
+	
 	<select id="getProductByCode" parameterType="Product" resultType="int">
 		select count(*) from t_product where product_code = #{productCode}
 		<if test="id != null">

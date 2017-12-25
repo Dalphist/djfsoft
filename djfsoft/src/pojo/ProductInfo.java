@@ -23,6 +23,7 @@ public class ProductInfo {
 	private Date gmtModified;
 	private Integer effectiveFlag;
 	private List<ProductAttributeInfo> attributeList; 
+	private Double stock;
 
 	public Integer getId() {
 		return id;
@@ -167,20 +168,24 @@ public class ProductInfo {
 	public void setAttributeList(List<ProductAttributeInfo> attributeList) {
 		this.attributeList = attributeList;
 	}
+	
+	public Double getStock() {
+		return stock;
+	}
+
+	public void setStock(Double stock) {
+		this.stock = stock;
+	}
 
 	@Override
 	public String toString() {
-		return "ProductInfo [id=" + id + ", productCode=" + productCode
-				+ ", barCode=" + barCode + ", productName=" + productName
-				+ ", productShortName=" + productShortName + ", categoryId="
-				+ categoryId + ", categoryName=" + categoryName
-				+ ", normalPurchasePrice=" + normalPurchasePrice + ", cost="
-				+ cost + ", lastPurchasePrice=" + lastPurchasePrice
-				+ ", salePrice=" + salePrice + ", stockWarn=" + stockWarn
-				+ ", productUnit=" + productUnit + ", productPlace="
-				+ productPlace + ", gmtCreate=" + gmtCreate + ", gmtModified="
-				+ gmtModified + ", effectiveFlag=" + effectiveFlag
-				+ ", attributeList=" + attributeList + "]";
+		return "ProductInfo [id=" + id + ", productCode=" + productCode + ", barCode=" + barCode + ", productName="
+				+ productName + ", productShortName=" + productShortName + ", categoryId=" + categoryId
+				+ ", categoryName=" + categoryName + ", normalPurchasePrice=" + normalPurchasePrice + ", cost=" + cost
+				+ ", lastPurchasePrice=" + lastPurchasePrice + ", salePrice=" + salePrice + ", stockWarn=" + stockWarn
+				+ ", productUnit=" + productUnit + ", productPlace=" + productPlace + ", gmtCreate=" + gmtCreate
+				+ ", gmtModified=" + gmtModified + ", effectiveFlag=" + effectiveFlag + ", attributeList="
+				+ attributeList + ", stock=" + stock + "]";
 	}
 
 }

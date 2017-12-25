@@ -9,6 +9,9 @@ public class Tree {
 	private String text;
 	private String state;
 	private List<Tree> children;
+	private String productCode;
+	private String barCode;
+	private Double stock;
 	
 	public int getId() {
 		return id;
@@ -40,5 +43,22 @@ public class Tree {
 	public void setState(String state) {
 		this.state = state;
 	}
-	
+	public String getProductCode() {
+		return productCode;
+	}
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+	public String getBarCode() {
+		return barCode;
+	}
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
+	}
+	public Double getStock() {
+		return stock;
+	}
+	public void setStock(Double stock) {
+		this.stock = stock;
+	}
 }

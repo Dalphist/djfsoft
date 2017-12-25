@@ -1,0 +1,89 @@
+<%@ page language="java" import="java.util.*,djfsoft.pojo.*" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>主页</title>
+    <%
+		String projectName  = request.getContextPath();
+	 %>
+    <link rel="stylesheet" type="text/css" href="<%=projectName%>/easyui/themes/default/easyui.css">   
+	<link rel="stylesheet" type="text/css" href="<%=projectName%>/easyui/themes/icon.css">   
+	<script type="text/javascript" src="<%=projectName%>/js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="<%=projectName%>/easyui/jquery.easyui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<%=projectName%>/css/style.css"> 
+	
+	<style type="text/css">
+	.select_tr{
+		background-color: #c4e8f5;
+	}
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			//单击行变色及获取订单详情
+			$("#table_order_list tbody tr").click(function() {  
+			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
+			   var order_id = $(this).find(".td_order_id").text().trim();
+			   $("#input_order_id").val(order_id);
+			   getorderInfo(order_id);
+			}); 
+			//添加
+		    $("#input_order_add").click(function(){
+		    	$("#tab_order input").val("");
+		    	$(".order_category_text").val(order_category_text);
+		    	$("#tab_order").tabs("select",0);
+		    	$("#input_order_id").val("");
+		    	getCategoryAttribute(category_id);
+		    });
+		});
+		
+		//添加商品
+		function addProduct(){
+			$("#win_product",window.parent.document).window("open");  
+		}
+	</script>
+  </head>
+<body style="margin: 0px;">
+	<input id="input_order_id" style="display: none;">
+	<div style="height:30px;background-color:#e0ecff">
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">新建订单</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="addProduct();">选择商品</a>
+	</div>
+	<div>
+		<table id="table_order_list" class="table_list" cellspacing="0">
+			<thead>
+				<tr>
+					<th style="width:30px;">序号</th>
+					<th>商品编号</th>
+					<th>商品条形码</th>
+					<th>商品名称</th>
+					<th>数量</th>
+					<th>单位</th>
+					<th>单价</th>
+					<th>总价</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="detail" items="${detailList}" varStatus="status">  
+				    <tr>
+				    	<td>${status.count}</td>
+				    	<td>${detail.productCode}</td>
+				    	<td>${detail.barCode}</td>
+				    	<td>${detail.productName}</td>
+				    	<td>${detail.quantity}</td>
+				    	<td>${detail.productUnit}</td>
+				    	<td>${detail.unit_price}</td>
+				    	<td>${detail.cost}</td>
+				    </tr>
+				</c:forEach> 
+			</tbody>
+		</table>
+	</div>
+	
+</body>
+</html>
+

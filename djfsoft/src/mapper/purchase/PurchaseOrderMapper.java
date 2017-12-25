@@ -4,6 +4,7 @@ import java.util.List;
 
 import pojo.purchase.PurchaseOrder;
 import pojo.purchase.PurchaseOrderDetailInfo;
+import pojo.purchase.PurchaseOrderInfo;
 
 public interface PurchaseOrderMapper {
 	public void addOrder(PurchaseOrder purchaseOrder);
@@ -16,7 +17,7 @@ public interface PurchaseOrderMapper {
 
 	public void updateOrder(PurchaseOrder purchaseOrder);
 
-	public List<PurchaseOrder> orderList();
+	public List<PurchaseOrderInfo> orderList();
 
 	public List<PurchaseOrderDetailInfo> getDetail(String orderId);
 }

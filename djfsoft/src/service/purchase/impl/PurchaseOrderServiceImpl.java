@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import pojo.purchase.PurchaseOrder;
 import pojo.purchase.PurchaseOrderDetailInfo;
+import pojo.purchase.PurchaseOrderInfo;
 import service.purchase.PurchaseOrderService;
 
 @Service
@@ -47,7 +48,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	}
 	
 	@Override
-	public List<PurchaseOrder> orderList() {
+	public List<PurchaseOrderInfo> orderList() {
 		return purchaseOrderMapper.orderList();
 	}
 	
@@ -55,6 +56,5 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	public List<PurchaseOrderDetailInfo> getDetail(String orderId) {
 		return purchaseOrderMapper.getDetail(orderId);
 	}
-
 	
 }

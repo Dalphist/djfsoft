@@ -4,6 +4,7 @@ import java.util.List;
 
 import pojo.purchase.PurchaseOrder;
 import pojo.purchase.PurchaseOrderDetailInfo;
+import pojo.purchase.PurchaseOrderInfo;
 
 public interface PurchaseOrderService {
 	void addOrder(PurchaseOrder purchaseOrder);
@@ -16,7 +17,7 @@ public interface PurchaseOrderService {
 
 	void updateOrder(PurchaseOrder purchaseOrder);
 
-	List<PurchaseOrder> orderList();
+	List<PurchaseOrderInfo> orderList();
 
 	List<PurchaseOrderDetailInfo> getDetail(String orderId);
 

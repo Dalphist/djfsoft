@@ -18,6 +18,7 @@ public interface ProductService {
 	
 	List<Product> getProductList(String categoryId);
 	
+	List<ProductInfo> getProductInfoByCategoryId(String categoryId);
 	//校验用方法
 	int getProductByCode(Product product);
 	int getProductByBarCode(Product product);

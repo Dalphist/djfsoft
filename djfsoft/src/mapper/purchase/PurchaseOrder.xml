@@ -36,13 +36,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where id=#{id}
 	</update>
 
-	<select id="orderList" resultType="PurchaseOrder">
+	<select id="orderList" resultType="PurchaseOrderInfo">
 		select * from t_purchase_order
 	</select>
 	
 	<select id="getDetail" parameterType="String" resultType="PurchaseOrderDetailInfo">
-		select * from t_purchase_order_detail 
-		where purchase_order_id= #{orderId}
+		select pod.*,p.bar_code,p.product_code,p.product_name,p.product_unit from 
+		t_purchase_order_detail pod 
+		JOIN t_product p ON pod.product_id = p.id 
+		WHERE pod.purchase_order_id = #{orderId} 
 	</select>
 	
 	

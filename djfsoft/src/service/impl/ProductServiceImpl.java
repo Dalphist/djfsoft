@@ -59,4 +59,9 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.getProductByBarCode(product);
 	}
 
+	@Override
+	public List<ProductInfo> getProductInfoByCategoryId(String categoryId) {
+		return productMapper.productInfolist(categoryId);
+	}
+
 }

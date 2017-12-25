@@ -21,10 +21,6 @@
 	.select_tr{
 		background-color: #c4e8f5;
 	}
-	span.required {
-		color: #999;
-		font-size: 150%;
-	}
 	</style>
 	<script type="text/javascript">
 		$(function(){
@@ -33,7 +29,7 @@
 			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
 			   var order_id = $(this).find(".td_order_id").text().trim();
 			   $("#input_order_id").val(order_id);
-			   getorderInfo(order_id);
+			   getorderDetail(order_id);
 			}); 
 			//添加
 		    $("#input_order_add").click(function(){
@@ -44,14 +40,18 @@
 		    	getCategoryAttribute(category_id);
 		    });
 		});
+		
+		function getorderDetail(order_id){
+			$("#iframe_order_detail",window.parent.document).attr("src","<%=projectName%>/purchase/purchaseOrder/orderDetail?orderId="+order_id);
+		}
 	</script>
   </head>
   <body style="margin: 0px;">
-  <input id="order_category_id" style="display: none;">
   <input id="input_order_id" style="display: none;">
   <div class="easyui-layout" style="height:100%;">
   	<div data-options="region:'center'" style="height:70%;">
 		<div style="height:30px;background-color:#e0ecff">
+			<span>采购订单</span>
 			<input id="input_order_add" type="button" value="添加" />
 			<input id="input_order_del" type="button" value="删除" onclick="delSelectorder();"/>
 			<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
@@ -82,14 +82,15 @@
 					    	<td>${order.transportFare}</td>
 					    	<td>${order.extraPrice}</td>
 					    	<td>${order.totalPrice}</td>
-					    	<td>${order.operaterId}</td>
-					    	<td></td>
-					    	<td></td>
+					    	<td>${order.operateName}</td>
+					    	<td>${order.operateDate}</td>
+					    	<td>${order.payType}</td>
 					    </tr>
 					</c:forEach> 
 				</tbody>
 			</table>
 		</div>
+	</div>
 </body>
 </html>
 

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pojo.ProductCategory;
+import pojo.ProductInfo;
 import pojo.ResultBean;
 import pojo.Tree;
 import pojo.User;
 import service.ProductCategoryService;
+import service.ProductService;
 import service.UserService;
-import util.ParseUtil;
 import util.DateUtil;
+import util.ParseUtil;
 
 @Controller
 @RequestMapping("productCategory")
@@ -145,6 +148,42 @@ public class ProductCategoryController {
 			List<Tree> children = productCategoryService.getTreeByCategoryId(tree.getId());
 			tree.setChildren(children);
 			buildTree(children);
+		}
+		return root;
+	}
+	
+	@RequestMapping("getCategoryToProductTree")
+	@ResponseBody
+	public List<Tree> getCategoryToProductTree() {
+		List<Tree> root = productCategoryService.getTreeByCategoryId(0); // 根节点
+		List<Tree> list = buildProductTree(root);
+		return list;
+	}
+	
+	@Autowired
+	ProductService productService;
+	
+	public List<Tree> buildProductTree(List<Tree> root) {
+		for (Tree tree : root) {
+			List<Tree> children = productCategoryService.getTreeByCategoryId(tree.getId());
+			if(children.size() > 0){
+				tree.setChildren(children);
+				buildProductTree(children);
+			}else{
+				List<ProductInfo> productInfoList = productService.getProductInfoByCategoryId(String.valueOf(tree.getId()));
+				List<Tree> list = new ArrayList<Tree>();
+				for(ProductInfo p : productInfoList){
+					Tree t = new Tree();
+					t.setId(p.getId()+1000);
+					t.setParentId(tree.getId());
+					t.setBarCode(p.getBarCode());
+					t.setProductCode(p.getProductCode());
+					t.setText(p.getProductName());
+					t.setChildren(null);
+					list.add(t);
+				}
+				tree.setChildren(list);
+			}
 		}
 		return root;
 	}
