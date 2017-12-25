@@ -23,8 +23,11 @@
 			    checkbox: true,
 				rownumbers: true, 
 			    columns:[[   
-			    	{field:'id',title:'id',width:300,hidden:true}, 
-            		{field:'text',title:'名称',width:300,iconCls:"icon-sum"},         
+			    	{field:'id',title:'id'}, 
+            		{field:'text',title:'名称',width:200,iconCls:"icon-sum"},         
+            		{field:'productCode',title:'编号',width:200},         
+            		{field:'barCode',title:'条形码',width:200},         
+            		{field:'stock',title:'库存',width:200},         
 			    ]]    
 			});
 		})
