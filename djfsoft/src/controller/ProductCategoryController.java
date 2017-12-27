@@ -179,6 +179,7 @@ public class ProductCategoryController {
 					t.setBarCode(p.getBarCode());
 					t.setProductCode(p.getProductCode());
 					t.setText(p.getProductName());
+					t.setStock(p.getStock());
 					list.add(t);
 				}
 				tree.setChildren(list);

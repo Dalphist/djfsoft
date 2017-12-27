@@ -25,11 +25,10 @@
 	<script type="text/javascript">
 		$(function(){
 			//单击行变色及获取订单详情
-			$("#table_order_list tbody tr").click(function() {  
+			$("#table_order_detail tbody").on("click","tr",function(){
 			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
 			   var order_id = $(this).find(".td_order_id").text().trim();
 			   $("#input_order_id").val(order_id);
-			   getorderInfo(order_id);
 			}); 
 			//添加
 		    $("#input_order_add").click(function(){
@@ -37,14 +36,40 @@
 		    	$(".order_category_text").val(order_category_text);
 		    	$("#tab_order").tabs("select",0);
 		    	$("#input_order_id").val("");
-		    	getCategoryAttribute(category_id);
 		    });
+		    
+		    $("#table_order_detail tbody").on("keyup",".quantity",function(){
+		    	cal($(this).parents("tr"));
+			}); 
+		    $("#table_order_detail tbody").on("keyup",".unit_price",function(){
+			}); 
+		    $("#table_order_detail tbody").on("keyup",".cost",function(){
+			}); 
 		});
+		//计算
+		function cal(tr){
+			var unit_price = tr.find(".unit_price").val().trim();
+	    	var quantity = tr.find(".quantity").val().trim();
+	    	var cost = tr.find(".cost").val().trim();
+	    	if(unit_price != "" && quantity != ""){
+		    	$(".cost").val(unit_price*quantity);
+		    	return;
+	    	}
+	    	if(unit_price == "" && cost != ""){
+		    	$(".unit_price").val(cost/quantity);
+		    	return;
+	    	}
+	    	if(quantity == "" && cost != ""){
+		    	$(".quantity").val(cost/unit_price);
+		    	return;
+	    	}
+		}
 		
 		//添加商品
 		function addProduct(){
-			$("#win_product",window.parent.document).window("open");  
+			parent.openWinProduct();
 		}
+		
 	</script>
   </head>
 <body style="margin: 0px;">
@@ -54,16 +79,16 @@
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="addProduct();">选择商品</a>
 	</div>
 	<div>
-		<table id="table_order_list" class="table_list" cellspacing="0">
+		<table id="table_order_detail" class="table_list" cellspacing="0">
 			<thead>
 				<tr>
 					<th style="width:30px;">序号</th>
 					<th>商品编号</th>
 					<th>商品条形码</th>
 					<th>商品名称</th>
-					<th>数量</th>
 					<th>单位</th>
 					<th>单价</th>
+					<th>数量</th>
 					<th>总价</th>
 				</tr>
 			</thead>
@@ -74,9 +99,9 @@
 				    	<td>${detail.productCode}</td>
 				    	<td>${detail.barCode}</td>
 				    	<td>${detail.productName}</td>
-				    	<td>${detail.quantity}</td>
 				    	<td>${detail.productUnit}</td>
 				    	<td>${detail.unit_price}</td>
+				    	<td>${detail.quantity}</td>
 				    	<td>${detail.cost}</td>
 				    </tr>
 				</c:forEach> 

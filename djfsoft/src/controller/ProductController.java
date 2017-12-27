@@ -179,4 +179,22 @@ public class ProductController {
 		return result;
 	}
 	
+	/**
+	 * 采购订单选择商品后，获取前台传过来的商品id集合得到对应的商品信息传回
+	 * @param productIds
+	 * @return
+	 */
+	@RequestMapping("getProductInfoList")
+	@ResponseBody
+	public ResultBean<ProductInfo> getProductInfoList(String productIds) {
+		List<String> ids = ParseUtil.parseFromStrArray(productIds);
+		List<ProductInfo> list = new ArrayList<ProductInfo>();
+		for (String id : ids) {
+			ProductInfo info = productService.getProductById(id);
+			list.add(info);
+		}
+		ResultBean<ProductInfo> result = new ResultBean<ProductInfo>();
+		result.setDataList(list);
+		return result;
+	}
 }
