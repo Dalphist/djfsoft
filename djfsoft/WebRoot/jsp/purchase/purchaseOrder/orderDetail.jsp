@@ -21,6 +21,23 @@
 	.select_tr{
 		background-color: #c4e8f5;
 	}
+	.number_text{
+		font-size: 12px;
+	    border: 1px solid #95B8E7;
+	    padding: 4px;
+	    white-space: normal;
+	    vertical-align: top;
+	    outline-style: none;
+	    resize: none;
+	    border-radius: 5px 5px 5px 5px;
+	    margin: 0px;
+	    padding-top: 0px;
+	    padding-bottom: 0px;
+	    height: 23px;
+	    line-height: 23px;
+	    width: 127px;
+	    text-align: right;
+	}
 	</style>
 	<script type="text/javascript">
 		$(function(){
@@ -39,28 +56,58 @@
 		    });
 		    
 		    $("#table_order_detail tbody").on("keyup",".quantity",function(){
-		    	cal($(this).parents("tr"));
+		    	calByQuantity($(this).parents("tr"));
 			}); 
 		    $("#table_order_detail tbody").on("keyup",".unit_price",function(){
 			}); 
 		    $("#table_order_detail tbody").on("keyup",".cost",function(){
 			}); 
 		});
-		//计算
-		function cal(tr){
+		//单价变动的计算
+		function calByUnitPrice(tr){
 			var unit_price = tr.find(".unit_price").val().trim();
 	    	var quantity = tr.find(".quantity").val().trim();
 	    	var cost = tr.find(".cost").val().trim();
 	    	if(unit_price != "" && quantity != ""){
-		    	$(".cost").val(unit_price*quantity);
+	    		var cost_new = unit_price*quantity;
+		    	tr.find(".cost").val(cost_new.toFixed(2));
 		    	return;
 	    	}
-	    	if(unit_price == "" && cost != ""){
-		    	$(".unit_price").val(cost/quantity);
+	    	if(quantity == "" || quantity == 0 && cost != "" && cost != 0){
+	    		var quantity_new = cost/unit_price;
+		    	tr.find(".quantity").val(quantity_new.toFixed(2));
 		    	return;
 	    	}
-	    	if(quantity == "" && cost != ""){
-		    	$(".quantity").val(cost/unit_price);
+		}
+		//数量变动的计算
+		function calByQuantity(tr){
+			var unit_price = tr.find(".unit_price").val().trim();
+	    	var quantity = tr.find(".quantity").val().trim();
+	    	var cost = tr.find(".cost").val().trim();
+	    	if(unit_price != "" && quantity != ""){
+	    		var cost_new = unit_price*quantity;
+		    	tr.find(".cost").val(cost_new.toFixed(2));
+		    	return;
+	    	}
+	    	if(unit_price == "" || unit_price == 0 && cost != "" && cost != 0){
+	    		var unit_price_new = cost/quantity;
+		    	tr.find(".unit_price").val(unit_price_new.toFixed(2));
+		    	return;
+	    	}
+		}
+		//总价变动的计算
+		function calByCost(tr){
+			var unit_price = tr.find(".unit_price").val().trim();
+	    	var quantity = tr.find(".quantity").val().trim();
+	    	var cost = tr.find(".cost").val().trim();
+	    	if(cost != "" && quantity != "" && quantity!= 0){
+	    		var unit_price_new = cost/quantity;
+		    	tr.find(".unit_price").val(unit_price_new.toFixed(2));
+		    	return;
+	    	}
+	    	if(cost != "" && quantity == "" || quantity == 0 && unit_price != 0 && unit_price != ""){
+	    		var quantity_new = cost/unit_price;
+		    	tr.find(".quantity").val(quantity_new.toFixed(2));
 		    	return;
 	    	}
 		}
@@ -90,6 +137,11 @@
 					<th>单价</th>
 					<th>数量</th>
 					<th>总价</th>
+				</tr>
+				<tr>
+					<th colspan="6"></th>
+					<th id="total_quantity">0</th>
+					<th id="total_cost">0</th>
 				</tr>
 			</thead>
 			<tbody>

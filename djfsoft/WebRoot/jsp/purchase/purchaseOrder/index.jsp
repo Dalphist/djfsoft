@@ -13,7 +13,8 @@
 	<link rel="stylesheet" type="text/css" href="<%=projectName%>/easyui/themes/icon.css">   
 	<script type="text/javascript" src="<%=projectName%>/js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="<%=projectName%>/easyui/jquery.easyui.min.js"></script>
-	<style type="text/css"></style>
+	<style type="text/css">
+	</style>
 	<script type="text/javascript">
 		$(function(){
 			$("#win_product").window("close");
@@ -63,13 +64,14 @@
                 				+ "<td>"+ product.barCode +"</td>"
                 				+ "<td>"+ product.productName +"</td>"
                 				+ "<td>"+ product.productUnit +"</td>"
-                				+ "<td><input class='easyui-numberbox unit_price' data-options='min:0,precision:2'/></td>"
-                				+ "<td><input class='easyui-numberbox quantity' data-options='min:0,precision:2'/></td>"
-                				+ "<td><input class='easyui-numberbox cost' data-options='min:0,precision:2' value='0'/></td>"
+                				+ "<td><input class='number_text unit_price' data-options='min:0,precision:2'/></td>"
+                				+ "<td><input class='number_text quantity' data-options='min:0,precision:2'/></td>"
+                				+ "<td><input class='number_text cost' data-options='min:0,precision:2' value='0'/></td>"
                 				+ "</tr>";
-                		
 						tbody.append(tr);
 	     			});
+	     			//先将回显数据全部清除  
+	       			$("#tt").treegrid("clearChecked");
                 }				
 			});
 		}
