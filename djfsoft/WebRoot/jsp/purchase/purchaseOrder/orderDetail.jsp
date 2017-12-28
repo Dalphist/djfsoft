@@ -59,8 +59,10 @@
 		    	calByQuantity($(this).parents("tr"));
 			}); 
 		    $("#table_order_detail tbody").on("keyup",".unit_price",function(){
+		    	calByUnitPrice($(this).parents("tr"));
 			}); 
 		    $("#table_order_detail tbody").on("keyup",".cost",function(){
+		    	calByCost($(this).parents("tr"));
 			}); 
 		});
 		//单价变动的计算
