@@ -59,6 +59,7 @@
                 	var productList = result.dataList;
                 	$.each(productList,function(i,product){
                 		var tr = "<tr>"
+                				+ "<td><input type='checkbox'></td>"
                 				+ "<td>"+ (len*1+i*1+1) +"</td>"
                 				+ "<td>"+ product.productCode +"</td>"
                 				+ "<td>"+ product.barCode +"</td>"

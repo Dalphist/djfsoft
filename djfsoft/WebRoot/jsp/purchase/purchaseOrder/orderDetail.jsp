@@ -25,12 +25,7 @@
 		font-size: 12px;
 	    border: 1px solid #95B8E7;
 	    padding: 4px;
-	    white-space: normal;
-	    vertical-align: top;
-	    outline-style: none;
-	    resize: none;
 	    border-radius: 5px 5px 5px 5px;
-	    margin: 0px;
 	    padding-top: 0px;
 	    padding-bottom: 0px;
 	    height: 23px;
@@ -54,16 +49,28 @@
 		    	$("#tab_order").tabs("select",0);
 		    	$("#input_order_id").val("");
 		    });
-		    
-		    $("#table_order_detail tbody").on("keyup",".quantity",function(){
+		    //全选/取消全选
+		    $("#checkAll").on("click",function(event){
+		    	if($("#checkAll").prop("checked")){
+		    		$("#table_order_detail tbody :checkbox").prop("checked", true);
+		    	}else{
+		    		$("#table_order_detail tbody :checkbox").prop("checked", false);
+		    	}
+		    });
+		    //*************数值修改时联动修改**************
+		    $("#table_order_detail tbody").on("blur",".quantity",function(){
 		    	calByQuantity($(this).parents("tr"));
+		    	calTableCost();
 			}); 
-		    $("#table_order_detail tbody").on("keyup",".unit_price",function(){
+		    $("#table_order_detail tbody").on("blur",".unit_price",function(){
 		    	calByUnitPrice($(this).parents("tr"));
+		    	calTableCost();
 			}); 
-		    $("#table_order_detail tbody").on("keyup",".cost",function(){
+		    $("#table_order_detail tbody").on("blur",".cost",function(){
 		    	calByCost($(this).parents("tr"));
+		    	calTableCost();
 			}); 
+			//*********************************************
 		});
 		//单价变动的计算
 		function calByUnitPrice(tr){
@@ -75,7 +82,7 @@
 		    	tr.find(".cost").val(cost_new.toFixed(2));
 		    	return;
 	    	}
-	    	if(quantity == "" || quantity == 0 && cost != "" && cost != 0){
+	    	if((quantity == "" || quantity == 0) && (cost != "" && cost != 0)){
 	    		var quantity_new = cost/unit_price;
 		    	tr.find(".quantity").val(quantity_new.toFixed(2));
 		    	return;
@@ -91,7 +98,7 @@
 		    	tr.find(".cost").val(cost_new.toFixed(2));
 		    	return;
 	    	}
-	    	if(unit_price == "" || unit_price == 0 && cost != "" && cost != 0){
+	    	if((unit_price == "" || unit_price == 0) && (cost != "" && cost != 0)){
 	    		var unit_price_new = cost/quantity;
 		    	tr.find(".unit_price").val(unit_price_new.toFixed(2));
 		    	return;
@@ -107,11 +114,25 @@
 		    	tr.find(".unit_price").val(unit_price_new.toFixed(2));
 		    	return;
 	    	}
-	    	if(cost != "" && quantity == "" || quantity == 0 && unit_price != 0 && unit_price != ""){
+	    	if(cost != "" && (quantity == "" || quantity == 0) && (unit_price != 0 && unit_price != "")){
 	    		var quantity_new = cost/unit_price;
 		    	tr.find(".quantity").val(quantity_new.toFixed(2));
 		    	return;
 	    	}
+		}
+		//计算总价及总数量
+		function calTableCost(){
+			var trs = $("#table_order_detail tbody tr");
+			var total_quantity = 0;
+			var total_cost = 0;
+			trs.each(function(){
+				var quantity = $(this).find(".quantity").val();
+				var cost = $(this).find(".cost").val();
+				total_quantity += quantity *1;
+				total_cost += cost *1;
+			});
+			$("#total_quantity").html(total_quantity.toFixed(2));
+			$("#total_cost").html(total_cost.toFixed(2));
 		}
 		
 		//添加商品
@@ -126,29 +147,32 @@
 	<div style="height:30px;background-color:#e0ecff">
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">新建订单</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="addProduct();">选择商品</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="chooseModel();">套用模板</a>
 	</div>
 	<div>
 		<table id="table_order_detail" class="table_list" cellspacing="0">
 			<thead>
-				<tr>
+				<tr style="height: 30px;">
+					<th style="width:30px;"><input id="checkAll" type="checkbox"></th>
 					<th style="width:30px;">序号</th>
-					<th>商品编号</th>
-					<th>商品条形码</th>
-					<th>商品名称</th>
+					<th style="width: 200px;">商品编号</th>
+					<th style="width: 200px;">商品条形码</th>
+					<th style="width: 300px;">商品名称</th>
 					<th>单位</th>
-					<th>单价</th>
-					<th>数量</th>
-					<th>总价</th>
+					<th style="width: 127px;">单价</th>
+					<th style="width: 127px;">数量</th>
+					<th style="width: 127px;">总价</th>
 				</tr>
-				<tr>
-					<th colspan="6"></th>
-					<th id="total_quantity">0</th>
-					<th id="total_cost">0</th>
+				<tr style="height: 30px;">
+					<td colspan="7"></td>
+					<td style="font-weight:bold; text-align: right;!" id="total_quantity">0</td>
+					<td style="font-weight:bold; text-align: right;!" id="total_cost">0</td>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="detail" items="${detailList}" varStatus="status">  
 				    <tr>
+				    	<td style="width:30px;"><input type="checkbox"></td>
 				    	<td>${status.count}</td>
 				    	<td>${detail.productCode}</td>
 				    	<td>${detail.barCode}</td>
