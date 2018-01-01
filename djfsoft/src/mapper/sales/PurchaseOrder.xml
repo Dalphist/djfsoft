@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.purchase.PurchaseOrderMapper">
+	<insert id="addOrder" parameterType="PurchaseOrder">
+		<selectKey keyProperty='id' resultType='int' order='AFTER'  >  
+	        select LAST_INSERT_ID();  
+	    </selectKey> 
+		INSERT INTO t_purchase_order
+		(order_code,product_price,transport_fare,extra_price,total_price,pay_type_id,operater_id,operate_date,effective_flag)
+		VALUES
+		(#{orderCode},#{productPrice},#{transportFare},#{extraPrice},#{totalPrice},#{payTypeId},#{operaterId},#{operateDate},#{effectiveFlag})
+	</insert>
+	
+	<insert id="addOrderDetail" parameterType="PurchaseOrderDetailInfo">
+		INSERT INTO t_purchase_order_detail
+		(purchase_order_id,product_id,quantity,unit_price,cost)
+		VALUES
+		(#{purchaseOrderId},#{productId},#{quantity},#{unitPrice},#{cost})
+	</insert>
+
+	<delete id="delOrder" parameterType="String">
+		delete from t_purchase_order where id= #{orderId}
+	</delete>
+	
+	<delete id="delOrderDetail" parameterType="String">
+		delete from t_purchase_order_detail where purchase_order_id= #{orderId}
+	</delete>
+
+	<update id="updateOrder" parameterType="PurchaseOrder">
+		update t_purchase_order
+		set product_price = #{productPrice},transport_fare = #{transportFare},extra_price = #{extraPrice},total_price = #{totalPrice},
+		pay_type_id = #{payTypeId},operater_id = #{operaterId},operate_date = #{operateDate},effective_flag = #{effectiveFlag}
+		where id=#{id}
+	</update>
+
+	<select id="orderList" resultType="PurchaseOrderInfo">
+		select * from t_purchase_order
+	</select>
+	
+	<select id="getDetail" parameterType="String" resultType="PurchaseOrderDetailInfo">
+		select pod.*,p.bar_code,p.product_code,p.product_name,p.product_unit from 
+		t_purchase_order_detail pod 
+		JOIN t_product p ON pod.product_id = p.id 
+		WHERE pod.purchase_order_id = #{orderId} 
+	</select>
+	
+	
+</mapper>

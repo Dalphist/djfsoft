@@ -1,0 +1,24 @@
+package service.sales;
+
+import java.util.List;
+
+import pojo.salesOrder.SalesOrder;
+import pojo.salesOrder.SalesOrderDetailInfo;
+import pojo.salesOrder.SalesOrderInfo;
+
+public interface SalesOrderService {
+	void addOrder(SalesOrder salesOrder);
+
+	void addOrderDetail(SalesOrderDetailInfo salesOrderDetailInfo);
+
+	void delOrder(String orderId);
+
+	void delOrderDetail(String orderId);
+
+	void updateOrder(SalesOrder salesOrder);
+
+	List<SalesOrderInfo> orderList();
+
+	List<SalesOrderDetailInfo> getDetail(String orderId);
+
+}
