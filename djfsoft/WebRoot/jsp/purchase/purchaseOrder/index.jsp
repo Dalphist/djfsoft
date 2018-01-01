@@ -48,7 +48,7 @@
 		//导入选中的商品
 		function importProduct(){
 			$("#win_product").window("close");
-			var tbody = $(window.frames["iframe_order_detail"].document).find("#table_order_detail tbody");
+			var tbody = $(window.frames["iframe_order_product"].document).find("#table_order_detail tbody");
 			var len = tbody.find("tr").length;
 			var productIds = getSelectProduct();
 			$.ajax({
@@ -86,15 +86,14 @@
 		<%@include file="../../common/nav.jsp"%>
 		<div data-options="region:'north'" style="height:51px">
 		</div>
-		<div data-options="region:'west',title:'West',split:true" style="width:100px;">
-		</div>
 		<div data-options="region:'center'">
 			<div class="easyui-layout" style="width:100%;height:100%;">
-				<div data-options="region:'center'">
-					<iframe id="iframe_order_list" src="<%=projectName%>/purchase/purchaseOrder/orderList" style="width: 99%;height: 99%;"></iframe>
+				<div data-options="region:'north',title:'基本信息'" style="height: 30%;">
 				</div>
-				<div data-options="region:'south'" style="height: 40%;">
-					<iframe id="iframe_order_detail" name="iframe_order_detail" src="<%=projectName%>/purchase/purchaseOrder/orderDetail" style="width: 99%;height: 99%;"></iframe>
+				<div data-options="region:'center',title:'订单货品'" style="height: 40%;">
+					<iframe id="iframe_order_product" name="iframe_order_product" src="<%=projectName%>/purchase/purchaseOrder/orderDetail" style="width: 99%;height: 99%;"></iframe>
+				</div>
+				<div data-options="region:'south',title:'订单结算'" style="height: 30%;">
 				</div>
 			</div>
 		</div>
