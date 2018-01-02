@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="mapper.purchase.PurchaseOrderMapper">
+<mapper namespace="mapper.sales.SalesOrderMapper">
 	<insert id="addOrder" parameterType="PurchaseOrder">
 		<selectKey keyProperty='id' resultType='int' order='AFTER'  >  
 	        select LAST_INSERT_ID();  
