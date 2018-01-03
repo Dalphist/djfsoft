@@ -13,11 +13,13 @@
 	<link rel="stylesheet" type="text/css" href="<%=projectName%>/easyui/themes/icon.css">   
 	<script type="text/javascript" src="<%=projectName%>/js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="<%=projectName%>/easyui/jquery.easyui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<%=projectName%>/css/style.css"> 
 	<style type="text/css">
 	</style>
 	<script type="text/javascript">
 		$(function(){
 			$("#win_product").window("close");
+			$('#tabs').tabs('select',1);
 			$("#tt").treegrid({    
 			    url:"<%=projectName%>/productCategory/getCategoryToProductTree",    
 			    idField:'id',    
@@ -48,7 +50,7 @@
 		//导入选中的商品
 		function importProduct(){
 			$("#win_product").window("close");
-			var tbody = $(window.frames["iframe_order_product"].document).find("#table_order_detail tbody");
+			var tbody = $("#table_order_detail tbody");
 			var len = tbody.find("tr").length;
 			var productIds = getSelectProduct();
 			$.ajax({
@@ -76,27 +78,39 @@
                 }				
 			});
 		}
-		function openWinProduct(){
-			$("#win_product").window("open");
-		}
 	</script>
   </head>
-  <body>
+<body>
 	<div id="main_layout" class="easyui-layout" style="width:100%;height:100%;">
 		<%@include file="../../common/nav.jsp"%>
 		<div data-options="region:'north'" style="height:51px">
+			<div id="win_product" class="easyui-window" title="商品列表" style="width:600px;height:400px"   
+		        data-options="iconCls:'icon-save',modal:true">   
+			    <table id="tt" style="width:581px;height:333px"></table>  
+			    <div style="height: 10px;">
+			    	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="$('#win_product').window('close');">
+						<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>  
+					</div>
+			    	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="importProduct();">
+				    	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">确定</a>  
+			    	</div>
+			    </div>
+			</div> 
 		</div>
 		<div data-options="region:'center'">
-			<div class="easyui-tabs" style="width:100%;height:100%;">
+			<div id="tabs" class="easyui-tabs" style="width:100%;height:100%;">
 			    <div title="订单列表" style="display:none;">   
-			        <iframe id="iframe_order_list" name="iframe_order_list" src="<%=projectName%>/purchase/purchaseOrder/orderList" style="width: 99%;height: 99%;"></iframe>    
+			        <iframe id="iframe_order_list" name="iframe_order_list" src="<%=projectName%>/sales/salesOrder/orderList" style="width: 99%;height: 99%;"></iframe>    
 			    </div>   
-			    <div title="Tab2" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">   
-			        tab2    
+			    <div id="tab_addOrder" title="手动添加" data-options="closable:true" style="overflow:auto;display:none;">   
+			    	<%@include file="addOrder.jsp"%>
 			    </div>   
 			</div> 
 		</div>
 	</div>
+
+
+
 </body>
 </html>
 

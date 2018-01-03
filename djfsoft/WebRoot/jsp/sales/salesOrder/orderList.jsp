@@ -21,6 +21,12 @@
 	</style>
 	<script type="text/javascript">
 		$(function(){
+			var height = $(window).height()-30;  
+	        $("#layout_order_list").attr("style","width:100%;height:"+height+"px");  
+	        $("#layout_order_list").layout("resize",{  
+	            width:"100%",  
+	            height:height+"px"  
+	        });  
 			//单击行变色及获取订单详情
 			$("#table_order_list tbody tr").click(function() {  
 			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
@@ -54,11 +60,11 @@
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">手动添加</a>
 		<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 	</div>
-	<div class="easyui-layout" style="width:100%;height:90%;">
-		<div data-options="region:'west',title:'过滤'" style="width: 100px;"></div>
+	<div id="layout_order_list" class="easyui-layout">
+		<div data-options="region:'west',title:'筛选'" style="width: 100px;"></div>
 		<div data-options="region:'center'" >
-			<div class="easyui-layout" style="width:100%;height:100%;">
-				<div data-options="region:'center'" style="height: 60%;">
+			<div id="div_order_list" class="easyui-layout" style="width:100%;height:100%;">
+				<div data-options="region:'center'" >
 					<div>
 						<table id="table_order_list" class="table_list" cellspacing="0">
 							<thead>
@@ -94,44 +100,65 @@
 						</table>
 					</div>
 				</div>
-			</div>
-			<div data-options="region:'south'" style="width: 100px;">
-				<div>
-					<table id="table_order_detail" class="table_list" cellspacing="0">
-						<thead>
-							<tr style="height: 30px;">
-								<th style="width:30px;"><input id="checkAll" type="checkbox"></th>
-								<th style="width:30px;">序号</th>
-								<th style="width: 200px;">商品编号</th>
-								<th style="width: 200px;">商品条形码</th>
-								<th style="width: 300px;">商品名称</th>
-								<th>单位</th>
-								<th style="width: 127px;">单价</th>
-								<th style="width: 127px;">数量</th>
-								<th style="width: 127px;">总价</th>
-							</tr>
-							<tr style="height: 30px;">
-								<td colspan="7"></td>
-								<td style="font-weight:bold; text-align: right;!" id="total_quantity">0</td>
-								<td style="font-weight:bold; text-align: right;!" id="total_cost">0</td>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="detail" items="${detailList}" varStatus="status">  
-							    <tr>
-							    	<td style="width:30px;"><input type="checkbox"></td>
-							    	<td>${status.count}</td>
-							    	<td>${detail.productCode}</td>
-							    	<td>${detail.barCode}</td>
-							    	<td>${detail.productName}</td>
-							    	<td>${detail.productUnit}</td>
-							    	<td>${detail.unit_price}</td>
-							    	<td>${detail.quantity}</td>
-							    	<td>${detail.cost}</td>
-							    </tr>
-							</c:forEach> 
-						</tbody>
-					</table>
+				<div data-options="region:'south'" style="height: 40%;">
+					<div id="tt" class="easyui-tabs" style="width:100%;height: 100%;">   
+					    <div title="货品详情" style="display:none;">   
+					        <div>
+								<table id="table_order_detail" class="table_list" cellspacing="0">
+									<thead>
+										<tr style="height: 30px;">
+											<th style="width: 40px;">序号</th>
+											<th style="width: 200px;">商品编号</th>
+											<th style="width: 200px;">商品条形码</th>
+											<th style="width: 300px;">商品名称</th>
+											<th style="width: 40px;">单位</th>
+											<th style="width: 127px;">单价</th>
+											<th style="width: 127px;">数量</th>
+											<th style="width: 127px;">总价</th>
+										</tr>
+										<tr style="height: 30px;">
+											<td colspan="6">总计</td>
+											<td style="font-weight:bold; text-align: right;!" id="total_quantity">0</td>
+											<td style="font-weight:bold; text-align: right;!" id="total_cost">0</td>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="detail" items="${detailList}" varStatus="status">  
+										    <tr>
+										    	<td>${status.count}</td>
+										    	<td>${detail.productCode}</td>
+										    	<td>${detail.barCode}</td>
+										    	<td>${detail.productName}</td>
+										    	<td>${detail.productUnit}</td>
+										    	<td>${detail.unit_price}</td>
+										    	<td>${detail.quantity}</td>
+										    	<td>${detail.cost}</td>
+										    </tr>
+										</c:forEach> 
+									</tbody>
+								</table>
+							</div>    
+					    </div>   
+					    <div title="库存"  style="overflow:auto;display:none;">   
+					        tab2    
+					    </div>   
+					    <div title="支付"  style="overflow:auto;display:none;">   
+					        tab2    
+					    </div>   
+					    <div title="备注"  style="overflow:auto;display:none;">   
+					        tab2    
+					    </div>   
+					    <div title="退换"  style="overflow:auto;display:none;">   
+					        tab2    
+					    </div>   
+					    <div title="补款"  style="overflow:auto;display:none;">   
+					        tab2    
+					    </div>   
+					    <div title="额外包裹"  style="overflow:auto;display:none;">   
+					        tab2    
+					    </div>   
+					</div> 
+					
 				</div>
 			</div>
 		</div>
