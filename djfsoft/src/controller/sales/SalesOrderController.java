@@ -21,7 +21,7 @@ public class SalesOrderController {
 	@RequestMapping("index")
 	public ModelAndView productIndex() {
 		ModelAndView mav = new ModelAndView();
-		String url = "sales/SalesOrder/index";
+		String url = "sales/salesOrder/index";
 		mav.setViewName(url);
 		return mav;
 	}

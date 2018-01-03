@@ -24,7 +24,7 @@
 							<li>
 								<a>销售</a>
 								<ul class="sub-menu">
-									<li><a>销售订单</a></li>
+									<li><a onclick="window.location='<%=projectName%>/sales/salesOrder/index'">销售订单</a></li>
 									<li><a>销售出库</a></li>
 									<li><a>销售退货</a></li>
 								</ul>
