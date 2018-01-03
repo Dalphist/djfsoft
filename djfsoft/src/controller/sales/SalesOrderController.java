@@ -30,7 +30,7 @@ public class SalesOrderController {
 	public ModelAndView orderList() {
 		List<SalesOrderInfo> list = SalesOrderService.orderList();
 		ModelAndView mav = new ModelAndView();
-		String url = "sales/SalesOrder/orderList";
+		String url = "sales/salesOrder/orderList";
 		mav.setViewName(url);
 		mav.addObject("orderList", list);
 		return mav;
@@ -40,7 +40,7 @@ public class SalesOrderController {
 	public ModelAndView orderDetail(String orderId) {
 		List<SalesOrderDetailInfo> list = SalesOrderService.getDetail(orderId);
 		ModelAndView mav = new ModelAndView();
-		String url = "sales/SalesOrder/orderDetail";
+		String url = "sales/salesOrder/orderDetail";
 		mav.setViewName(url);
 		mav.addObject("detailList", list);
 		return mav;
