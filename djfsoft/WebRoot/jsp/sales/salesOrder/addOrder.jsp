@@ -13,6 +13,12 @@ $(function(){
 	   		$("#table_order_detail tbody :checkbox").prop("checked", false);
 	   	}
 	});
+	//单击行变色及获取订单详情
+	$("#table_order_detail tbody").on("click","tr",function(){
+	   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
+	   var order_id = $(this).find(".td_order_id").text().trim();
+	   $("#input_order_id").val(order_id);
+	});
 	//*************数值修改时联动修改***************
 	$("#table_order_detail tbody").on("blur",".quantity",function(){
 		calByQuantity($(this).parents("tr"));
@@ -95,7 +101,69 @@ function calTableCost(){
 	$("#input_productPrice").val(total_cost.toFixed(2));
 	var transportFare = $("#input_transportFare").val();
 	var extraPrice = $("#input_extraPrice").val();
-	var totalPrice = 
+	var totalPrice = total_cost*1 + transportFare*1 - extraPrice;
+	$("#input_totalPrice").val(totalPrice.toFixed(2));
+}
+//保存订单
+function saveOrder(){
+	var productListInfo = getProductList();
+	if(!productListInfo){	//如果货品信息填写不全，返回false
+		return false;
+	}
+	alert("1");
+}
+//获取基本信息
+function getBasicInfo(){
+	var basicInfo = {};
+	basicInfo.dealDate = $("#input_dealDate").val();
+	basicInfo.taobaoCode = $("#input_taobaoCode").val();
+	basicInfo.customerName = $("#input_customerName").val();
+	basicInfo.customerTel = $("#input_customerTel").val();
+	basicInfo.customerPostcode = $("#input_customerPostcode").val();
+	basicInfo.customerNotes = $("#input_customerNotes").val();
+	basicInfo.customerAddress = $("#input_customerAddress").val();
+	basicInfo.productPrice = $("#input_productPrice").val();
+	basicInfo.transportFare = $("#input_transportFare").val();
+	basicInfo.extraPrice = $("#input_extraPrice").val();
+	basicInfo.totalPrice = $("#input_totalPrice").val();
+	return basicInfo;
+}
+//获取货品信息
+function getProductList(){
+	var productListInfo = [];
+	var trs = $("#table_order_detail tbody").find("tr");
+	var b = true;
+	trs.each(function(){
+		var productInfo = {};
+		var product_id = $(this).find(".td_product_id").text().trim();
+		var unit_price = $(this).find(".unit_price").val().trim();
+		var quantity = $(this).find(".quantity").val().trim();
+		var cost = $(this).find(".cost").val().trim();
+		if(unit_price == 0 || unit_price == "" || quantity == 0 || quantity == "" || cost == 0 || cost == "" ){
+			b = false;
+			return;
+		}
+		productInfo.productId = product_id;
+		productInfo.unitPrice = unit_price;
+		productInfo.quantity = quantity;
+		productInfo.cost = cost;
+		productListInfo.push(productInfo);
+	});
+	if(!b){
+		alert("商品数量/价格 不能为0");
+		return false;
+	}
+	return productListInfo;
+}
+//删除货品
+function delProduct(){
+	var tr = $("#table_order_detail tbody").find(".select_tr");
+	tr.remove();
+	//重排序号
+	var trs = $("#table_order_detail tbody").find("tr");
+	trs.each(function(){
+		
+	});
 }
 </script>
  <div id="layout_addOrder" class="easyui-layout">   
@@ -111,7 +179,7 @@ function calTableCost(){
     			<td></td>
     		</tr>
     	</table>
-    	<hr style="height:1px;border:none;border-top:1px solid #1675a1;margin-left: 10px;margin-right: 10px;margin-top: -1px;" />
+    	<hr style="height:1px;border:none;border-top:1px solid #1675a1;margin-left: 10px;margin-right: 10px;margin-top: 0px;" />
     	<table id="table_basicInfo" >
     		<tr>
     			<td style="width:80px;">客户网名：</td>
@@ -155,8 +223,9 @@ function calTableCost(){
     			<td></td>
     		</tr>
     	</table>
-    	<div style="width: 200px;margin: 0 auto;margin-top: 35px;">
+    	<div style="width: 220px;margin: 0 auto;margin-top: 35px;">
     		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveOrder();">保存为待审订单</a>
+    		&nbsp;&nbsp;
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="reset();">重置订单</a>
     	</div>
     </div>   
@@ -227,5 +296,8 @@ function calTableCost(){
 	    line-height: 23px;
 	    width: 127px;
 	    text-align: right;
+	}
+	.select_tr{
+		background-color: #c4e8f5;
 	}
 </style>

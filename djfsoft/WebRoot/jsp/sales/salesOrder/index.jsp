@@ -63,6 +63,7 @@
                 		var tr = "<tr>"
                 				+ "<td><input type='checkbox'></td>"
                 				+ "<td>"+ (len*1+i*1+1) +"</td>"
+                				+ "<td class='td_product_id' style='display:none;'>"+ product.id +"</td>"
                 				+ "<td>"+ product.productCode +"</td>"
                 				+ "<td>"+ product.barCode +"</td>"
                 				+ "<td>"+ product.productName +"</td>"
