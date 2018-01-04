@@ -1,4 +1,4 @@
-package pojo.salesOrder;
+package pojo.sales;
 
 import java.util.Date;
 

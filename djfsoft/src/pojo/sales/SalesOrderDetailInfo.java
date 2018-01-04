@@ -1,4 +1,4 @@
-package pojo.salesOrder;
+package pojo.sales;
 
 public class SalesOrderDetailInfo {
 	private Integer id;
