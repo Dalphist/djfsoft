@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mapper.sales.SalesOrderMapper;
-import pojo.salesOrder.SalesOrder;
-import pojo.salesOrder.SalesOrderDetailInfo;
-import pojo.salesOrder.SalesOrderInfo;
+import pojo.sales.SalesOrder;
+import pojo.sales.SalesOrderDetailInfo;
+import pojo.sales.SalesOrderInfo;
 import service.sales.SalesOrderService;
 
 @Service

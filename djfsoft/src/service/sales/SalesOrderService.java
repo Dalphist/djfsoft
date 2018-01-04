@@ -2,9 +2,9 @@ package service.sales;
 
 import java.util.List;
 
-import pojo.salesOrder.SalesOrder;
-import pojo.salesOrder.SalesOrderDetailInfo;
-import pojo.salesOrder.SalesOrderInfo;
+import pojo.sales.SalesOrder;
+import pojo.sales.SalesOrderDetailInfo;
+import pojo.sales.SalesOrderInfo;
 
 public interface SalesOrderService {
 	void addOrder(SalesOrder salesOrder);

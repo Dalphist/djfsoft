@@ -157,12 +157,11 @@ function getProductList(){
 }
 //删除货品
 function delProduct(){
-	var tr = $("#table_order_detail tbody").find(".select_tr");
-	tr.remove();
+	$("#table_order_detail tbody").find(".select_tr").remove();
 	//重排序号
 	var trs = $("#table_order_detail tbody").find("tr");
-	trs.each(function(){
-		
+	trs.each(function(i,tr){
+		$(this).find("td").eq(1).html(i*1+1);
 	});
 }
 </script>
