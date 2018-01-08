@@ -9,9 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        select LAST_INSERT_ID();  
 	    </selectKey> 
 		INSERT INTO t_purchase_order
-		(order_code,product_price,transport_fare,extra_price,total_price,pay_type_id,operater_id,operate_date,effective_flag)
+		(order_code,product_price,transport_fare,extra_price,total_price,pay_type_id,operater_id,operate_date,
+		deal_date,taobao_code,customer_name,customer_tel,customer_postcode,customer_district_id,customer_address,customer_notes)
 		VALUES
-		(#{orderCode},#{productPrice},#{transportFare},#{extraPrice},#{totalPrice},#{payTypeId},#{operaterId},#{operateDate},#{effectiveFlag})
+		(#{orderCode},#{productPrice},#{transportFare},#{extraPrice},#{totalPrice},#{payTypeId},#{operaterId},#{operateDate},
+		#{dealDate},#{taobaoCode},#{customerName},#{customerTel},#{customerPostcode},#{customerDistrictId},#{customerAddress},#{customerNotes})
 	</insert>
 	
 	<insert id="addOrderDetail" parameterType="PurchaseOrderDetailInfo">

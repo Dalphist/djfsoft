@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import pojo.Product;
 import pojo.ResultBean;
+import pojo.sales.SalesOrder;
 import pojo.sales.SalesOrderDetailInfo;
 import pojo.sales.SalesOrderInfo;
 import service.sales.SalesOrderService;
-import util.DateUtil;
 import util.ParseUtil;
 
 
@@ -54,21 +53,21 @@ public class SalesOrderController {
 	@RequestMapping("saveSalesOrder")
 	@ResponseBody
 	public ResultBean<String> saveSalesOrder(String basicInfo,String productListInfo) {
-		Product product = new Product();
-		product = (Product)ParseUtil.getBeanFromStr(basicInfo, "pojo.sales.salesOrder");
+		SalesOrder salesOrder = new SalesOrder();
+		salesOrder = (SalesOrder)ParseUtil.getBeanFromStr(basicInfo, "pojo.sales.SalesOrder");
 		ResultBean<String> result = new ResultBean<String>();
-		if(product.getId() == null){
-			// 添加商品时，设置当前时间为添加时间。
-			product.setGmtCreate(DateUtil.getNowDate());
+		if(salesOrder.getId() == null){
+			SalesOrderService.addOrder(salesOrder);
 			result.setMsg("添加成功！");
 		}else{
-			product.setGmtModified(DateUtil.getNowDate());
 			result.setMsg("修改成功！");
 		}
-		String productId = String.valueOf(product.getId());
-		//保存规格
-		List<String> ids = ParseUtil.parseFromStrArray(productListInfo);
-		for(String valueId : ids){
+		String salesOrderId = String.valueOf(salesOrder.getId());
+		//保存订单的货品详情
+		List<SalesOrderDetailInfo> list = ParseUtil.getBeanListFromStr(productListInfo, "pojo.sales.SalesOrderDetailInfo");
+		for(SalesOrderDetailInfo detail : list){
+			detail.setPurchaseOrderId(Integer.parseInt(salesOrderId));
+			SalesOrderService.addOrderDetail(detail);
 		}
 		result.setCode(ResultBean.SUCCESS);
 		return result;

@@ -107,10 +107,18 @@ function calTableCost(){
 //保存订单
 function saveOrder(){
 	var productListInfo = getProductList();
+	var basicInfo = getBasicInfo();
 	if(!productListInfo){	//如果货品信息填写不全，返回false
 		return false;
 	}
-	alert("1");
+	$.ajax({
+		url:"<%=projectName%>/sales/salesOrder/saveSalesOrder",
+		type:"post",
+        data:{"productListInfo":JSON.stringify(productListInfo),"basicInfo":JSON.stringify(basicInfo)},
+        success:function(result){
+        
+        }				
+	});
 }
 //获取基本信息
 function getBasicInfo(){
