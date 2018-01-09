@@ -19,7 +19,6 @@
 	<script type="text/javascript">
 		$(function(){
 			$("#win_product").window("close");
-			$('#tabs').tabs('select',1);
 			$("#tt").treegrid({    
 			    url:"<%=projectName%>/productCategory/getCategoryToProductTree",    
 			    idField:'id',    

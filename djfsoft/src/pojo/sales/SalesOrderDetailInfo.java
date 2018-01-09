@@ -2,7 +2,7 @@ package pojo.sales;
 
 public class SalesOrderDetailInfo {
 	private Integer id;
-	private Integer purchaseOrderId;
+	private Integer salesOrderId;
 	private Integer productId;
 	private Double quantity;
 	private Double unitPrice;
@@ -21,12 +21,12 @@ public class SalesOrderDetailInfo {
 		this.id = id;
 	}
 
-	public Integer getPurchaseOrderId() {
-		return purchaseOrderId;
+	public Integer getSalesOrderId() {
+		return salesOrderId;
 	}
 
-	public void setPurchaseOrderId(Integer purchaseOrderId) {
-		this.purchaseOrderId = purchaseOrderId;
+	public void setSalesOrderId(Integer salesOrderId) {
+		this.salesOrderId = salesOrderId;
 	}
 
 	public Integer getProductId() {
@@ -95,7 +95,7 @@ public class SalesOrderDetailInfo {
 
 	@Override
 	public String toString() {
-		return "SalesOrderDetailInfo [id=" + id + ", purchaseOrderId=" + purchaseOrderId + ", productId=" + productId
+		return "SalesOrderDetailInfo [id=" + id + ", salesOrderId=" + salesOrderId + ", productId=" + productId
 				+ ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", cost=" + cost + ", productCode="
 				+ productCode + ", barCode=" + barCode + ", productName=" + productName + ", productUnit=" + productUnit
 				+ "]";

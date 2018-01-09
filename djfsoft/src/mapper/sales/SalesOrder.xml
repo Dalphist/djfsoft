@@ -4,11 +4,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.sales.SalesOrderMapper">
-	<insert id="addOrder" parameterType="PurchaseOrder">
+	<insert id="addOrder" parameterType="salesOrder">
 		<selectKey keyProperty='id' resultType='int' order='AFTER'  >  
 	        select LAST_INSERT_ID();  
 	    </selectKey> 
-		INSERT INTO t_purchase_order
+		INSERT INTO t_sales_order
 		(order_code,product_price,transport_fare,extra_price,total_price,pay_type_id,operater_id,operate_date,
 		deal_date,taobao_code,customer_name,customer_tel,customer_postcode,customer_district_id,customer_address,customer_notes)
 		VALUES
@@ -16,37 +16,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{dealDate},#{taobaoCode},#{customerName},#{customerTel},#{customerPostcode},#{customerDistrictId},#{customerAddress},#{customerNotes})
 	</insert>
 	
-	<insert id="addOrderDetail" parameterType="PurchaseOrderDetailInfo">
-		INSERT INTO t_purchase_order_detail
-		(purchase_order_id,product_id,quantity,unit_price,cost)
+	<insert id="addOrderDetail" parameterType="salesOrderDetailInfo">
+		INSERT INTO t_sales_order_detail
+		(sales_order_id,product_id,quantity,unit_price,cost)
 		VALUES
-		(#{purchaseOrderId},#{productId},#{quantity},#{unitPrice},#{cost})
+		(#{salesOrderId},#{productId},#{quantity},#{unitPrice},#{cost})
 	</insert>
 
 	<delete id="delOrder" parameterType="String">
-		delete from t_purchase_order where id= #{orderId}
+		delete from t_sales_order where id= #{orderId}
 	</delete>
 	
 	<delete id="delOrderDetail" parameterType="String">
-		delete from t_purchase_order_detail where purchase_order_id= #{orderId}
+		delete from t_sales_order_detail where sales_order_id= #{orderId}
 	</delete>
 
-	<update id="updateOrder" parameterType="PurchaseOrder">
-		update t_purchase_order
+	<update id="updateOrder" parameterType="salesOrder">
+		update t_sales_order
 		set product_price = #{productPrice},transport_fare = #{transportFare},extra_price = #{extraPrice},total_price = #{totalPrice},
 		pay_type_id = #{payTypeId},operater_id = #{operaterId},operate_date = #{operateDate},effective_flag = #{effectiveFlag}
 		where id=#{id}
 	</update>
 
-	<select id="orderList" resultType="PurchaseOrderInfo">
-		select * from t_purchase_order
+	<select id="orderList" resultType="salesOrderInfo">
+		select * from t_sales_order
 	</select>
 	
-	<select id="getDetail" parameterType="String" resultType="PurchaseOrderDetailInfo">
+	<select id="getDetail" parameterType="String" resultType="salesOrderDetailInfo">
 		select pod.*,p.bar_code,p.product_code,p.product_name,p.product_unit from 
-		t_purchase_order_detail pod 
+		t_sales_order_detail pod 
 		JOIN t_product p ON pod.product_id = p.id 
-		WHERE pod.purchase_order_id = #{orderId} 
+		WHERE pod.sales_order_id = #{orderId} 
 	</select>
 	
 	

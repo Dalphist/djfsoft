@@ -33,6 +33,17 @@ $(function(){
 	   	calTableCost();
 	}); 
 	//*********************************************
+	//初始化省列表
+	getDistrictList('0','district1');
+	//地区变动联动修改
+	$("#district1").on("change",function(){
+	   	var district1_id = $("#district1").val();
+	   	getDistrictList(district1_id,'district2');
+	}); 
+	$("#district2").on("change",function(){
+	   	var district2_id = $("#district2").val();
+	   	getDistrictList(district2_id,'district3');
+	}); 
 })
 function openWinProduct(){
 	$("#win_product").window("open");
@@ -134,6 +145,11 @@ function getBasicInfo(){
 	basicInfo.transportFare = $("#input_transportFare").val();
 	basicInfo.extraPrice = $("#input_extraPrice").val();
 	basicInfo.totalPrice = $("#input_totalPrice").val();
+	var district_id = $("#district3").val();
+	if(district_id == ""){
+		district_id = $("#district2").val();
+	}
+	basicInfo.customerDistrictId = district_id;
 	return basicInfo;
 }
 //获取货品信息
@@ -172,6 +188,23 @@ function delProduct(){
 		$(this).find("td").eq(1).html(i*1+1);
 	});
 }
+//地区列表
+function getDistrictList(parent_id,element_id){
+	$.ajax({
+		url:"<%=projectName%>/district/list",
+		type:"post",
+        data:{"parentId":parent_id},
+        success:function(result){
+			$("#"+element_id).empty();
+        	var districtList = result.dataList; 
+           	$.each(districtList,function(i,district){
+   				var option = '<option value="'+district.id+'">'+district.name+'</option>';
+	        	$("#"+element_id).append(option);
+   			});
+   			$("#"+element_id).change();
+        }				
+	});
+}
 </script>
  <div id="layout_addOrder" class="easyui-layout">   
     <div data-options="region:'north',title:'基本信息'" style="height:165px;">
@@ -202,11 +235,11 @@ function delProduct(){
     		</tr>
     		<tr>
     			<td>省份：</td>
-    			<td><input id="" class="easyui-combobox" name="dept" style="width:100%"/></td>
+    			<td><select id="district1"  style="width:100%"/></select></td>
     			<td>区市：</td>
-    			<td><input id="" class="easyui-combobox" name="dept" style="width:100%"/></td>
+    			<td><select id="district2"  style="width:100%"/></select></td>
     			<td>区县：</td>
-    			<td><input id="" class="easyui-combobox" name="dept" style="width:100%"/></td>
+    			<td><select id="district3"  style="width:100%"/></select></td>
     			<td>客户备注：</td>
     			<td colspan="2"><input id="input_customerNotes" class="easyui-textbox" style="width:100%"></td>
     		</tr>
@@ -306,5 +339,16 @@ function delProduct(){
 	}
 	.select_tr{
 		background-color: #c4e8f5;
+	}
+	select{
+		font-size: 12px;
+	    border: 1px solid #95B8E7;
+	    padding: 4px;
+	    border-radius: 5px 5px 5px 5px;
+	    padding-top: 0px;
+	    padding-bottom: 0px;
+	    height: 23px;
+	    line-height: 23px;
+	    width: 127px;
 	}
 </style>

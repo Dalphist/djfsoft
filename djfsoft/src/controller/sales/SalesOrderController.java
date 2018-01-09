@@ -66,7 +66,7 @@ public class SalesOrderController {
 		//保存订单的货品详情
 		List<SalesOrderDetailInfo> list = ParseUtil.getBeanListFromStr(productListInfo, "pojo.sales.SalesOrderDetailInfo");
 		for(SalesOrderDetailInfo detail : list){
-			detail.setPurchaseOrderId(Integer.parseInt(salesOrderId));
+			detail.setSalesOrderId(Integer.parseInt(salesOrderId));
 			SalesOrderService.addOrderDetail(detail);
 		}
 		result.setCode(ResultBean.SUCCESS);
