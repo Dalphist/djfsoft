@@ -1,15 +1,17 @@
-package pojo;
+package pojo.manage;
 
 import java.util.Date;
+import java.util.List;
 
 
-public class Product {
+public class ProductInfo {
 	private Integer id;
 	private String productCode;
 	private String barCode;
 	private String productName;
 	private String productShortName;
 	private Integer categoryId;
+	private String categoryName;
 	private Double normalPurchasePrice;
 	private Double cost;
 	private Double lastPurchasePrice;
@@ -20,6 +22,8 @@ public class Product {
 	private Date gmtCreate;
 	private Date gmtModified;
 	private Integer effectiveFlag;
+	private List<ProductAttributeInfo> attributeList; 
+	private Double stock;
 
 	public Integer getId() {
 		return id;
@@ -148,18 +152,40 @@ public class Product {
 	public void setEffectiveFlag(Integer effectiveFlag) {
 		this.effectiveFlag = effectiveFlag;
 	}
+	
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	
+	public List<ProductAttributeInfo> getAttributeList() {
+		return attributeList;
+	}
+
+	public void setAttributeList(List<ProductAttributeInfo> attributeList) {
+		this.attributeList = attributeList;
+	}
+	
+	public Double getStock() {
+		return stock;
+	}
+
+	public void setStock(Double stock) {
+		this.stock = stock;
+	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", productCode=" + productCode
-				+ ", barCode=" + barCode + ", productName=" + productName
-				+ ", productShortName=" + productShortName + ", categoryId="
-				+ categoryId + ", normalPurchasePrice=" + normalPurchasePrice
-				+ ", cost=" + cost + ", lastPurchasePrice=" + lastPurchasePrice
-				+ ", salePrice=" + salePrice + ", stockWarn=" + stockWarn
-				+ ", productUnit=" + productUnit + ", productPlace="
-				+ productPlace + ", gmtCreate=" + gmtCreate + ", gmtModified="
-				+ gmtModified + ", effectiveFlag=" + effectiveFlag + "]";
+		return "ProductInfo [id=" + id + ", productCode=" + productCode + ", barCode=" + barCode + ", productName="
+				+ productName + ", productShortName=" + productShortName + ", categoryId=" + categoryId
+				+ ", categoryName=" + categoryName + ", normalPurchasePrice=" + normalPurchasePrice + ", cost=" + cost
+				+ ", lastPurchasePrice=" + lastPurchasePrice + ", salePrice=" + salePrice + ", stockWarn=" + stockWarn
+				+ ", productUnit=" + productUnit + ", productPlace=" + productPlace + ", gmtCreate=" + gmtCreate
+				+ ", gmtModified=" + gmtModified + ", effectiveFlag=" + effectiveFlag + ", attributeList="
+				+ attributeList + ", stock=" + stock + "]";
 	}
 
 }

@@ -1,21 +1,15 @@
-package pojo;
+package pojo.manage;
 
 import java.util.Date;
-import java.util.List;
 
-/**
- * 比正常的实体类多出了规格值的列表和选中的值的id
- * @author DJF
- */
 
-public class ProductAttributeInfo {
+
+public class ProductAttribute {
 	private Integer id;
-	private Integer valueId;
 	private String attributeName;
 	private Integer effectiveFlag;
 	private Date gmtCreate;
 	private Date gmtModified;
-	private List<ProductAttributeValue> valueList;
 	
 	public Integer getId() {
 		return id;
@@ -48,25 +42,10 @@ public class ProductAttributeInfo {
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
 	}
-	
-	public Integer getValueId() {
-		return valueId;
-	}
-	public void setValueId(Integer valueId) {
-		this.valueId = valueId;
-	}
-	public List<ProductAttributeValue> getValueList() {
-		return valueList;
-	}
-	public void setValueList(List<ProductAttributeValue> valueList) {
-		this.valueList = valueList;
-	}
 	@Override
 	public String toString() {
-		return "ProductAttributeInfo [id=" + id + ", valueId=" + valueId
-				+ ", attributeName=" + attributeName + ", effectiveFlag="
-				+ effectiveFlag + ", gmtCreate=" + gmtCreate + ", gmtModified="
-				+ gmtModified + ", valueList=" + valueList + "]";
+		return "ProductAttribute [id=" + id + ", attributeName=" + attributeName + ", effectiveFlag=" + effectiveFlag
+				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + "]";
 	}
 	
 }
