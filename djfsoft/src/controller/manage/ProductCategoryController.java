@@ -12,11 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pojo.ProductCategory;
-import pojo.ProductInfo;
 import pojo.ResultBean;
 import pojo.Tree;
 import pojo.User;
+import pojo.manage.ProductCategory;
+import pojo.manage.ProductInfo;
 import service.ProductCategoryService;
 import service.ProductService;
 import service.UserService;

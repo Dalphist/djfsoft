@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import pojo.ProductCategory;
 import pojo.Tree;
+import pojo.manage.ProductCategory;
 
 
 

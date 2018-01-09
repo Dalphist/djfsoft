@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import pojo.ProductAttribute;
-import pojo.ProductAttributeInfo;
-import pojo.ProductAttributeValue;
 import pojo.ResultBean;
+import pojo.manage.ProductAttribute;
+import pojo.manage.ProductAttributeInfo;
+import pojo.manage.ProductAttributeValue;
 import service.ProductAttributeService;
 import service.ProductAttributeValueService;
 import util.ParseUtil;

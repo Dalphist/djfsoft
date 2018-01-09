@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import pojo.ProductAttributeValue;
+import pojo.manage.ProductAttributeValue;
 
 
 

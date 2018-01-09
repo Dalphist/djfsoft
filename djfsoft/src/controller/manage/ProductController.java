@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import pojo.Product;
-import pojo.ProductAttributeInfo;
-import pojo.ProductAttributeValue;
-import pojo.ProductInfo;
 import pojo.ResultBean;
+import pojo.manage.Product;
+import pojo.manage.ProductAttributeInfo;
+import pojo.manage.ProductAttributeValue;
+import pojo.manage.ProductInfo;
 import service.ProductAttributeService;
 import service.ProductAttributeValueService;
 import service.ProductService;

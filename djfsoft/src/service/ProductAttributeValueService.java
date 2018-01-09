@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 
-import pojo.ProductAttributeValue;
+import pojo.manage.ProductAttributeValue;
 
 public interface ProductAttributeValueService {
 	void add(ProductAttributeValue productAttributeValue);

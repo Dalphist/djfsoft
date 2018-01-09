@@ -2,8 +2,8 @@ package mapper;
 
 import java.util.List;
 
-import pojo.Product;
-import pojo.ProductInfo;
+import pojo.manage.Product;
+import pojo.manage.ProductInfo;
 
 public interface ProductMapper {
 	public void add(Product product);

@@ -3,12 +3,12 @@ package service.impl;
 import java.util.List;
 
 import mapper.ProductMapper;
+import pojo.manage.Product;
+import pojo.manage.ProductInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pojo.Product;
-import pojo.ProductInfo;
 import service.ProductService;
 
 @Service

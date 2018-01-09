@@ -2,8 +2,8 @@ package service;
 
 import java.util.List;
 
-import pojo.Product;
-import pojo.ProductInfo;
+import pojo.manage.Product;
+import pojo.manage.ProductInfo;
 
 public interface ProductService {
 	void addProduct(Product product);

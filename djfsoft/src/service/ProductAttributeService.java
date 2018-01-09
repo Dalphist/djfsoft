@@ -2,8 +2,8 @@ package service;
 
 import java.util.List;
 
-import pojo.ProductAttribute;
-import pojo.ProductAttributeInfo;
+import pojo.manage.ProductAttribute;
+import pojo.manage.ProductAttributeInfo;
 public interface ProductAttributeService {
 	void addProductAttribute(ProductAttribute productAttribute);
 	

@@ -2,8 +2,8 @@ package service;
 
 import java.util.List;
 
-import pojo.ProductCategory;
 import pojo.Tree;
+import pojo.manage.ProductCategory;
 
 public interface ProductCategoryService {
 	void addProductCategory(ProductCategory productCategory);

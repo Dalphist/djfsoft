@@ -7,8 +7,8 @@ import mapper.ProductCategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pojo.ProductCategory;
 import pojo.Tree;
+import pojo.manage.ProductCategory;
 import service.ProductCategoryService;
 
 
