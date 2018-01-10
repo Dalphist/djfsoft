@@ -46,7 +46,7 @@
 		
 		//手动添加订单
 		function addOrder(){
-			
+			parent.addOrder();
 		}
 		
 		function getorderDetail(order_id){

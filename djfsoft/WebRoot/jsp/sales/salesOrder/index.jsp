@@ -33,6 +33,8 @@
             		{field:'stock',title:'库存',width:80,halign:"center",align:"right"},         
 			    ]]    
 			});
+			//iframe src 后赋值可以保证只有一次请求。
+			$("#iframe_order_list").attr("src","<%=projectName%>/sales/salesOrder/orderList");
 		})
 		//获取选中商品
 		function getSelectProduct(){
@@ -78,14 +80,24 @@
                 }				
 			});
 		}
+		
+		function addOrder(){
+			if($("#tabs").tabs('exists','手动添加')){
+				$("#tabs").tabs('select','手动添加');
+			}else{   
+				$("#tabs").tabs('add',{
+				title: '手动添加',
+               	content: '<iframe src="addOrder.jsp" frameborder="0" style="height:100%;width:100%;"></iframe>',
+               	closable: true
+			});
+		}
 	</script>
   </head>
 <body>
 	<div id="main_layout" class="easyui-layout" style="width:100%;height:100%;">
 		<%@include file="../../common/nav.jsp"%>
 		<div data-options="region:'north'" style="height:51px">
-			<div id="win_product" class="easyui-window" title="商品列表" style="width:600px;height:400px"   
-		        data-options="iconCls:'icon-save',modal:true">   
+			<div id="win_product" class="easyui-window" title="商品列表" style="width:600px;height:400px" data-options="iconCls:'icon-save',modal:true">   
 			    <table id="tt" style="width:581px;height:333px"></table>  
 			    <div style="height: 10px;">
 			    	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="$('#win_product').window('close');">
@@ -100,10 +112,7 @@
 		<div data-options="region:'center'">
 			<div id="tabs" class="easyui-tabs" style="width:100%;height:100%;">
 			    <div title="订单列表" style="display:none;">   
-			        <iframe id="iframe_order_list" name="iframe_order_list" src="<%=projectName%>/sales/salesOrder/orderList" style="width: 99%;height: 99%;"></iframe>    
-			    </div>   
-			    <div id="tab_addOrder" title="手动添加" data-options="closable:true" style="overflow:auto;display:none;">   
-			    	<%@include file="addOrder.jsp"%>
+			        <iframe id="iframe_order_list" name="iframe_order_list" style="width: 99%;height: 99%;"></iframe>    
 			    </div>   
 			</div> 
 		</div>
