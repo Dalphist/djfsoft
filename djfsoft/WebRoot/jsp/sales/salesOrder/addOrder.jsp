@@ -1,4 +1,18 @@
 <%@ page language="java" import="java.util.*,djfsoft.pojo.*" pageEncoding="UTF-8"%>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>主页</title>
+    <%String projectName  = request.getContextPath();%>
+    <link rel="stylesheet" type="text/css" href="<%=projectName%>/easyui/themes/default/easyui.css">   
+	<link rel="stylesheet" type="text/css" href="<%=projectName%>/easyui/themes/icon.css">   
+	<script type="text/javascript" src="<%=projectName%>/js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="<%=projectName%>/easyui/jquery.easyui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<%=projectName%>/css/style.css"> 
 <script type="text/javascript">
 $(function(){
 	$("#layout_addOrder").layout("resize",{  
@@ -206,6 +220,7 @@ function getDistrictList(parent_id,element_id){
 	});
 }
 </script>
+</head>
  <div id="layout_addOrder" class="easyui-layout">   
     <div data-options="region:'north',title:'基本信息'" style="height:165px;">
     	<table id="table_basicInfo1">
