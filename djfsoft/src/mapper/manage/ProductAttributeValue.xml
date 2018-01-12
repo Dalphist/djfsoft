@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="mapper.ProductAttributeValueMapper">
+<mapper namespace="mapper.manage.ProductAttributeValueMapper">
     <insert id="add" parameterType="ProductAttributeValue" >
         insert into t_product_attribute_value
         (attribute_id,attribute_value_name,effective_flag,gmt_create) 

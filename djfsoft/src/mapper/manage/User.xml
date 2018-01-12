@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="mapper.UserMapper">
+<mapper namespace="mapper.manage.UserMapper">
     <insert id="add" parameterType="User" >
         insert into t_user ( user_name ) values (#{user_name})    
     </insert>
