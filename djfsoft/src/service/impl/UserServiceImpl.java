@@ -1,10 +1,9 @@
 package service.impl;
 
-import mapper.UserMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mapper.manage.UserMapper;
 import pojo.User;
 
 import service.UserService;

@@ -2,12 +2,12 @@ package service.impl;
 
 import java.util.List;
 
-import mapper.ProductAttributeValueMapper;
 import pojo.manage.ProductAttributeValue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mapper.manage.ProductAttributeValueMapper;
 import service.ProductAttributeValueService;
 
 @Service

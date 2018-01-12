@@ -18,6 +18,16 @@
 	</style>
 	<script type="text/javascript">
 		$(function(){
+			$('#tabs').tabs({
+				onSelect: function(title){
+					if(title == '手动添加'){
+						$("#layout_addOrder").layout("resize",{  
+						    width:"100%",  
+						    height:"100%" 
+						});
+					}
+				}
+			}); 
 			$("#win_product").window("close");
 			$("#tt").treegrid({    
 			    url:"<%=projectName%>/productCategory/getCategoryToProductTree",    
@@ -81,16 +91,6 @@
 			});
 		}
 		
-		function addOrder(){
-			if($("#tabs").tabs('exists','手动添加')){
-				$("#tabs").tabs('select','手动添加');
-			}else{   
-				$("#tabs").tabs('add',{
-				title: '手动添加',
-               	content: '<iframe src="addOrder.jsp" frameborder="0" style="height:100%;width:100%;"></iframe>',
-               	closable: true
-			});
-		}
 	</script>
   </head>
 <body>
@@ -113,6 +113,9 @@
 			<div id="tabs" class="easyui-tabs" style="width:100%;height:100%;">
 			    <div title="订单列表" style="display:none;">   
 			        <iframe id="iframe_order_list" name="iframe_order_list" style="width: 99%;height: 99%;"></iframe>    
+			    </div>   
+			    <div title="手动添加" style="display:none;">   
+			        <%@ include file="addOrder.jsp"%> 
 			    </div>   
 			</div> 
 		</div>
