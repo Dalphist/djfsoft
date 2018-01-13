@@ -56,4 +56,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 		return SalesOrderMapper.getDetail(orderId);
 	}
 
+	@Override
+	public String getNewCode(String preStr) {
+		return SalesOrderMapper.getNewCode(preStr);
+	}
+
 }

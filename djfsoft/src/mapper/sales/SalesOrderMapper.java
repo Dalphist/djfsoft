@@ -20,4 +20,6 @@ public interface SalesOrderMapper {
 	public List<SalesOrderInfo> orderList();
 
 	public List<SalesOrderDetailInfo> getDetail(String orderId);
+	//得到最新编码，即：原最大编码加1	preStr:XS+时间
+	public String getNewCode(String preStr);
 }

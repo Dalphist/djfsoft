@@ -5,6 +5,7 @@ $(function(){
 	    width:"100%",  
 	    height:"100%" 
 	});  
+	getNewOrderCode();
 	//全选/取消全选
 	$("#checkAll").on("click",function(event){
 	   	if($("#checkAll").prop("checked")){
@@ -30,6 +31,12 @@ $(function(){
 	}); 
 	$("#table_order_detail tbody").on("blur",".cost",function(){
 	   	calByCost($(this).parents("tr"));
+	   	calTableCost();
+	}); 
+	$("#input_transportFare").on("blur",function(){
+	   	calTableCost();
+	}); 
+	$("#input_extraPrice").on("blur",function(){
 	   	calTableCost();
 	}); 
 	//*********************************************
@@ -127,13 +134,16 @@ function saveOrder(){
 		type:"post",
         data:{"productListInfo":JSON.stringify(productListInfo),"basicInfo":JSON.stringify(basicInfo)},
         success:function(result){
-        
+        	$.messager.alert('提示',result.msg,'info',function(){    
+		        location.reload(); 
+			});
         }				
 	});
 }
 //获取基本信息
 function getBasicInfo(){
 	var basicInfo = {};
+	basicInfo.orderCode = $("#td_order_code").text().trim();
 	basicInfo.dealDate = $("#input_dealDate").val();
 	basicInfo.taobaoCode = $("#input_taobaoCode").val();
 	basicInfo.customerName = $("#input_customerName").val();
@@ -145,11 +155,9 @@ function getBasicInfo(){
 	basicInfo.transportFare = $("#input_transportFare").val();
 	basicInfo.extraPrice = $("#input_extraPrice").val();
 	basicInfo.totalPrice = $("#input_totalPrice").val();
-	var district_id = $("#district3").val();
-	if(district_id == ""){
-		district_id = $("#district2").val();
-	}
-	basicInfo.customerDistrictId = district_id;
+	basicInfo.customerDistrict1Id = $("#district1").val();
+	basicInfo.customerDistrict2Id = $("#district2").val();
+	basicInfo.customerDistrict3Id = $("#district3").val();
 	return basicInfo;
 }
 //获取货品信息
@@ -192,7 +200,7 @@ function delProduct(){
 function getDistrictList(parent_id,element_id){
 	$.ajax({
 		url:"<%=projectName%>/district/list",
-		type:"post",
+		type:"get",
         data:{"parentId":parent_id},
         success:function(result){
 			$("#"+element_id).empty();
@@ -205,6 +213,22 @@ function getDistrictList(parent_id,element_id){
         }				
 	});
 }
+function getNewOrderCode(){
+	$.ajax({
+		url:"<%=projectName%>/sales/salesOrder/getNewOrderCode",
+		type:"get",
+        success:function(result){
+        	var code = result.data;
+        	$("#td_order_code").text(code);
+        }				
+	});
+}
+function reset(){
+	$("#layout_addOrder input").val("");
+	$("#table_order_detail tbody").empty();
+	calTableCost();
+	getNewOrderCode();
+}
 </script>
  <div id="layout_addOrder" class="easyui-layout">   
     <div data-options="region:'north',title:'基本信息'" style="height:165px;">
@@ -212,6 +236,8 @@ function getDistrictList(parent_id,element_id){
     		<tr>
     			<td>业务员：</td>
     			<td></td>
+    			<td>销售单号：</td>
+    			<td id="td_order_code"></td>
     			<td>成交时间：</td>
     			<td><input id="input_dealDate" class="easyui-datetimebox" name="birthday" data-options="required:true,showSeconds:false"  style="width:150px"> </td>
     			<td>淘宝订单号：</td>

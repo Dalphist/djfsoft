@@ -1,5 +1,6 @@
 package controller.sales;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import pojo.sales.SalesOrder;
 import pojo.sales.SalesOrderDetailInfo;
 import pojo.sales.SalesOrderInfo;
 import service.sales.SalesOrderService;
+import util.DateUtil;
 import util.ParseUtil;
 
 
@@ -40,14 +42,13 @@ public class SalesOrderController {
 		return mav;
 	}
 	
-	@RequestMapping("orderDetail")
-	public ModelAndView orderDetail(String orderId) {
+	@RequestMapping("getOrderDetail")
+	@ResponseBody
+	public ResultBean<SalesOrderDetailInfo> orderDetail(String orderId) {
+		ResultBean<SalesOrderDetailInfo> result = new ResultBean<SalesOrderDetailInfo>();
 		List<SalesOrderDetailInfo> list = SalesOrderService.getDetail(orderId);
-		ModelAndView mav = new ModelAndView();
-		String url = "sales/salesOrder/orderDetail";
-		mav.setViewName(url);
-		mav.addObject("detailList", list);
-		return mav;
+		result.setDataList(list);
+		return result;
 	}
 	
 	@RequestMapping("saveSalesOrder")
@@ -57,6 +58,7 @@ public class SalesOrderController {
 		salesOrder = (SalesOrder)ParseUtil.getBeanFromStr(basicInfo, "pojo.sales.SalesOrder");
 		ResultBean<String> result = new ResultBean<String>();
 		if(salesOrder.getId() == null){
+			salesOrder.setOperateDate(DateUtil.getNowDateTime());
 			SalesOrderService.addOrder(salesOrder);
 			result.setMsg("添加成功！");
 		}else{
@@ -70,6 +72,26 @@ public class SalesOrderController {
 			SalesOrderService.addOrderDetail(detail);
 		}
 		result.setCode(ResultBean.SUCCESS);
+		return result;
+	}
+	@RequestMapping("delOrder")
+	@ResponseBody
+	public ResultBean<String> delOrder(String orderId) {
+		ResultBean<String> result = new ResultBean<String>();
+		SalesOrderService.delOrderDetail(orderId);
+		SalesOrderService.delOrder(orderId);
+		result.setMsg("删除成功！");
+		return result;
+	}
+	
+	@RequestMapping("getNewOrderCode")
+	@ResponseBody
+	public ResultBean<String> getNewOrderCode() {
+		ResultBean<String> result = new ResultBean<String>();
+		String preStr = "XS"+DateUtil.getDateFormat1(new Date());
+		String code = SalesOrderService.getNewCode(preStr);
+		result.setCode(ResultBean.SUCCESS);
+		result.setData(code);
 		return result;
 	}
 }

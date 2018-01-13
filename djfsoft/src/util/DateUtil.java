@@ -26,8 +26,10 @@ public class DateUtil {
 
 	// 时间格式化
 	private static DateFormat dateTimeFormat = null;
-
+	
 	private static DateFormat timeFormat = null;
+	
+	private static SimpleDateFormat simpleDateFormat =  null;  
 
 	private static Calendar gregorianCalendar = null;
 
@@ -35,6 +37,7 @@ public class DateUtil {
 		dateFormat = new SimpleDateFormat(DATE_DEFAULT_FORMAT);
 		dateTimeFormat = new SimpleDateFormat(DATETIME_DEFAULT_FORMAT);
 		timeFormat = new SimpleDateFormat(TIME_DEFAULT_FORMAT);
+		simpleDateFormat = new SimpleDateFormat(DATETIME_DEFAULT_FORMAT); 
 		gregorianCalendar = new GregorianCalendar();
 	}
 	
@@ -68,6 +71,16 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String getDateFormat(Date date) {
+		return dateFormat.format(date);
+	}
+	/**
+	 * 日期格式化yyyyMMdd
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static String getDateFormat1(Date date) {
+		dateFormat = new SimpleDateFormat("yyyyMMdd");
 		return dateFormat.format(date);
 	}
 
@@ -143,6 +156,21 @@ public class DateUtil {
 	 */
 	public static Date getNowDate() {
 		return DateUtil.getDateFormat(dateFormat.format(new Date()));
+	}
+	/**
+	 * 获取当前时间戳(yyyy-MM-dd hh:mm:ss)
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static Date getNowDateTime() {
+        Date date = new Date();
+		try {
+			date = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
 	}
 
 	/**

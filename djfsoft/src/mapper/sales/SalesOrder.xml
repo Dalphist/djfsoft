@@ -10,10 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    </selectKey> 
 		INSERT INTO t_sales_order
 		(order_code,product_price,transport_fare,extra_price,total_price,pay_type_id,operater_id,operate_date,
-		deal_date,taobao_code,customer_name,customer_tel,customer_postcode,customer_district_id,customer_address,customer_notes)
+		deal_date,taobao_code,customer_name,customer_tel,customer_postcode,customer_district1_id,customer_district2_id,customer_district3_id,customer_address,customer_notes)
 		VALUES
 		(#{orderCode},#{productPrice},#{transportFare},#{extraPrice},#{totalPrice},#{payTypeId},#{operaterId},#{operateDate},
-		#{dealDate},#{taobaoCode},#{customerName},#{customerTel},#{customerPostcode},#{customerDistrictId},#{customerAddress},#{customerNotes})
+		#{dealDate},#{taobaoCode},#{customerName},#{customerTel},#{customerPostcode},#{customerDistrict1Id},#{customerDistrict2Id},#{customerDistrict3Id},#{customerAddress},#{customerNotes})
 	</insert>
 	
 	<insert id="addOrderDetail" parameterType="salesOrderDetailInfo">
@@ -39,7 +39,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<select id="orderList" resultType="salesOrderInfo">
-		select * from t_sales_order
+		select s.*,
+		(select name from t_district d1 WHERE s.customer_district1_id = d1.id) as customer_district1_name,
+		(select name from t_district d2 WHERE s.customer_district2_id = d2.id) as customer_district2_name,
+		(select name from t_district d3 WHERE s.customer_district3_id = d3.id) as customer_district3_name
+		from t_sales_order s
 	</select>
 	
 	<select id="getDetail" parameterType="String" resultType="salesOrderDetailInfo">
@@ -47,6 +51,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_sales_order_detail pod 
 		JOIN t_product p ON pod.product_id = p.id 
 		WHERE pod.sales_order_id = #{orderId} 
+	</select>
+	
+	<select id="getNewCode" parameterType="String" resultType="String">
+		select IFNULL(CONCAT(#{preStr},LPAD(SUBSTR(max(order_code),-1,3)+1,3,0)),CONCAT(#{preStr},'001')) 
+		from t_sales_order
+		where SUBSTR(order_code,1,10) = #{preStr} 
 	</select>
 	
 	

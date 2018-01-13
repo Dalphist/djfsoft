@@ -21,7 +21,9 @@ public class SalesOrder {
 	private String customerName;
 	private String customerTel;
 	private String customerPostcode;
-	private Integer customerDistrictId;
+	private Integer customerDistrict1Id;
+	private Integer customerDistrict2Id;
+	private Integer customerDistrict3Id;
 	private String customerAddress;
 	private String customerNotes;
 
@@ -169,12 +171,28 @@ public class SalesOrder {
 		this.customerPostcode = customerPostcode;
 	}
 
-	public Integer getCustomerDistrictId() {
-		return customerDistrictId;
+	public Integer getCustomerDistrict1Id() {
+		return customerDistrict1Id;
 	}
 
-	public void setCustomerDistrictId(Integer customerDistrictId) {
-		this.customerDistrictId = customerDistrictId;
+	public void setCustomerDistrict1Id(Integer customerDistrict1Id) {
+		this.customerDistrict1Id = customerDistrict1Id;
+	}
+
+	public Integer getCustomerDistrict2Id() {
+		return customerDistrict2Id;
+	}
+
+	public void setCustomerDistrict2Id(Integer customerDistrict2Id) {
+		this.customerDistrict2Id = customerDistrict2Id;
+	}
+
+	public Integer getCustomerDistrict3Id() {
+		return customerDistrict3Id;
+	}
+
+	public void setCustomerDistrict3Id(Integer customerDistrict3Id) {
+		this.customerDistrict3Id = customerDistrict3Id;
 	}
 
 	public String getCustomerAddress() {
@@ -201,7 +219,8 @@ public class SalesOrder {
 				+ ", confirmId=" + confirmId + ", confirmDate=" + confirmDate + ", stateFlag=" + stateFlag
 				+ ", dealDate=" + dealDate + ", taobaoCode=" + taobaoCode + ", customerId=" + customerId
 				+ ", customerName=" + customerName + ", customerTel=" + customerTel + ", customerPostcode="
-				+ customerPostcode + ", customerDistrictId=" + customerDistrictId + ", customerAddress="
+				+ customerPostcode + ", customerDistrict1Id=" + customerDistrict1Id + ", customerDistrict2Id="
+				+ customerDistrict2Id + ", customerDistrict3Id=" + customerDistrict3Id + ", customerAddress="
 				+ customerAddress + ", customerNotes=" + customerNotes + "]";
 	}
 

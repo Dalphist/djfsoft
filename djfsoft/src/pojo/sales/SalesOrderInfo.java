@@ -21,7 +21,9 @@ public class SalesOrderInfo {
 	private String customerName;
 	private String customerTel;
 	private String customerPostcode;
-	private Integer customerDistrictId;
+	private Integer customerDistrict1Id;
+	private Integer customerDistrict2Id;
+	private Integer customerDistrict3Id;
 	private String customerAddress;
 	private String customerNotes;
 	// info
@@ -29,6 +31,9 @@ public class SalesOrderInfo {
 	private String operateName;
 	private String confirmName;
 	private Integer effectiveFlag;
+	private String customerDistrict1Name;
+	private String customerDistrict2Name;
+	private String customerDistrict3Name;
 
 	public Integer getId() {
 		return id;
@@ -206,13 +211,6 @@ public class SalesOrderInfo {
 		this.customerPostcode = customerPostcode;
 	}
 
-	public Integer getCustomerDistrictId() {
-		return customerDistrictId;
-	}
-
-	public void setCustomerDistrictId(Integer customerDistrictId) {
-		this.customerDistrictId = customerDistrictId;
-	}
 
 	public String getCustomerAddress() {
 		return customerAddress;
@@ -229,6 +227,54 @@ public class SalesOrderInfo {
 	public void setCustomerNotes(String customerNotes) {
 		this.customerNotes = customerNotes;
 	}
+	
+	public Integer getCustomerDistrict1Id() {
+		return customerDistrict1Id;
+	}
+
+	public void setCustomerDistrict1Id(Integer customerDistrict1Id) {
+		this.customerDistrict1Id = customerDistrict1Id;
+	}
+
+	public Integer getCustomerDistrict2Id() {
+		return customerDistrict2Id;
+	}
+
+	public void setCustomerDistrict2Id(Integer customerDistrict2Id) {
+		this.customerDistrict2Id = customerDistrict2Id;
+	}
+
+	public Integer getCustomerDistrict3Id() {
+		return customerDistrict3Id;
+	}
+
+	public void setCustomerDistrict3Id(Integer customerDistrict3Id) {
+		this.customerDistrict3Id = customerDistrict3Id;
+	}
+
+	public String getCustomerDistrict1Name() {
+		return customerDistrict1Name;
+	}
+
+	public void setCustomerDistrict1Name(String customerDistrict1Name) {
+		this.customerDistrict1Name = customerDistrict1Name;
+	}
+
+	public String getCustomerDistrict2Name() {
+		return customerDistrict2Name;
+	}
+
+	public void setCustomerDistrict2Name(String customerDistrict2Name) {
+		this.customerDistrict2Name = customerDistrict2Name;
+	}
+
+	public String getCustomerDistrict3Name() {
+		return customerDistrict3Name;
+	}
+
+	public void setCustomerDistrict3Name(String customerDistrict3Name) {
+		this.customerDistrict3Name = customerDistrict3Name;
+	}
 
 	@Override
 	public String toString() {
@@ -238,9 +284,12 @@ public class SalesOrderInfo {
 				+ ", confirmId=" + confirmId + ", confirmDate=" + confirmDate + ", stateFlag=" + stateFlag
 				+ ", dealDate=" + dealDate + ", taobaoCode=" + taobaoCode + ", customerId=" + customerId
 				+ ", customerName=" + customerName + ", customerTel=" + customerTel + ", customerPostcode="
-				+ customerPostcode + ", customerDistrictId=" + customerDistrictId + ", customerAddress="
+				+ customerPostcode + ", customerDistrict1Id=" + customerDistrict1Id + ", customerDistrict2Id="
+				+ customerDistrict2Id + ", customerDistrict3Id=" + customerDistrict3Id + ", customerAddress="
 				+ customerAddress + ", customerNotes=" + customerNotes + ", payType=" + payType + ", operateName="
-				+ operateName + ", confirmName=" + confirmName + ", effectiveFlag=" + effectiveFlag + "]";
+				+ operateName + ", confirmName=" + confirmName + ", effectiveFlag=" + effectiveFlag
+				+ ", customerDistrict1Name=" + customerDistrict1Name + ", customerDistrict2Name="
+				+ customerDistrict2Name + ", customerDistrict3Name=" + customerDistrict3Name + "]";
 	}
 
 }

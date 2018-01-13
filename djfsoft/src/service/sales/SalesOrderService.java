@@ -20,5 +20,7 @@ public interface SalesOrderService {
 	List<SalesOrderInfo> orderList();
 
 	List<SalesOrderDetailInfo> getDetail(String orderId);
+	
+	String getNewCode(String preStr);
 
 }
