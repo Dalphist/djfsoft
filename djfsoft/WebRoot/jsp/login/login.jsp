@@ -23,13 +23,13 @@
 	                url:"/djfsoft/login",
 	                type:"post",
 	                dataType:"json",
-	                data:{"user_name":name,"password":password},
+	                data:{"userName":name,"password":password},
 	                success:function(data){
-	                	var result = data.result;
-	                	if(result == 0){
-	     					alert("用户名或密码错误。")           		
-	                	}else{
+	                	var code = data.code;
+	                	if(code == 0){
 	                		window.location="main";
+	                	}else{
+	     					alert("用户名或密码错误。");           		
 	                	}
 	                },
 	                error:function(){

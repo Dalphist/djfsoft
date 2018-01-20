@@ -361,6 +361,15 @@
 				});
 			}
 		}
+		
+		function selectFile(){
+			$("#btn_upLoad").click();
+		}
+		
+		function upLoad(){
+			var name = $("#btn_upLoad").val();
+			$("#btn_submit").click();
+		}
 	</script>
   </head>
   <body style="margin: 0px;">
@@ -461,7 +470,11 @@
 				</div>
 			</div>   
 			<div title="图片" style="overflow:auto;display:none;">   
-				tab2    
+			    <form method="post" enctype="multipart/form-data" action="<%=projectName%>/manage/product/upLoad" id="upLoadForm">
+			        <input id="btn_upLoad" type="file" name="file" hidden="hidden" onchange="upLoad();"/>
+			        <input type="button"  value=" 上 传 " onclick = "selectFile();"/>
+			        <input id="btn_submit" type="submit" hidden="hidden"/>
+			    </form>   
 			</div>   
 			<div title="多单位" style="overflow:auto;display:none;">   
 				<table class="table_list">   

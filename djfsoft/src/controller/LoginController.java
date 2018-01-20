@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pojo.ResultBean;
 import pojo.User;
 import service.UserService;
+import util.Log;
 
 @Controller
 @RequestMapping("")
@@ -19,18 +18,15 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 
-	// 第二种写法，参数可以直接写key名，自动获取。注解ResponseBody可以把返回值直接转成json返回到页面
 	@RequestMapping("login")
 	@ResponseBody
-	public Map<String, String> getUser(String user_name, String password,
-			HttpSession session) {
-		User user = userService.getUser(new User(user_name, password));
-		Map<String, String> map = new HashMap<String, String>();
-		String result = (user == null ? "0" : "1");
+	public ResultBean<String> getUser(String userName, String password,HttpSession session) {
+		User user = userService.getUser(new User(userName, password));
+		ResultBean<String> result = new ResultBean<String>();
 		session.setAttribute("user", user);
-		// Log.login(user);
-		map.put("result", result);
-		return map;
+		result.setCode(ResultBean.SUCCESS);
+		Log.login(user);
+		return result;
 	}
 
 	@RequestMapping("main")
