@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pojo.ResultBean;
-import pojo.sales.SalesOrder;
-import pojo.sales.SalesOrderDetailInfo;
-import pojo.sales.SalesOrderInfo;
-import service.sales.SalesOrderService;
+import pojo.sales.SalesStockOutOrderDetailInfo;
+import pojo.sales.SalesStockOutOrderInfo;
+import service.sales.SalesStockOutOrderService;
 import util.DateUtil;
 import util.ParseUtil;
 
@@ -22,21 +21,21 @@ import util.ParseUtil;
 @RequestMapping("sales/salesStockOutOrder")
 public class SalesStockOutOrderController {
 	@Autowired
-	SalesOrderService SalesOrderService;
+	SalesStockOutOrderService salesStockOutOrderService;
 
 	@RequestMapping("index")
 	public ModelAndView productIndex() {
 		ModelAndView mav = new ModelAndView();
-		String url = "sales/salesOrder/index";
+		String url = "sales/salesStockOutOrder/index";
 		mav.setViewName(url);
 		return mav;
 	}
 	
 	@RequestMapping("orderList")
 	public ModelAndView orderList() {
-		List<SalesOrderInfo> list = SalesOrderService.orderList();
+		List<SalesStockOutOrderInfo> list = salesStockOutOrderService.orderList();
 		ModelAndView mav = new ModelAndView();
-		String url = "sales/salesOrder/orderList";
+		String url = "sales/salesStockOutOrder/orderList";
 		mav.setViewName(url);
 		mav.addObject("orderList", list);
 		return mav;
@@ -44,9 +43,9 @@ public class SalesStockOutOrderController {
 	
 	@RequestMapping("getOrderDetail")
 	@ResponseBody
-	public ResultBean<SalesOrderDetailInfo> orderDetail(String orderId) {
-		ResultBean<SalesOrderDetailInfo> result = new ResultBean<SalesOrderDetailInfo>();
-		List<SalesOrderDetailInfo> list = SalesOrderService.getDetail(orderId);
+	public ResultBean<SalesStockOutOrderDetailInfo> orderDetail(String orderId) {
+		ResultBean<SalesStockOutOrderDetailInfo> result = new ResultBean<SalesStockOutOrderDetailInfo>();
+		List<SalesStockOutOrderDetailInfo> list = salesStockOutOrderService.getDetail(orderId);
 		result.setDataList(list);
 		return result;
 	}
@@ -54,22 +53,22 @@ public class SalesStockOutOrderController {
 	@RequestMapping("saveSalesOrder")
 	@ResponseBody
 	public ResultBean<String> saveSalesOrder(String basicInfo,String productListInfo) {
-		SalesOrder salesOrder = new SalesOrder();
-		salesOrder = (SalesOrder)ParseUtil.getBeanFromStr(basicInfo, "pojo.sales.SalesOrder");
+		SalesStockOutOrderInfo salesStockOutOrder = new SalesStockOutOrderInfo();
+		salesStockOutOrder = (SalesStockOutOrderInfo)ParseUtil.getBeanFromStr(basicInfo, "pojo.sales.salesStockOutOrder");
 		ResultBean<String> result = new ResultBean<String>();
-		if(salesOrder.getId() == null){
-			salesOrder.setOperateDate(DateUtil.getNowDateTime());
-			SalesOrderService.addOrder(salesOrder);
+		if(salesStockOutOrder.getId() == null){
+			salesStockOutOrder.setOperateDate(DateUtil.getNowDateTime());
+			salesStockOutOrderService.addOrder(salesStockOutOrder);
 			result.setMsg("添加成功！");
 		}else{
 			result.setMsg("修改成功！");
 		}
-		String salesOrderId = String.valueOf(salesOrder.getId());
+		String salesOrderId = String.valueOf(salesStockOutOrder.getId());
 		//保存订单的货品详情
-		List<SalesOrderDetailInfo> list = ParseUtil.getBeanListFromStr(productListInfo, "pojo.sales.SalesOrderDetailInfo");
-		for(SalesOrderDetailInfo detail : list){
-			detail.setSalesOrderId(Integer.parseInt(salesOrderId));
-			SalesOrderService.addOrderDetail(detail);
+		List<SalesStockOutOrderDetailInfo> list = ParseUtil.getBeanListFromStr(productListInfo, "pojo.sales.SalesStockOutOrderDetailInfo");
+		for(SalesStockOutOrderDetailInfo detail : list){
+			detail.setStockOutOrderId(Integer.parseInt(salesOrderId));
+			salesStockOutOrderService.addOrderDetail(detail);
 		}
 		result.setCode(ResultBean.SUCCESS);
 		return result;
@@ -78,8 +77,8 @@ public class SalesStockOutOrderController {
 	@ResponseBody
 	public ResultBean<String> delOrder(String orderId) {
 		ResultBean<String> result = new ResultBean<String>();
-		SalesOrderService.delOrderDetail(orderId);
-		SalesOrderService.delOrder(orderId);
+		salesStockOutOrderService.delOrderDetail(orderId);
+		salesStockOutOrderService.delOrder(orderId);
 		result.setMsg("删除成功！");
 		return result;
 	}
@@ -88,8 +87,8 @@ public class SalesStockOutOrderController {
 	@ResponseBody
 	public ResultBean<String> getNewOrderCode() {
 		ResultBean<String> result = new ResultBean<String>();
-		String preStr = "XS"+DateUtil.getDateFormat1(new Date());
-		String code = SalesOrderService.getNewCode(preStr);
+		String preStr = "XSCK"+DateUtil.getDateFormat1(new Date());
+		String code = salesStockOutOrderService.getNewCode(preStr);
 		result.setCode(ResultBean.SUCCESS);
 		result.setData(code);
 		return result;

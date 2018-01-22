@@ -22,7 +22,7 @@ import util.ParseUtil;
 @RequestMapping("sales/salesOrder")
 public class SalesOrderController {
 	@Autowired
-	SalesOrderService SalesOrderService;
+	SalesOrderService salesOrderService;
 
 	@RequestMapping("index")
 	public ModelAndView productIndex() {
@@ -34,7 +34,7 @@ public class SalesOrderController {
 	
 	@RequestMapping("orderList")
 	public ModelAndView orderList() {
-		List<SalesOrderInfo> list = SalesOrderService.orderList();
+		List<SalesOrderInfo> list = salesOrderService.orderList();
 		ModelAndView mav = new ModelAndView();
 		String url = "sales/salesOrder/orderList";
 		mav.setViewName(url);
@@ -46,7 +46,7 @@ public class SalesOrderController {
 	@ResponseBody
 	public ResultBean<SalesOrderDetailInfo> orderDetail(String orderId) {
 		ResultBean<SalesOrderDetailInfo> result = new ResultBean<SalesOrderDetailInfo>();
-		List<SalesOrderDetailInfo> list = SalesOrderService.getDetail(orderId);
+		List<SalesOrderDetailInfo> list = salesOrderService.getDetail(orderId);
 		result.setDataList(list);
 		return result;
 	}
@@ -59,7 +59,7 @@ public class SalesOrderController {
 		ResultBean<String> result = new ResultBean<String>();
 		if(salesOrder.getId() == null){
 			salesOrder.setOperateDate(DateUtil.getNowDateTime());
-			SalesOrderService.addOrder(salesOrder);
+			salesOrderService.addOrder(salesOrder);
 			result.setMsg("添加成功！");
 		}else{
 			result.setMsg("修改成功！");
@@ -69,7 +69,7 @@ public class SalesOrderController {
 		List<SalesOrderDetailInfo> list = ParseUtil.getBeanListFromStr(productListInfo, "pojo.sales.SalesOrderDetailInfo");
 		for(SalesOrderDetailInfo detail : list){
 			detail.setSalesOrderId(Integer.parseInt(salesOrderId));
-			SalesOrderService.addOrderDetail(detail);
+			salesOrderService.addOrderDetail(detail);
 		}
 		result.setCode(ResultBean.SUCCESS);
 		return result;
@@ -78,8 +78,8 @@ public class SalesOrderController {
 	@ResponseBody
 	public ResultBean<String> delOrder(String orderId) {
 		ResultBean<String> result = new ResultBean<String>();
-		SalesOrderService.delOrderDetail(orderId);
-		SalesOrderService.delOrder(orderId);
+		salesOrderService.delOrderDetail(orderId);
+		salesOrderService.delOrder(orderId);
 		result.setMsg("删除成功！");
 		return result;
 	}
@@ -89,7 +89,7 @@ public class SalesOrderController {
 	public ResultBean<String> getNewOrderCode() {
 		ResultBean<String> result = new ResultBean<String>();
 		String preStr = "XS"+DateUtil.getDateFormat1(new Date());
-		String code = SalesOrderService.getNewCode(preStr);
+		String code = salesOrderService.getNewCode(preStr);
 		result.setCode(ResultBean.SUCCESS);
 		result.setData(code);
 		return result;
