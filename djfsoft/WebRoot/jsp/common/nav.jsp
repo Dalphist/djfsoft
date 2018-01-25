@@ -32,7 +32,7 @@
 							<li>
 								<a>仓库</a>
 								<ul class="sub-menu">
-									<li><a onclick="window.location='<%=projectName%>/main'">库存</a></li>
+									<li><a onclick="window.location='<%=projectName%>/stock/index'">库存</a></li>
 									<li><a>调拨</a></li>
 									<li><a>调整</a></li>
 								</ul>

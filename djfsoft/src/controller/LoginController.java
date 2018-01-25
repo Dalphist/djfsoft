@@ -31,7 +31,7 @@ public class LoginController {
 
 	@RequestMapping("main")
 	public String loginSuccess() {
-		String url = "main";
+		String url = "stock/index";
 		return url;
 	}
 
