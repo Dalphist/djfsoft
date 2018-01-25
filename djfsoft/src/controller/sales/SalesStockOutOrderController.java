@@ -93,4 +93,22 @@ public class SalesStockOutOrderController {
 		result.setData(code);
 		return result;
 	}
+	
+	/**
+	 * 出库操作
+	 * @return
+	 */
+	@RequestMapping("stockOut")
+	@ResponseBody
+	public ResultBean<String> stockOut(String orderId) {
+		ResultBean<String> result = new ResultBean<String>();
+		List<SalesStockOutOrderDetailInfo> details = salesStockOutOrderService.getDetail(orderId);
+		for(SalesStockOutOrderDetailInfo detail : details){
+			int productId = detail.getProductId();
+			double quantity = detail.getQuantity();
+			
+		}
+		result.setCode(ResultBean.SUCCESS);
+		return result;
+	}
 }
