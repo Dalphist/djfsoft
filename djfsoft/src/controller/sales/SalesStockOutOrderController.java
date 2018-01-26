@@ -12,7 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import pojo.ResultBean;
 import pojo.sales.SalesStockOutOrderDetailInfo;
 import pojo.sales.SalesStockOutOrderInfo;
+import pojo.stock.StockOutInfo;
 import service.sales.SalesStockOutOrderService;
+import service.stock.StockService;
 import util.DateUtil;
 import util.ParseUtil;
 
@@ -96,17 +98,18 @@ public class SalesStockOutOrderController {
 	
 	/**
 	 * 出库操作
-	 * @return
 	 */
+	StockService stockService;
 	@RequestMapping("stockOut")
 	@ResponseBody
 	public ResultBean<String> stockOut(String orderId) {
 		ResultBean<String> result = new ResultBean<String>();
 		List<SalesStockOutOrderDetailInfo> details = salesStockOutOrderService.getDetail(orderId);
 		for(SalesStockOutOrderDetailInfo detail : details){
-			int productId = detail.getProductId();
-			double quantity = detail.getQuantity();
-			
+			StockOutInfo stockOut = new StockOutInfo();
+			stockOut.setProductId(detail.getProductId());
+			stockOut.setNormalQuantity(detail.getQuantity());
+			stockService.stockOut(stockOut);
 		}
 		result.setCode(ResultBean.SUCCESS);
 		return result;
