@@ -91,11 +91,13 @@ public class SalesStockOutOrderController {
 		StockOutOrderInfo stockOutOrder = new StockOutOrderInfo();
 		stockOutOrder.setOrderCode(getCode());
 		salesStockOutOrderService.addOrder(stockOutOrder);
+		int stockOutOrderId = stockOutOrder.getId();
 		List<String> ids = ParseUtil.parseFromStrArray(selectOrderIds);
 		for(String orderId : ids){
 			List<SalesOrderDetailInfo> details = salesOrderService.getDetail(orderId);
 			for(SalesOrderDetailInfo detail : details){
 				StockOutOrderDetailInfo out = new StockOutOrderDetailInfo();
+				out.setStockOutOrderId(stockOutOrderId);
 				out.setProductId(detail.getProductId());
 				out.setNormalQuantity(detail.getQuantity());
 				out.setSalesOrderId(Integer.parseInt(orderId));
