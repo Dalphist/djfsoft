@@ -16,7 +16,7 @@
 								<a>采购</a>
 								<ul class="sub-menu">
 									<li><a>采购计划</a></li>
-									<li><a onclick="window.location='<%=projectName%>/purchase/purchaseOrder/index'">采购订单</a></li>
+									<li><a href="<%=projectName%>/purchase/purchaseOrder/index">采购订单</a></li>
 									<li><a>采购入库</a></li>
 									<li><a>采购退货</a></li>
 								</ul>
@@ -24,15 +24,15 @@
 							<li>
 								<a>销售</a>
 								<ul class="sub-menu">
-									<li><a onclick="window.location='<%=projectName%>/sales/salesOrder/index'">销售订单</a></li>
-									<li><a onclick="window.location='<%=projectName%>/sales/salesStockOutOrder/index'">销售出库</a></li>
+									<li><a href="<%=projectName%>/sales/salesOrder/index">销售订单</a></li>
+									<li><a href="<%=projectName%>/sales/salesStockOutOrder/index">销售出库</a></li>
 									<li><a>销售退货</a></li>
 								</ul>
 							</li>
 							<li>
 								<a>仓库</a>
 								<ul class="sub-menu">
-									<li><a onclick="window.location='<%=projectName%>/stock/index'">库存</a></li>
+									<li><a href="<%=projectName%>/stock/index">库存</a></li>
 									<li><a>调拨</a></li>
 									<li><a>调整</a></li>
 								</ul>

@@ -44,6 +44,14 @@
 		    	$("#input_order_id").val("");
 		    	getCategoryAttribute(category_id);
 		    });
+		    //全选/取消全选
+		    $("#checkAll").on("click",function(event){
+		    	if($("#checkAll").prop("checked")){
+		    		$("#table_order_list tbody :checkbox").prop("checked", true);
+		    	}else{
+		    		$("#table_order_list tbody :checkbox").prop("checked", false);
+		    	}
+		    });
 		});
 		
 		//手动添加订单
@@ -101,6 +109,34 @@
 		        }				
 			});
 		}
+		
+		//将选中的销售订单出库操作
+		function stockOut(){
+			var selectOrderIds = getSelectOrder();
+			$.ajax({
+				url:"<%=projectName%>/sales/salesOrder/toStockOut",
+				type:"post",
+		        data:{"selectOrderIds":JSON.stringify(selectOrderIds)},
+		        success:function(result){
+		        	$.messager.alert('提示',result.msg,'info',function(){    
+				        parent.window.location="<%=projectName%>/sales/salesOrder/index";
+					});
+		        }				
+			});
+		}
+		
+		//获取选中的订单
+		function getSelectOrder(){
+			var checkboxes = $("#table_order_list tbody :checkbox");
+			var selectOrderIds = [];
+			checkboxes.each(function(){
+				if($(this).prop("checked")){
+					var orderId = $(this).parents("tr").find(".td_order_id").text().trim();
+					selectOrderIds.push(orderId);
+				}
+			});
+			return selectOrderIds;
+		}
 	</script>
   </head>
   <body style="margin: 0px;">
@@ -108,6 +144,7 @@
 	<div style="height:30px;background-color:#e0ecff;padding-top: 3px;">
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">手动添加</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="delOrder();">删除订单</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="stockOut();">订单出库</a>
 		<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 	</div>
 	<div id="layout_order_list" class="easyui-layout">
@@ -120,8 +157,10 @@
 							<thead>
 								<tr>
 									<th style="display: none;">ID</th>
+									<th style="width:10px;"><input id="checkAll" type="checkbox"/></th>
 									<th style="width:30px;">序号</th>
 									<th>订单编号</th>
+									<th>状态</th>
 									<th>商品总价</th>
 									<th>运费</th>
 									<th>优惠金额</th>
@@ -135,8 +174,10 @@
 								<c:forEach var="order" items="${orderList}" varStatus="status">  
 								    <tr>
 								    	<td style="display: none;" class="td_order_id">${order.id}</td>
+								    	<td class="td_checkbox"><input type="checkbox"/></td>
 								    	<td>${status.count}</td>
 								    	<td>${order.orderCode}</td>
+								    	<td>${order.effectiveFlag}</td>
 								    	<td>${order.productPrice}</td>
 								    	<td>${order.transportFare}</td>
 								    	<td>${order.extraPrice}</td>

@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mapper.sales.SalesStockOutOrderMapper;
-import pojo.sales.SalesStockOutOrderDetailInfo;
 import pojo.sales.SalesStockOutOrderInfo;
+import pojo.stock.StockOutOrderDetailInfo;
+import pojo.stock.StockOutOrderInfo;
 import service.sales.SalesStockOutOrderService;
 
 @Service
@@ -16,13 +17,13 @@ public class SalesStockOutOrderServiceImpl implements SalesStockOutOrderService 
 	SalesStockOutOrderMapper salesStockOutOrderMapper;
 
 	@Override
-	public void addOrder(SalesStockOutOrderInfo order) {
+	public void addOrder(StockOutOrderInfo order) {
 		salesStockOutOrderMapper.addOrder(order);
 		return;
 	}
 
 	@Override
-	public void addOrderDetail(SalesStockOutOrderDetailInfo detailInfo) {
+	public void addOrderDetail(StockOutOrderDetailInfo detailInfo) {
 		salesStockOutOrderMapper.addOrderDetail(detailInfo);
 		return;
 	}
@@ -40,7 +41,7 @@ public class SalesStockOutOrderServiceImpl implements SalesStockOutOrderService 
 	}
 
 	@Override
-	public void updateOrder(SalesStockOutOrderInfo order) {
+	public void updateOrder(StockOutOrderInfo order) {
 		salesStockOutOrderMapper.updateOrder(order);
 		return;
 	}
@@ -51,7 +52,7 @@ public class SalesStockOutOrderServiceImpl implements SalesStockOutOrderService 
 	}
 
 	@Override
-	public List<SalesStockOutOrderDetailInfo> getDetail(String orderId) {
+	public List<StockOutOrderDetailInfo> getDetail(String orderId) {
 		return salesStockOutOrderMapper.getDetail(orderId);
 	}
 

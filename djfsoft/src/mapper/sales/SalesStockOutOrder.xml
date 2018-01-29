@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.sales.SalesStockOutOrderMapper">
-	<insert id="addOrder" parameterType="SalesStockOutOrderInfo">
+	<insert id="addOrder" parameterType="StockOutOrderInfo">
 		<selectKey keyProperty='id' resultType='int' order='AFTER'  >  
 	        select LAST_INSERT_ID();  
 	    </selectKey> 
@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(#{orderCode},#{typeId},#{operaterId},#{operateDate})
 	</insert>
 	
-	<insert id="addOrderDetail" parameterType="SalesStockOutOrderDetailInfo">
+	<insert id="addOrderDetail" parameterType="StockOutOrderDetailInfo">
 		INSERT INTO t_sales_order_detail
 		(sales_order_id,product_id,quantity,unit_price,cost)
 		VALUES
@@ -29,19 +29,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from t_sales_order_detail where sales_order_id= #{orderId}
 	</delete>
 
-	<update id="updateOrder" parameterType="SalesStockOutOrderInfo">
+	<update id="updateOrder" parameterType="StockOutOrderInfo">
 		update t_stock_out_order
 		set product_price = #{productPrice},transport_fare = #{transportFare},extra_price = #{extraPrice},total_price = #{totalPrice},
 		pay_type_id = #{payTypeId},operater_id = #{operaterId},operate_date = #{operateDate},effective_flag = #{effectiveFlag}
 		where id=#{id}
 	</update>
 
-	<select id="orderList" resultType="SalesStockOutOrderInfo">
+	<select id="orderList" resultType="StockOutOrderInfo">
 		select s.*
 		from t_stock_out_order s
 	</select>
 	
-	<select id="getDetail" parameterType="String" resultType="SalesStockOutOrderDetailInfo">
+	<select id="getDetail" parameterType="String" resultType="StockOutOrderDetailInfo">
 		select pod.*,p.bar_code,p.product_code,p.product_name,p.product_unit from 
 		t_sales_order_detail pod 
 		JOIN t_product p ON pod.product_id = p.id 

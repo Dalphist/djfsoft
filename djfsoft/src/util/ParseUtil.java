@@ -30,7 +30,7 @@ public class ParseUtil {
 		}
 		return obj;
 	}
-	
+	//把前台传过来的字符串数组转成后台可用的集合
 	public static List<String> parseFromStrArray(String data) {
 		List<String> list = new ArrayList<String>();
 		if (null == data || data.length() == 0 || data.length() < 4) {

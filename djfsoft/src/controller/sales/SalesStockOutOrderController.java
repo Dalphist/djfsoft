@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pojo.ResultBean;
-import pojo.sales.SalesStockOutOrderDetailInfo;
+import pojo.sales.SalesOrderDetailInfo;
 import pojo.sales.SalesStockOutOrderInfo;
-import pojo.stock.StockOutInfo;
+import pojo.stock.StockOutOrderDetailInfo;
+import pojo.stock.StockOutOrderInfo;
+import service.sales.SalesOrderService;
 import service.sales.SalesStockOutOrderService;
 import service.stock.StockService;
 import util.DateUtil;
@@ -45,36 +47,13 @@ public class SalesStockOutOrderController {
 	
 	@RequestMapping("getOrderDetail")
 	@ResponseBody
-	public ResultBean<SalesStockOutOrderDetailInfo> orderDetail(String orderId) {
-		ResultBean<SalesStockOutOrderDetailInfo> result = new ResultBean<SalesStockOutOrderDetailInfo>();
-		List<SalesStockOutOrderDetailInfo> list = salesStockOutOrderService.getDetail(orderId);
+	public ResultBean<StockOutOrderDetailInfo> orderDetail(String orderId) {
+		ResultBean<StockOutOrderDetailInfo> result = new ResultBean<StockOutOrderDetailInfo>();
+		List<StockOutOrderDetailInfo> list = salesStockOutOrderService.getDetail(orderId);
 		result.setDataList(list);
 		return result;
 	}
 	
-	@RequestMapping("saveSalesOrder")
-	@ResponseBody
-	public ResultBean<String> saveSalesOrder(String basicInfo,String productListInfo) {
-		SalesStockOutOrderInfo salesStockOutOrder = new SalesStockOutOrderInfo();
-		salesStockOutOrder = (SalesStockOutOrderInfo)ParseUtil.getBeanFromStr(basicInfo, "pojo.sales.salesStockOutOrder");
-		ResultBean<String> result = new ResultBean<String>();
-		if(salesStockOutOrder.getId() == null){
-			salesStockOutOrder.setOperateDate(DateUtil.getNowDateTime());
-			salesStockOutOrderService.addOrder(salesStockOutOrder);
-			result.setMsg("添加成功！");
-		}else{
-			result.setMsg("修改成功！");
-		}
-		String salesOrderId = String.valueOf(salesStockOutOrder.getId());
-		//保存订单的货品详情
-		List<SalesStockOutOrderDetailInfo> list = ParseUtil.getBeanListFromStr(productListInfo, "pojo.sales.SalesStockOutOrderDetailInfo");
-		for(SalesStockOutOrderDetailInfo detail : list){
-			detail.setStockOutOrderId(Integer.parseInt(salesOrderId));
-			salesStockOutOrderService.addOrderDetail(detail);
-		}
-		result.setCode(ResultBean.SUCCESS);
-		return result;
-	}
 	@RequestMapping("delOrder")
 	@ResponseBody
 	public ResultBean<String> delOrder(String orderId) {
@@ -89,28 +68,42 @@ public class SalesStockOutOrderController {
 	@ResponseBody
 	public ResultBean<String> getNewOrderCode() {
 		ResultBean<String> result = new ResultBean<String>();
-		String preStr = "XSCK"+DateUtil.getDateFormat1(new Date());
-		String code = salesStockOutOrderService.getNewCode(preStr);
+		String code = getCode();
 		result.setCode(ResultBean.SUCCESS);
 		result.setData(code);
 		return result;
 	}
-	
 	/**
-	 * 出库操作
+	 * 获取最新编号
 	 */
+	public String getCode(){
+		String preStr = "XSCK"+DateUtil.getDateFormat1(new Date());
+		return salesStockOutOrderService.getNewCode(preStr);
+	}
+	@Autowired
 	StockService stockService;
-	@RequestMapping("stockOut")
+	@Autowired
+	SalesOrderService salesOrderService;
+	
+	@RequestMapping("toStockOut")
 	@ResponseBody
-	public ResultBean<String> stockOut(String orderId) {
-		ResultBean<String> result = new ResultBean<String>();
-		List<SalesStockOutOrderDetailInfo> details = salesStockOutOrderService.getDetail(orderId);
-		for(SalesStockOutOrderDetailInfo detail : details){
-			StockOutInfo stockOut = new StockOutInfo();
-			stockOut.setProductId(detail.getProductId());
-			stockOut.setNormalQuantity(detail.getQuantity());
-			stockService.stockOut(stockOut);
+	public ResultBean<String> toStockOut(String selectOrderIds) {
+		StockOutOrderInfo stockOutOrder = new StockOutOrderInfo();
+		stockOutOrder.setOrderCode(getCode());
+		salesStockOutOrderService.addOrder(stockOutOrder);
+		List<String> ids = ParseUtil.parseFromStrArray(selectOrderIds);
+		for(String orderId : ids){
+			List<SalesOrderDetailInfo> details = salesOrderService.getDetail(orderId);
+			for(SalesOrderDetailInfo detail : details){
+				StockOutOrderDetailInfo out = new StockOutOrderDetailInfo();
+				out.setProductId(detail.getProductId());
+				out.setNormalQuantity(detail.getQuantity());
+				out.setSalesOrderId(Integer.parseInt(orderId));
+				//出库减库存
+				stockService.stockOut(out);
+			}
 		}
+		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);
 		return result;
 	}

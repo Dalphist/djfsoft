@@ -37,12 +37,12 @@
 			   getBasicInfo($(this));
 			}); 
 		});
+		
 	</script>
   </head>
   <body style="margin: 0px;">
   <input id="input_order_id" style="display: none;">
 	<div style="height:30px;background-color:#e0ecff;padding-top: 3px;">
-		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">手动添加</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="delOrder();">删除订单</a>
 		<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 	</div>

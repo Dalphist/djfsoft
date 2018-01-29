@@ -2,23 +2,24 @@ package mapper.sales;
 
 import java.util.List;
 
-import pojo.sales.SalesStockOutOrderDetailInfo;
 import pojo.sales.SalesStockOutOrderInfo;
+import pojo.stock.StockOutOrderDetailInfo;
+import pojo.stock.StockOutOrderInfo;
 
 public interface SalesStockOutOrderMapper {
-	public void addOrder(SalesStockOutOrderInfo order);
+	public void addOrder(StockOutOrderInfo order);
 
-	public void addOrderDetail(SalesStockOutOrderDetailInfo detailInfo);
+	public void addOrderDetail(StockOutOrderDetailInfo detailInfo);
 
 	public void delOrder(String orderId);
 
 	public void delOrderDetail(String orderId);
 
-	public void updateOrder(SalesStockOutOrderInfo order);
+	public void updateOrder(StockOutOrderInfo order);
 
 	public List<SalesStockOutOrderInfo> orderList();
 
-	public List<SalesStockOutOrderDetailInfo> getDetail(String orderId);
+	public List<StockOutOrderDetailInfo> getDetail(String orderId);
 	
 	public String getNewCode(String preStr);
 }

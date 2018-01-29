@@ -44,6 +44,14 @@
 		    	$("#input_order_id").val("");
 		    	getCategoryAttribute(category_id);
 		    });
+		    //全选/取消全选
+		    $("#checkAll").on("click",function(event){
+		    	if($("#checkAll").prop("checked")){
+		    		$("#table_product_list tbody :checkbox").prop("checked", true);
+		    	}else{
+		    		$("#table_product_list tbody :checkbox").prop("checked", false);
+		    	}
+		    });
 		});
 		
 		//手动添加订单
@@ -101,11 +109,16 @@
 		        }				
 			});
 		}
+		//销售订单导入成出库订单
+		function importSalesOrder(){
+			parent.window.location="<%=projectName%>/sales/salesOrder/index";
+		}
 	</script>
   </head>
   <body style="margin: 0px;">
   <input id="input_order_id" style="display: none;">
 	<div style="height:30px;background-color:#e0ecff;padding-top: 3px;">
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="importSalesOrder();">销售导入</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">手动添加</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="delOrder();">删除订单</a>
 		<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
@@ -120,6 +133,7 @@
 							<thead>
 								<tr>
 									<th style="display: none;">ID</th>
+									<th style="width:10px;"><input id="checkAll" type="checkbox"/></th>
 									<th style="width:30px;">序号</th>
 									<th>出库单号</th>
 									<th>操作人</th>
@@ -133,6 +147,7 @@
 								<c:forEach var="order" items="${orderList}" varStatus="status">  
 								    <tr>
 								    	<td style="display: none;" class="td_order_id">${order.id}</td>
+								    	<td class="td_checkbox"><input type="checkbox"/></td>
 								    	<td>${status.count}</td>
 								    	<td>${order.orderCode}</td>
 								    	<td>${order.productPrice}</td>

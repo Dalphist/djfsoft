@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import mapper.stock.StockMapper;
 import pojo.stock.StockInInfo;
 import pojo.stock.StockInfo;
-import pojo.stock.StockOutInfo;
+import pojo.stock.StockOutOrderDetailInfo;
 import service.stock.StockService;
 
 @Service
@@ -21,7 +21,7 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
-	public void stockOut(StockOutInfo stockOutInfo) {
+	public void stockOut(StockOutOrderDetailInfo stockOutInfo) {
 		stockMapper.stockOut(stockOutInfo);
 		return;
 	}

@@ -24,7 +24,7 @@
   </head>
 <body>
 	<div id="main_layout" class="easyui-layout" style="width:100%;height:100%;">
-		<%@include file="../../common/nav.jsp"%>
+		<%@include file="../common/nav.jsp"%>
 		<div data-options="region:'north'" style="height:51px"></div>
 		<div data-options="region:'center'">
 			<div id="tabs" class="easyui-tabs" style="width:100%;height:100%;">
