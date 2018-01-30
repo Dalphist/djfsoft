@@ -27,6 +27,7 @@ public class SalesOrderInfo {
 	private String customerAddress;
 	private String customerNotes;
 	// info
+	private String orderState;
 	private String payType;
 	private String operateName;
 	private String confirmName;
@@ -275,21 +276,12 @@ public class SalesOrderInfo {
 	public void setCustomerDistrict3Name(String customerDistrict3Name) {
 		this.customerDistrict3Name = customerDistrict3Name;
 	}
+	public String getOrderState() {
+		return orderState;
+	}
 
-	@Override
-	public String toString() {
-		return "SalesOrderInfo [id=" + id + ", orderCode=" + orderCode + ", productPrice=" + productPrice
-				+ ", transportFare=" + transportFare + ", extraPrice=" + extraPrice + ", totalPrice=" + totalPrice
-				+ ", payTypeId=" + payTypeId + ", operaterId=" + operaterId + ", operateDate=" + operateDate
-				+ ", confirmId=" + confirmId + ", confirmDate=" + confirmDate + ", stateFlag=" + stateFlag
-				+ ", dealDate=" + dealDate + ", taobaoCode=" + taobaoCode + ", customerId=" + customerId
-				+ ", customerName=" + customerName + ", customerTel=" + customerTel + ", customerPostcode="
-				+ customerPostcode + ", customerDistrict1Id=" + customerDistrict1Id + ", customerDistrict2Id="
-				+ customerDistrict2Id + ", customerDistrict3Id=" + customerDistrict3Id + ", customerAddress="
-				+ customerAddress + ", customerNotes=" + customerNotes + ", payType=" + payType + ", operateName="
-				+ operateName + ", confirmName=" + confirmName + ", effectiveFlag=" + effectiveFlag
-				+ ", customerDistrict1Name=" + customerDistrict1Name + ", customerDistrict2Name="
-				+ customerDistrict2Name + ", customerDistrict3Name=" + customerDistrict3Name + "]";
+	public void setOrderState(String orderState) {
+		this.orderState = orderState;
 	}
 
 }

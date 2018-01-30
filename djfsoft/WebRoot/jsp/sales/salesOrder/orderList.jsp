@@ -141,13 +141,13 @@
   </head>
   <body style="margin: 0px;">
   <input id="input_order_id" style="display: none;">
-	<div style="height:30px;background-color:#e0ecff;padding-top: 3px;">
+	<div style="height:28px;background-color:#e0ecff;padding-top: 1px;">
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">手动添加</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="delOrder();">删除订单</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="stockOut();">订单出库</a>
 		<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 	</div>
-	<div id="layout_order_list" class="easyui-layout">
+	<div id="layout_order_list" class="easyui-layout" style="height: 560px;">
 		<div data-options="region:'west',title:'筛选'" style="width: 100px;"></div>
 		<div data-options="region:'center'" >
 			<div id="div_order_list" class="easyui-layout" style="width:100%;height:100%;">
@@ -177,7 +177,7 @@
 								    	<td class="td_checkbox"><input type="checkbox"/></td>
 								    	<td>${status.count}</td>
 								    	<td>${order.orderCode}</td>
-								    	<td>${order.effectiveFlag}</td>
+								    	<td>${order.orderState}</td>
 								    	<td>${order.productPrice}</td>
 								    	<td>${order.transportFare}</td>
 								    	<td>${order.extraPrice}</td>

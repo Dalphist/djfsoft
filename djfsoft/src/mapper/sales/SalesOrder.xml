@@ -45,11 +45,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<select id="orderList" resultType="salesOrderInfo">
-		select s.*,
+		select s.id,s.order_code,s.product_price,s.transport_fare,s.extra_price,s.total_price,s.pay_type_id,
+		s.operater_id,s.operate_date,s.confirm_id,s.confirm_date,tdss.name as order_state,s.deal_date,s.taobao_code,
+		s.customer_id,s.customer_name,s.customer_tel,s.customer_postcode,s.customer_address,s.customer_notes,
 		(select name from t_district d1 WHERE s.customer_district1_id = d1.id) as customer_district1_name,
 		(select name from t_district d2 WHERE s.customer_district2_id = d2.id) as customer_district2_name,
 		(select name from t_district d3 WHERE s.customer_district3_id = d3.id) as customer_district3_name
 		from t_sales_order s
+		LEFT JOIN t_dict_sales_state tdss ON s.state_flag = tdss.nid 
 	</select>
 	
 	<select id="getDetail" parameterType="String" resultType="salesOrderDetailInfo">
