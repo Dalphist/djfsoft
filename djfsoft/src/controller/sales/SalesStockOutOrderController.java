@@ -18,6 +18,7 @@ import service.sales.SalesStockOutOrderService;
 import service.stock.StockService;
 import util.DateUtil;
 import util.ParseUtil;
+import util.enumSet.SalesStateEnum;
 
 
 @Controller
@@ -103,8 +104,9 @@ public class SalesStockOutOrderController {
 				//出库减库存
 				stockService.stockOut(out);
 			}
+			//修改销售订单的状态 -- 已出库
+			salesOrderService.updateState(orderId, SalesStateEnum.STOCKOUT.getState());
 		}
-		// TODO 修改销售订单的状态 -- 已出库
 		
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);

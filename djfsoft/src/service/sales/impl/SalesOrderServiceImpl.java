@@ -47,6 +47,12 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 	}
 
 	@Override
+	public void updateState(String orderId, String state) {
+		salesOrderMapper.updateState(orderId, state);
+		return;
+	}
+
+	@Override
 	public List<SalesOrderInfo> orderList() {
 		return salesOrderMapper.orderList();
 	}

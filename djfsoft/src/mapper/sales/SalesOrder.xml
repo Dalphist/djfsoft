@@ -37,6 +37,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		pay_type_id = #{payTypeId},operater_id = #{operaterId},operate_date = #{operateDate},effective_flag = #{effectiveFlag}
 		where id=#{id}
 	</update>
+	
+	<update id="updateState" parameterType="String">
+		update t_sales_order
+		set state_flag = #{state}
+		where id=#{orderId}
+	</update>
 
 	<select id="orderList" resultType="salesOrderInfo">
 		select s.*,

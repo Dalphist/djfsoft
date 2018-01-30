@@ -7,6 +7,8 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
+import util.enumSet.SalesStateEnum;
+
 public class LogTest {
 	private static Logger logger = Logger.getLogger(LogTest.class);
 	@Test
@@ -17,9 +19,7 @@ public class LogTest {
 	}
 	@Test
 	public void test2() throws ParseException{
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-		String s = df.format(new Date());
-        Date date = df.parse(s);
-		System.out.println(date);
+		String s =  SalesStateEnum.SALESORDER.getState();
+		System.out.println(s);
 	}
 }

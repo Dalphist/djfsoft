@@ -119,7 +119,7 @@
 		        data:{"selectOrderIds":JSON.stringify(selectOrderIds)},
 		        success:function(result){
 		        	$.messager.alert('提示',result.msg,'info',function(){    
-				        parent.window.location="<%=projectName%>/sales/salesOrder/index";
+				        parent.window.location="<%=projectName%>/sales/salesStockOutOrder/index";
 					});
 		        }				
 			});
