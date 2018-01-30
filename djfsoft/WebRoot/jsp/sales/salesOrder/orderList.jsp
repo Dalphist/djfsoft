@@ -113,16 +113,21 @@
 		//将选中的销售订单出库操作
 		function stockOut(){
 			var selectOrderIds = getSelectOrder();
-			$.ajax({
-				url:"<%=projectName%>/sales/salesStockOutOrder/toStockOut",
-				type:"post",
-		        data:{"selectOrderIds":JSON.stringify(selectOrderIds)},
-		        success:function(result){
-		        	$.messager.alert('提示',result.msg,'info',function(){    
-				        parent.window.location="<%=projectName%>/sales/salesStockOutOrder/index";
-					});
-		        }				
-			});
+			if(selectOrderIds.length == 0){
+				$.messager.alert('提示','没有选择任何订单','info');
+				return false;
+			}else{
+				$.ajax({
+					url:"<%=projectName%>/sales/salesStockOutOrder/toStockOut",
+					type:"post",
+			        data:{"selectOrderIds":JSON.stringify(selectOrderIds)},
+			        success:function(result){
+			        	$.messager.alert('提示',result.msg,'info',function(){    
+					        parent.window.location="<%=projectName%>/sales/salesStockOutOrder/index";
+						});
+			        }				
+				});
+			}
 		}
 		
 		//获取选中的订单

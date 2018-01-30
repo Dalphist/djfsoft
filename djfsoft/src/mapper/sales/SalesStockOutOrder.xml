@@ -16,9 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="addOrderDetail" parameterType="StockOutOrderDetailInfo">
 		INSERT INTO t_stock_out_order_detail
-		(sales_order_id,product_id,quantity,unit_price,cost)
+		(stock_out_order_id,sales_order_id,product_id,normal_quantity,defect_quantity,
+		useless_quantity,warehouse_id,rack_code)
 		VALUES
-		(#{salesOrderId},#{productId},#{quantity},#{unitPrice},#{cost})
+		(#{stockOutOrderId},#{salesOrderId},#{productId},#{normalQuantity},#{defectQuantity},
+		#{uselessQuantity},#{warehouseId},#{rackCode})
 	</insert>
 
 	<delete id="delOrder" parameterType="String">

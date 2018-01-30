@@ -10,6 +10,9 @@ public class StockOutOrderDetailInfo {
 	private Double uselessQuantity;
 	private Double rackCode;
 	
+	//info
+	private String warehouseName;
+	
 	public Integer getStockOutOrderId() {
 		return stockOutOrderId;
 	}
@@ -57,6 +60,12 @@ public class StockOutOrderDetailInfo {
 	}
 	public void setRackCode(Double rackCode) {
 		this.rackCode = rackCode;
+	}
+	public String getWarehouseName() {
+		return warehouseName;
+	}
+	public void setWarehouseName(String warehouseName) {
+		this.warehouseName = warehouseName;
 	}
 	
 }

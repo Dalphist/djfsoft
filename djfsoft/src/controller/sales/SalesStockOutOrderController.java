@@ -101,6 +101,8 @@ public class SalesStockOutOrderController {
 				out.setProductId(detail.getProductId());
 				out.setNormalQuantity(detail.getQuantity());
 				out.setSalesOrderId(Integer.parseInt(orderId));
+				//保存到出库单详情
+				salesStockOutOrderService.addOrderDetail(out);
 				//出库减库存
 				stockService.stockOut(out);
 			}
