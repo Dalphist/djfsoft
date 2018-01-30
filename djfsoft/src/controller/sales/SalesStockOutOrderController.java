@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pojo.ResultBean;
 import pojo.sales.SalesOrderDetailInfo;
-import pojo.sales.SalesStockOutOrderInfo;
 import pojo.stock.StockOutOrderDetailInfo;
 import pojo.stock.StockOutOrderInfo;
 import service.sales.SalesOrderService;
@@ -37,7 +36,7 @@ public class SalesStockOutOrderController {
 	
 	@RequestMapping("orderList")
 	public ModelAndView orderList() {
-		List<SalesStockOutOrderInfo> list = salesStockOutOrderService.orderList();
+		List<StockOutOrderInfo> list = salesStockOutOrderService.orderList();
 		ModelAndView mav = new ModelAndView();
 		String url = "sales/salesStockOutOrder/orderList";
 		mav.setViewName(url);
@@ -105,8 +104,11 @@ public class SalesStockOutOrderController {
 				stockService.stockOut(out);
 			}
 		}
+		// TODO 修改销售订单的状态 -- 已出库
+		
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);
+		result.setMsg("出库成功！");
 		return result;
 	}
 }

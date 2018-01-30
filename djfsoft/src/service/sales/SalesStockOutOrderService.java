@@ -2,7 +2,6 @@ package service.sales;
 
 import java.util.List;
 
-import pojo.sales.SalesStockOutOrderInfo;
 import pojo.stock.StockOutOrderDetailInfo;
 import pojo.stock.StockOutOrderInfo;
 
@@ -17,7 +16,7 @@ public interface SalesStockOutOrderService {
 
 	void updateOrder(StockOutOrderInfo order);
 
-	List<SalesStockOutOrderInfo> orderList();
+	List<StockOutOrderInfo> orderList();
 
 	List<StockOutOrderDetailInfo> getDetail(String orderId);
 	

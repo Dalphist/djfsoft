@@ -150,10 +150,6 @@
 								    	<td class="td_checkbox"><input type="checkbox"/></td>
 								    	<td>${status.count}</td>
 								    	<td>${order.orderCode}</td>
-								    	<td>${order.productPrice}</td>
-								    	<td>${order.transportFare}</td>
-								    	<td>${order.extraPrice}</td>
-								    	<td>${order.totalPrice}</td>
 								    	<td>${order.operateName}</td>
 								    	<td><fmt:formatDate value="${order.operateDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 								    </tr>

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mapper.sales.SalesStockOutOrderMapper;
-import pojo.sales.SalesStockOutOrderInfo;
 import pojo.stock.StockOutOrderDetailInfo;
 import pojo.stock.StockOutOrderInfo;
 import service.sales.SalesStockOutOrderService;
@@ -47,7 +46,7 @@ public class SalesStockOutOrderServiceImpl implements SalesStockOutOrderService 
 	}
 
 	@Override
-	public List<SalesStockOutOrderInfo> orderList() {
+	public List<StockOutOrderInfo> orderList() {
 		return salesStockOutOrderMapper.orderList();
 	}
 

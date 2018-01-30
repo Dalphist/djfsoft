@@ -4,9 +4,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.stock.StockMapper">
-	<update id="stockOut" parameterType="StockOutInfo">
+	<update id="stockOut" parameterType="StockOutOrderInfo">
 		update t_stock set normal_quantity = normal_quantity - #{normalQuantity}
-		where product_id=#{id}
+		where product_id=#{productId}
 	</update>
 	<update id="stockIn" parameterType="StockInInfo">
 		update t_stock set normal_quantity = normal_quantity + #{normalQuantity}

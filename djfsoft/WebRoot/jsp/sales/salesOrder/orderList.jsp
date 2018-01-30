@@ -114,7 +114,7 @@
 		function stockOut(){
 			var selectOrderIds = getSelectOrder();
 			$.ajax({
-				url:"<%=projectName%>/sales/salesOrder/toStockOut",
+				url:"<%=projectName%>/sales/salesStockOutOrder/toStockOut",
 				type:"post",
 		        data:{"selectOrderIds":JSON.stringify(selectOrderIds)},
 		        success:function(result){
