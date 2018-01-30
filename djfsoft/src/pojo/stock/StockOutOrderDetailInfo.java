@@ -1,6 +1,8 @@
 package pojo.stock;
 
 public class StockOutOrderDetailInfo {
+	
+	private Integer id;
 	private Integer stockOutOrderId;
 	private Integer salesOrderId;
 	private Integer productId;
@@ -13,6 +15,13 @@ public class StockOutOrderDetailInfo {
 	//info
 	private String warehouseName;
 	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public Integer getStockOutOrderId() {
 		return stockOutOrderId;
 	}

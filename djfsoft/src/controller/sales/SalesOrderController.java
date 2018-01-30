@@ -3,6 +3,8 @@ package controller.sales;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pojo.ResultBean;
+import pojo.User;
 import pojo.sales.SalesOrder;
 import pojo.sales.SalesOrderDetailInfo;
 import pojo.sales.SalesOrderInfo;
@@ -53,9 +56,13 @@ public class SalesOrderController {
 	
 	@RequestMapping("saveSalesOrder")
 	@ResponseBody
-	public ResultBean<String> saveSalesOrder(String basicInfo,String productListInfo) {
+	public ResultBean<String> saveSalesOrder(HttpSession session,String basicInfo,String productListInfo) {
 		SalesOrder salesOrder = new SalesOrder();
 		salesOrder = (SalesOrder)ParseUtil.getBeanFromStr(basicInfo, "pojo.sales.SalesOrder");
+		//保存操作人
+		int userId = getUserId(session);
+		salesOrder.setOperaterId(userId);
+		
 		ResultBean<String> result = new ResultBean<String>();
 		if(salesOrder.getId() == null){
 			salesOrder.setOperateDate(DateUtil.getNowDateTime());
@@ -73,6 +80,16 @@ public class SalesOrderController {
 		}
 		result.setCode(ResultBean.SUCCESS);
 		return result;
+	}
+	/**
+	 * 通过session 获取userId
+	 * @param session
+	 * @return
+	 */
+	private int getUserId(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		int userId = user.getId();
+		return userId;
 	}
 	@RequestMapping("delOrder")
 	@ResponseBody
