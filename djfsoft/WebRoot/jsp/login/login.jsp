@@ -27,7 +27,7 @@
 	                success:function(data){
 	                	var code = data.code;
 	                	if(code == 0){
-	                		window.location="main";
+	                		window.location="/djfsoft/stock/index";
 	                	}else{
 	     					alert("用户名或密码错误。");           		
 	                	}

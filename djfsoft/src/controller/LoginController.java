@@ -1,5 +1,6 @@
 package controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,14 @@ public class LoginController {
 
 	@RequestMapping("login")
 	@ResponseBody
-	public ResultBean<String> getUser(String userName, String password,HttpSession session) {
+	public ResultBean<String> getUser(String userName, String password,HttpServletRequest request) {
 		User user = userService.getUser(new User(userName, password));
 		ResultBean<String> result = new ResultBean<String>();
+		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 		result.setCode(ResultBean.SUCCESS);
 		Log.login(user);
 		return result;
-	}
-
-	@RequestMapping("main")
-	public String loginSuccess() {
-		String url = "stock/index";
-		return url;
 	}
 
 }

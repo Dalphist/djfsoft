@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import interceptor.Authority;
 import pojo.ResultBean;
 import pojo.User;
 import pojo.sales.SalesOrder;
@@ -19,6 +20,7 @@ import pojo.sales.SalesOrderInfo;
 import service.sales.SalesOrderService;
 import util.DateUtil;
 import util.ParseUtil;
+import util.enumSet.AuthorityType;
 
 
 @Controller
@@ -26,7 +28,8 @@ import util.ParseUtil;
 public class SalesOrderController {
 	@Autowired
 	SalesOrderService salesOrderService;
-
+	
+	@Authority(AuthorityType.Validate)
 	@RequestMapping("index")
 	public ModelAndView productIndex() {
 		ModelAndView mav = new ModelAndView();
