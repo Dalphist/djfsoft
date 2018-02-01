@@ -63,8 +63,6 @@ public class AuthorityAnnotationInterceptor extends HandlerInterceptorAdapter {
 								response.getWriter().write("<script>window.location.href='" + url + "'</script>");
 								return false;
 							}
-							code = 1;
-							msg = "验证成功！";
 							return true;
 						}
 					} else {

@@ -14,6 +14,12 @@ public class StockOutOrderDetailInfo {
 	
 	//info
 	private String warehouseName;
+	private String productName;
+	private String productUnit;
+	private String productCode;
+	private String barCode;
+	private String salesOrderCode;
+	
 	
 	
 	public Integer getId() {
@@ -75,6 +81,36 @@ public class StockOutOrderDetailInfo {
 	}
 	public void setWarehouseName(String warehouseName) {
 		this.warehouseName = warehouseName;
+	}
+	public String getProductUnit() {
+		return productUnit;
+	}
+	public void setProductUnit(String productUnit) {
+		this.productUnit = productUnit;
+	}
+	public String getProductCode() {
+		return productCode;
+	}
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+	public String getBarCode() {
+		return barCode;
+	}
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
+	}
+	public String getSalesOrderCode() {
+		return salesOrderCode;
+	}
+	public void setSalesOrderCode(String salesOrderCode) {
+		this.salesOrderCode = salesOrderCode;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 	
 }

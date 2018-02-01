@@ -20,6 +20,7 @@ import pojo.sales.SalesOrderInfo;
 import service.sales.SalesOrderService;
 import util.DateUtil;
 import util.ParseUtil;
+import util.SessionUtil;
 import util.enumSet.AuthorityType;
 
 
@@ -63,7 +64,7 @@ public class SalesOrderController {
 		SalesOrder salesOrder = new SalesOrder();
 		salesOrder = (SalesOrder)ParseUtil.getBeanFromStr(basicInfo, "pojo.sales.SalesOrder");
 		//保存操作人
-		int userId = getUserId(session);
+		int userId = SessionUtil.getUserId(session);
 		salesOrder.setOperaterId(userId);
 		
 		ResultBean<String> result = new ResultBean<String>();
@@ -84,16 +85,7 @@ public class SalesOrderController {
 		result.setCode(ResultBean.SUCCESS);
 		return result;
 	}
-	/**
-	 * 通过session 获取userId
-	 * @param session
-	 * @return
-	 */
-	private int getUserId(HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		int userId = user.getId();
-		return userId;
-	}
+	
 	@RequestMapping("delOrder")
 	@ResponseBody
 	public ResultBean<String> delOrder(String orderId) {

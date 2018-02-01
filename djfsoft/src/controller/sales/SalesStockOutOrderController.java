@@ -3,6 +3,8 @@ package controller.sales;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import service.sales.SalesStockOutOrderService;
 import service.stock.StockService;
 import util.DateUtil;
 import util.ParseUtil;
+import util.SessionUtil;
 import util.enumSet.SalesStateEnum;
 
 
@@ -87,32 +90,40 @@ public class SalesStockOutOrderController {
 	
 	@RequestMapping("toStockOut")
 	@ResponseBody
-	public ResultBean<String> toStockOut(String selectOrderIds) {
+	public ResultBean<String> toStockOut(String selectOrderIds,HttpSession session) {
+		//保存出库单
 		StockOutOrderInfo stockOutOrder = new StockOutOrderInfo();
+		stockOutOrder.setOperaterId(SessionUtil.getUserId(session));
 		stockOutOrder.setOrderCode(getCode());
+		stockOutOrder.setOperateDate(DateUtil.getNowDateTime());
 		salesStockOutOrderService.addOrder(stockOutOrder);
 		int stockOutOrderId = stockOutOrder.getId();
+		//遍历所选销售订单
 		List<String> ids = ParseUtil.parseFromStrArray(selectOrderIds);
-		for(String orderId : ids){
-			List<SalesOrderDetailInfo> details = salesOrderService.getDetail(orderId);
-			for(SalesOrderDetailInfo detail : details){
-				StockOutOrderDetailInfo out = new StockOutOrderDetailInfo();
-				out.setStockOutOrderId(stockOutOrderId);
-				out.setProductId(detail.getProductId());
-				out.setNormalQuantity(detail.getQuantity());
-				out.setSalesOrderId(Integer.parseInt(orderId));
-				//保存到出库单详情
-				salesStockOutOrderService.addOrderDetail(out);
-				//出库减库存
-				stockService.stockOut(out);
-			}
+		for(String salesOrderId : ids){
+			//保存出库单详情
+			saveStockOutOrderDetail(stockOutOrderId, salesOrderId);
 			//修改销售订单的状态 -- 已出库
-			salesOrderService.updateState(orderId, SalesStateEnum.STOCKOUT.getState());
+			salesOrderService.updateState(salesOrderId, SalesStateEnum.STOCKOUT.getState());
 		}
 		
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);
 		result.setMsg("出库成功！");
 		return result;
+	}
+
+	private void saveStockOutOrderDetail(int stockOutOrderId, String salesOrderId) {
+		List<SalesOrderDetailInfo> details = salesOrderService.getDetail(salesOrderId);
+		for(SalesOrderDetailInfo detail : details){
+			StockOutOrderDetailInfo out = new StockOutOrderDetailInfo();
+			out.setStockOutOrderId(stockOutOrderId);
+			out.setProductId(detail.getProductId());
+			out.setNormalQuantity(detail.getQuantity());
+			out.setSalesOrderId(Integer.parseInt(salesOrderId));
+			salesStockOutOrderService.addOrderDetail(out);
+			//出库减库存
+			stockService.stockOut(out);
+		}
 	}
 }

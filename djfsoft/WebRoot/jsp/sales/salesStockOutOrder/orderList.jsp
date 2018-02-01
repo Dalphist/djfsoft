@@ -34,16 +34,7 @@
 			   var order_id = $(this).find(".td_order_id").text().trim();
 			   $("#input_order_id").val(order_id);
 			   getorderDetail(order_id);
-			   getBasicInfo($(this));
 			}); 
-			//添加
-		    $("#input_order_add").click(function(){
-		    	$("#tab_order input").val("");
-		    	$(".order_category_text").val(order_category_text);
-		    	$("#tab_order").tabs("select",0);
-		    	$("#input_order_id").val("");
-		    	getCategoryAttribute(category_id);
-		    });
 		    //全选/取消全选
 		    $("#checkAll").on("click",function(event){
 		    	if($("#checkAll").prop("checked")){
@@ -54,15 +45,11 @@
 		    });
 		});
 		
-		//手动添加订单
-		function addOrder(){
-			parent.addOrder();
-		}
 		//获取订单对应的货品详情
 		function getorderDetail(order_id){
 			$("#table_order_detail tbody").empty();
 			$.ajax({
-				url:"<%=projectName%>/sales/salesOrder/getOrderDetail",
+				url:"<%=projectName%>/sales/salesStockOutOrder/getOrderDetail",
 				type:"get",
 		        data:{"orderId":order_id},
 		        success:function(result){
@@ -70,29 +57,19 @@
 		        	$.each(detailList,function(i,detail){
 		        		var tr = "<tr>"
 		        				+ "<td>"+ (i+1) +"</td>"
+		        				+ "<td>"+ detail.salesOrderCode +"</td>"
 		        				+ "<td>"+ detail.productName +"</td>"
 		        				+ "<td>"+ detail.productCode +"</td>"
 		        				+ "<td>"+ detail.barCode +"</td>"
 		        				+ "<td>"+ detail.productUnit +"</td>"
-		        				+ "<td>"+ detail.unitPrice +"</td>"
-		        				+ "<td>"+ detail.quantity +"</td>"
-		        				+ "<td>"+ detail.cost +"</td>"
+		        				+ "<td>"+ detail.normalQuantity +"</td>"
+		        				+ "<td>"+ detail.warehouseName +"</td>"
+		        				+ "<td>"+ detail.rackCode +"</td>"
 		        				+ "</tr>"
 		        		$("#table_order_detail tbody").append(tr);
 		        	});
 		        }				
 			});
-		}
-		//订单基本信息显示在下面
-		function getBasicInfo(tr){
-			$("#td_dealDate").text(tr.find(".dealDate").text());
-			$("#td_taobaoCode").text(tr.find(".taobaoCode").text());
-			$("#td_customerName").text(tr.find(".customerName").text());
-			$("#td_customerTel").text(tr.find(".customerTel").text());
-			$("#td_customerPostcode").text(tr.find(".customerPostcode").text());
-			$("#td_district").text(tr.find(".customerDistrictName").text());
-			$("#td_customerNotes").text(tr.find(".customerNotes").text());
-			$("#td_customerAddress").text(tr.find(".customerAddress").text());
 		}
 		
 		//删除订单
@@ -150,7 +127,7 @@
 								    	<td class="td_checkbox"><input type="checkbox"/></td>
 								    	<td>${status.count}</td>
 								    	<td>${order.orderCode}</td>
-								    	<td>${order.operateName}</td>
+								    	<td>${order.operaterName}</td>
 								    	<td><fmt:formatDate value="${order.operateDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 								    </tr>
 								</c:forEach> 
@@ -160,23 +137,23 @@
 				</div>
 				<div data-options="region:'south'" style="height: 40%;">
 					<div id="tt" class="easyui-tabs" style="width:100%;height: 100%;">   
-					    <div title="货品详情" style="display:none;">   
+					    <div title="出库货品" style="display:none;">   
 					        <div>
 								<table id="table_order_detail" class="table_list" cellspacing="0">
 									<thead>
 										<tr style="height: 30px;">
 											<th style="width: 40px;">序号</th>
+											<th style="width: 200px;">销售订单单号</th>
 											<th style="width: 300px;">商品名称</th>
 											<th style="width: 200px;">商品编号</th>
 											<th style="width: 200px;">商品条形码</th>
 											<th style="width: 40px;">单位</th>
-											<th style="width: 127px;">单价</th>
-											<th style="width: 127px;">数量</th>
-											<th style="width: 127px;">总价</th>
+											<th style="width: 100px;">出库数量</th>
+											<th style="width: 100px;">出库仓库</th>
+											<th style="width: 100px;">出库货位号</th>
 										</tr>
 									</thead>
 									<tbody>
-									
 									</tbody>
 								</table>
 							</div>    

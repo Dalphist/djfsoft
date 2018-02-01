@@ -11,7 +11,7 @@ public class StockOutOrderInfo {
 	private Date confirmDate;
 	private Integer typeId;
 	// info
-	private String operateName;
+	private String operaterName;
 	private String confirmName;
 	public Integer getId() {
 		return id;
@@ -55,23 +55,17 @@ public class StockOutOrderInfo {
 	public void setTypeId(Integer typeId) {
 		this.typeId = typeId;
 	}
-	public String getOperateName() {
-		return operateName;
+	public String getOperaterName() {
+		return operaterName;
 	}
-	public void setOperateName(String operateName) {
-		this.operateName = operateName;
+	public void setOperaterName(String operaterName) {
+		this.operaterName = operaterName;
 	}
 	public String getConfirmName() {
 		return confirmName;
 	}
 	public void setConfirmName(String confirmName) {
 		this.confirmName = confirmName;
-	}
-	@Override
-	public String toString() {
-		return "SalesStockOutOrderInfo [id=" + id + ", orderCode=" + orderCode + ", operaterId=" + operaterId
-				+ ", operateDate=" + operateDate + ", confirmId=" + confirmId + ", confirmDate=" + confirmDate
-				+ ", typeId=" + typeId + ", operateName=" + operateName + ", confirmName=" + confirmName + "]";
 	}
 
 }

@@ -39,15 +39,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<select id="orderList" resultType="StockOutOrderInfo">
-		select s.*
-		from t_stock_out_order s
+		select soo.id,soo.order_code,user.user_name as operater_name,soo.operate_date
+		from t_stock_out_order soo
+		LEFT JOIN t_user user ON soo.operater_id = user.id
 	</select>
 	
 	<select id="getDetail" parameterType="String" resultType="StockOutOrderDetailInfo">
-		select pod.*,p.bar_code,p.product_code,p.product_name,p.product_unit from 
-		t_stock_out_order_detail pod 
-		JOIN t_product p ON pod.product_id = p.id 
-		WHERE pod.sales_order_id = #{orderId} 
+		select sood.*,p.bar_code,p.product_code,p.product_name,p.product_unit,so.order_code,w.name as warehouse_name
+		from t_stock_out_order_detail sood 
+		JOIN t_product p ON sood.product_id = p.id 
+		JOIN t_sales_order so ON sood.sales_order_id = so.id 
+		LEFT JOIN t_warehouse w ON sood.warehouse_id = w.id
+		WHERE sood.stock_out_order_id =  #{orderId} 
 	</select>
 	
 	<select id="getNewCode" parameterType="String" resultType="String">
