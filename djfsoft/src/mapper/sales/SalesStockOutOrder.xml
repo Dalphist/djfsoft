@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<delete id="delOrderDetail" parameterType="String">
-		delete from t_stock_out_order_detail where sales_order_id= #{orderId}
+		delete from t_stock_out_order_detail where stock_out_order_id= #{orderId}
 	</delete>
 
 	<update id="updateOrder" parameterType="StockOutOrderInfo">

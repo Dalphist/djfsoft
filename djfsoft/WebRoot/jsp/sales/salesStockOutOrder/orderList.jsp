@@ -74,16 +74,20 @@
 		
 		//删除订单
 		function delOrder(){
-			var order_id = $("#table_order_list tbody").find(".select_tr").find(".td_order_id").text().trim();;
-			$.ajax({
-				url:"<%=projectName%>/sales/salesOrder/delOrder",
-				type:"post",
-		        data:{"orderId":order_id},
-		        success:function(result){
-		        	$.messager.alert('提示',result.msg,'info',function(){    
-				        location.reload(); 
+			var order_id = $("#table_order_list tbody").find(".select_tr").find(".td_order_id").text().trim();
+			$.messager.confirm('确认','您确认想要删除所选商品吗？',function(r){    
+			    if (r){    
+			        $.ajax({
+						url:"<%=projectName%>/sales/salesStockOutOrder/delOrder",
+						type:"post",
+				        data:{"orderId":order_id},
+				        success:function(result){
+				        	$.messager.alert('提示',result.msg,'info',function(){    
+						        location.reload(); 
+							});
+				        }				
 					});
-		        }				
+			    }    
 			});
 		}
 		//销售订单导入成出库订单
