@@ -57,29 +57,30 @@
 								<tr>
 									<th style="display: none;">ID</th>
 									<th style="width:30px;">序号</th>
-									<th>订单编号</th>
-									<th>商品总价</th>
-									<th>运费</th>
-									<th>优惠金额</th>
-									<th>总价</th>
-									<th>采购人</th>
-									<th>订单时间</th>
-									<th>支付方式</th>
+									<th style="width:200px;">名称</th>
+									<th>编码</th>
+									<th>条形码</th>
+									<th>单位</th>
+									<th>库存数量</th>
+									<th style="width:60px;">预警数量</th>
+									<th>备注</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="order" items="${orderList}" varStatus="status">  
+								<c:forEach var="product" items="${productList}" varStatus="status">  
 								    <tr>
-								    	<td style="display: none;" class="td_order_id">${order.id}</td>
+								    	<td style="display: none;" class="td_product_id">${product.id}</td>
 								    	<td>${status.count}</td>
-								    	<td>${order.orderCode}</td>
-								    	<td>${order.productPrice}</td>
-								    	<td>${order.transportFare}</td>
-								    	<td>${order.extraPrice}</td>
-								    	<td>${order.totalPrice}</td>
-								    	<td>${order.operateName}</td>
-								    	<td><fmt:formatDate value="${order.operateDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-								    	<td>${order.payType}</td>
+								    	<td>${product.productName}</td>
+								    	<td>${product.productCode}</td>
+								    	<td>${product.barCode}</td>
+								    	<td>${product.productUnit}</td>
+								    	<td>
+								    		<c:if test="${product.stockWarn != -1}">
+												${product.stockWarn}
+											</c:if>
+								    	</td>
+								    	<td></td>
 								    </tr>
 								</c:forEach> 
 							</tbody>
@@ -88,7 +89,7 @@
 				</div>
 				<div data-options="region:'south'" style="height: 40%;">
 					<div id="tt" class="easyui-tabs" style="width:100%;height: 100%;">   
-					    <div title="货品详情" style="display:none;">   
+					    <div title="库存详情" style="display:none;">   
 					        <div>
 								<table id="table_order_detail" class="table_list" cellspacing="0">
 									<thead>
@@ -103,44 +104,9 @@
 											<th style="width: 127px;">总价</th>
 										</tr>
 									</thead>
-									<tbody>
-									
-									</tbody>
+									<tbody></tbody>
 								</table>
 							</div>    
-					    </div>   
-					    <div title="详情"  style="overflow:auto;display:none;">   
-					        <table id="table_basicInfo1">
-					    		<tr>
-					    			<td>成交时间：</td>
-					    			<td id="td_dealDate"></td>
-					    			<td>淘宝订单号：</td>
-					    			<td id="td_taobaoCode" colspan="2" style="width: 160px;"></td>
-					    			<td></td>
-					    		</tr>
-					    	</table>
-					    	<table id="table_basicInfo" >
-					    		<tr>
-					    			<td style="width:50px;">客户姓名：</td>
-					    			<td id="td_customerName" style="width:100px;"></td>
-					    			<td style="width:50px;">电话：</td>
-					    			<td id="td_customerTel" style="width:100px;"></td>
-					    			<td style="width:80px;">邮编：</td>
-					    			<td id="td_customerPostcode" style="width:100px;"></td>
-					    			<td style="width:100px;"></td>
-					    			<td></td>
-					    		</tr>
-					    		<tr>
-					    			<td>地区：</td>
-					    			<td id="td_district" colspan="3"></td>
-					    			<td>地址：</td>
-					    			<td id="td_customerAddress" colspan="5"></td>
-					    		</tr>
-					    		<tr>
-					    			<td>客户备注：</td>
-					    			<td id="td_customerNotes" colspan="3"></td>
-					    		</tr>
-					    	</table>   
 					    </div>   
 					    <div title="库存"  style="overflow:auto;display:none;">   
 					        tab2    
