@@ -37,7 +37,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<select id="orderList" resultType="PurchaseOrderInfo">
-		select * from t_purchase_order
+		select po.*,dps.name as order_state,
+		user.user_name as operater_name
+		from t_purchase_order po
+		LEFT JOIN t_dict_purchase_state dps ON po.state_flag = dps.nid 
+		LEFT JOIN t_user user ON po.operater_id = user.id
 	</select>
 	
 	<select id="getDetail" parameterType="String" resultType="PurchaseOrderDetailInfo">

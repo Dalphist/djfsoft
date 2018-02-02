@@ -12,12 +12,15 @@ public class PurchaseOrderInfo {
 	private Integer payTypeId;
 	private String payType;
 	private Integer operaterId;
-	private String operateName;
 	private Date operateDate;
 	private Integer confirmId;
-	private String confirmName;
 	private Date confirmDate;
 	private Integer effectiveFlag;
+	
+	// info
+	private String orderState;
+	private String operaterName;
+	private String confirmName;
 
 	public Integer getId() {
 		return id;
@@ -123,12 +126,12 @@ public class PurchaseOrderInfo {
 		this.payType = payType;
 	}
 
-	public String getOperateName() {
-		return operateName;
+	public String getOperaterName() {
+		return operaterName;
 	}
 
-	public void setOperateName(String operateName) {
-		this.operateName = operateName;
+	public void setOperaterName(String operaterName) {
+		this.operaterName = operaterName;
 	}
 
 	public String getConfirmName() {
@@ -139,13 +142,12 @@ public class PurchaseOrderInfo {
 		this.confirmName = confirmName;
 	}
 
-	@Override
-	public String toString() {
-		return "PurchaseOrderInfo [id=" + id + ", orderCode=" + orderCode + ", productPrice=" + productPrice
-				+ ", transportFare=" + transportFare + ", extraPrice=" + extraPrice + ", totalPrice=" + totalPrice
-				+ ", payTypeId=" + payTypeId + ", payType=" + payType + ", operaterId=" + operaterId + ", operateName="
-				+ operateName + ", operateDate=" + operateDate + ", confirmId=" + confirmId + ", confirmName="
-				+ confirmName + ", confirmDate=" + confirmDate + ", effectiveFlag=" + effectiveFlag + "]";
+	public String getOrderState() {
+		return orderState;
+	}
+
+	public void setOrderState(String orderState) {
+		this.orderState = orderState;
 	}
 
 }
