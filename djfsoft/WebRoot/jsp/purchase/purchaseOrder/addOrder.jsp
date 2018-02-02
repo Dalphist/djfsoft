@@ -207,38 +207,26 @@ function reset(){
     		<tr>
     			<td>业务员：</td>
     			<td></td>
-    			<td>销售单号：</td>
+    			<td>采购单号：</td>
     			<td id="td_order_code"></td>
-    			<td>成交时间：</td>
-    			<td><input id="input_dealDate" class="easyui-datetimebox" name="birthday" data-options="required:true,showSeconds:false"  style="width:150px"> </td>
+    			<td>供货方：</td>
+    			<td>
+    				<select></select>
+    			</td>
     		</tr>
     	</table>
     	<hr style="height:1px;border:none;border-top:1px solid #1675a1;margin-left: 10px;margin-right: 10px;margin-top: 0px;" />
-    	<table id="table_basicInfo" >
-    		<tr>
-    			<td style="width:80px;">客户网名：</td>
-    			<td style="width:100px;"><input id="input_customerWebName" class="easyui-textbox" style="width:100%"></td>
-    			<td style="width:50px;">姓名：</td>
-    			<td style="width:100px;"><input id="input_customerName" class="easyui-textbox" style="width:100%"></td>
-    			<td style="width:50px;">电话：</td>
-    			<td style="width:100px;"><input id="input_customerTel" class="easyui-textbox" style="width:100%"></td>
-    			<td style="width:80px;">邮编：</td>
-    			<td style="width:100px;"><input id="input_customerPostcode" class="easyui-textbox" style="width:100%"></td>
-    			<td style="width:100px;"></td>
-    			<td></td>
-    		</tr>
-    	</table>
     </div>   
     <div data-options="region:'south',title:'结算信息'" style="height:130px;">
     	<table id="table_accountsInfo" >
     		<tr>
     			<td style="width:80px;">商品总价：</td>
     			<td style="width:100px;"><input id="input_productPrice" class="number_text" disabled="disabled" style="width:100%" value="0.0"></td>
-    			<td style="width:80px;">邮费：</td>
+    			<td style="width:80px;">运费：</td>
     			<td style="width:100px;"><input id="input_transportFare" class="number_text" style="width:100%" value="0.0"></td>
-    			<td style="width:80px;">优惠金额：</td>
+    			<td style="width:80px;">其他金额：</td>
     			<td style="width:100px;"><input id="input_extraPrice" class="number_text" style="width:100%" value="0.0"></td>
-    			<td style="width:80px;">实收金额：</td>
+    			<td style="width:80px;">实付金额：</td>
     			<td style="width:100px;"><input id="input_totalPrice" class="number_text" style="width:100%"></td>
     			<td></td>
     		</tr>
