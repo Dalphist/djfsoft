@@ -63,7 +63,7 @@ public class ProductAttributeValueController {
 	@ResponseBody
 	public ResultBean<String> validateAttributeValue(String valueInfo) {
 		ProductAttributeValue value = new ProductAttributeValue();
-		value = (ProductAttributeValue)ParseUtil.getBeanFromStr(valueInfo, "pojo.ProductAttributeValue");
+		value = (ProductAttributeValue)ParseUtil.getBeanFromStr(valueInfo, "pojo.manage.ProductAttributeValue");
 		ResultBean<String> result = new ResultBean<String>();
 		int a = productAttributeValueService.getValueByNameAndAttribute(value);
 		if (a > 0) {
@@ -85,7 +85,7 @@ public class ProductAttributeValueController {
 	@ResponseBody
 	public ResultBean<String> saveAttributeValue(String valueInfo) {
 		ProductAttributeValue value = new ProductAttributeValue();
-		value = (ProductAttributeValue)ParseUtil.getBeanFromStr(valueInfo, "pojo.ProductAttributeValue");
+		value = (ProductAttributeValue)ParseUtil.getBeanFromStr(valueInfo, "pojo.manage.ProductAttributeValue");
 		ResultBean<String> result = new ResultBean<String>();
 		//添加
 		if(value.getId() == null){

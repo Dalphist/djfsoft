@@ -110,7 +110,7 @@ public class ProductController {
 	@ResponseBody
 	public ResultBean<String> saveProduct(String productInfo,String valueIdStr) {
 		Product product = new Product();
-		product = (Product)ParseUtil.getBeanFromStr(productInfo, "pojo.Product");
+		product = (Product)ParseUtil.getBeanFromStr(productInfo, "pojo.manage.Product");
 		ResultBean<String> result = new ResultBean<String>();
 		if(product.getId() == null){
 			// 添加商品时，设置当前时间为添加时间。
@@ -168,7 +168,7 @@ public class ProductController {
 	@ResponseBody
 	public ResultBean<String> validateProduct(String productInfo) {
 		Product product = new Product();
-		product = (Product)ParseUtil.getBeanFromStr(productInfo, "pojo.Product");
+		product = (Product)ParseUtil.getBeanFromStr(productInfo, "pojo.manage.Product");
 		ResultBean<String> result = new ResultBean<String>();
 		int a = productService.getProductByCode(product);
 		int b = productService.getProductByBarCode(product);

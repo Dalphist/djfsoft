@@ -124,7 +124,7 @@ public class ProductAttributeController {
 	@ResponseBody
 	public ResultBean<String> validateAttribute(String attributeInfo) {
 		ProductAttribute productAttribute = new ProductAttribute();
-		productAttribute = (ProductAttribute)ParseUtil.getBeanFromStr(attributeInfo, "pojo.ProductAttribute");
+		productAttribute = (ProductAttribute)ParseUtil.getBeanFromStr(attributeInfo, "pojo.manage.ProductAttribute");
 		ResultBean<String> result = new ResultBean<String>();
 		int a = productAttributeService.getProductAttributeByName(productAttribute);
 		if (a > 0) {
@@ -146,7 +146,7 @@ public class ProductAttributeController {
 	@ResponseBody
 	public ResultBean<String> saveAttribute(String attributeInfo) {
 		ProductAttribute productAttribute = new ProductAttribute();
-		productAttribute = (ProductAttribute)ParseUtil.getBeanFromStr(attributeInfo, "pojo.ProductAttribute");
+		productAttribute = (ProductAttribute)ParseUtil.getBeanFromStr(attributeInfo, "pojo.manage.ProductAttribute");
 		ResultBean<String> result = new ResultBean<String>();
 		//添加
 		if(productAttribute.getId() == null){

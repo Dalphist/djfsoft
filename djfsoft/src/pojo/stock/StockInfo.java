@@ -12,6 +12,7 @@ public class StockInfo {
 	//info
 	private Double beingOutQuantity;
 	private Double beingInQuantity;
+	private Double stockWarn;
 	private String productCode;
 	private String barCode;
 	private String productName;
@@ -103,6 +104,11 @@ public class StockInfo {
 	public void setBeingInQuantity(Double beingInQuantity) {
 		this.beingInQuantity = beingInQuantity;
 	}
-	
+	public Double getStockWarn() {
+		return stockWarn;
+	}
+	public void setStockWarn(Double stockWarn) {
+		this.stockWarn = stockWarn;
+	}
 	
 }

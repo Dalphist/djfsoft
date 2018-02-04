@@ -48,7 +48,7 @@ public class ProductCategoryController {
 	@ResponseBody
 	public ResultBean<String> validateCategory(String categoryInfo) {
 		ProductCategory productCategory = new ProductCategory();
-		productCategory = (ProductCategory)ParseUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
+		productCategory = (ProductCategory)ParseUtil.getBeanFromStr(categoryInfo, "pojo.manage.ProductCategory");
 		ResultBean<String> result = new ResultBean<String>();
 		int a = productCategoryService.getCategoryCountByInfo(productCategory);
 		if (a > 0) {
@@ -62,7 +62,7 @@ public class ProductCategoryController {
 	@ResponseBody
 	public ResultBean<String> saveProductCategory(String categoryInfo,String attributeIdStr) {
 		//保存基本信息
-		ProductCategory pc = (ProductCategory) ParseUtil.getBeanFromStr(categoryInfo, "pojo.ProductCategory");
+		ProductCategory pc = (ProductCategory) ParseUtil.getBeanFromStr(categoryInfo, "pojo.manage.ProductCategory");
 		if(pc.getId() == null){		//新加
 			pc.setGmtCreate(DateUtil.getNowDate());
 			productCategoryService.addProductCategory(pc);

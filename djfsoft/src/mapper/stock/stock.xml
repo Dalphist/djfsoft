@@ -13,7 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where product_id=#{id}
 	</update>
 	<select id="getStockList" resultType="StockInfo">
-		select stock.* 
-		from t_stock stock
+		select p.id,p.product_name,p.bar_code,p.product_code,p.product_unit,p.stock_warn,
+		IFNULL(s.normal_quantity,0) as normal_quantity
+		from t_product p
+		LEFT JOIN (SELECT product_id,SUM(normal_quantity) as normal_quantity from t_stock GROUP BY product_id) s ON s.product_id = p.id
+
 	</select>
 </mapper>

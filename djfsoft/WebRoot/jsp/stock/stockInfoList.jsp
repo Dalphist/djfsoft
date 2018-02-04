@@ -61,13 +61,21 @@
 									<th>编码</th>
 									<th>条形码</th>
 									<th>单位</th>
+									<th>成本价</th>
+									<th>标准采购价</th>
+									<th>最后采购价</th>
 									<th>库存数量</th>
-									<th style="width:60px;">预警数量</th>
+									<th>可销售数量</th>
+									<th>可发货数量</th>
+									<th>日销量</th>
+									<th>周销量</th>
+									<th>月销量</th>
+									<th>预警数量</th>
 									<th>备注</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="product" items="${productList}" varStatus="status">  
+								<c:forEach var="product" items="${list}" varStatus="status">  
 								    <tr>
 								    	<td style="display: none;" class="td_product_id">${product.id}</td>
 								    	<td>${status.count}</td>
@@ -75,6 +83,15 @@
 								    	<td>${product.productCode}</td>
 								    	<td>${product.barCode}</td>
 								    	<td>${product.productUnit}</td>
+								    	<td></td>
+								    	<td></td>
+								    	<td></td>
+								    	<td>${product.normalQuantity}</td>
+								    	<td></td>
+								    	<td></td>
+								    	<td></td>
+								    	<td></td>
+								    	<td></td>
 								    	<td>
 								    		<c:if test="${product.stockWarn != -1}">
 												${product.stockWarn}
@@ -91,24 +108,46 @@
 					<div id="tt" class="easyui-tabs" style="width:100%;height: 100%;">   
 					    <div title="库存详情" style="display:none;">   
 					        <div>
-								<table id="table_order_detail" class="table_list" cellspacing="0">
+								<table id="table_stock_detail" class="table_list" cellspacing="0">
 									<thead>
 										<tr style="height: 30px;">
 											<th style="width: 40px;">序号</th>
-											<th style="width: 300px;">商品名称</th>
-											<th style="width: 200px;">商品编号</th>
-											<th style="width: 200px;">商品条形码</th>
-											<th style="width: 40px;">单位</th>
-											<th style="width: 127px;">单价</th>
-											<th style="width: 127px;">数量</th>
-											<th style="width: 127px;">总价</th>
+											<th >商品名称</th>
+											<th >单位</th>
+											<th >仓库</th>
+											<th >货位</th>
+											<th >数量</th>
 										</tr>
 									</thead>
 									<tbody></tbody>
 								</table>
 							</div>    
 					    </div>   
-					    <div title="库存"  style="overflow:auto;display:none;">   
+					    <div title="执行中的销售"  style="overflow:auto;display:none;">   
+					        <div>
+								<table id="table_sales_order" class="table_list" cellspacing="0">
+									<thead>
+										<tr style="height: 30px;">
+											<th style="width: 40px;">序号</th>
+											<th >销售单号</th>
+											<th >商品名称</th>
+											<th >单位</th>
+											<th >数量</th>
+											<th >单价</th>
+											<th >总价</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>       
+					    </div>   
+					    <div title="执行中的采购"  style="overflow:auto;display:none;">   
+					        tab2    
+					    </div>   
+					    <div title="执行中的退货"  style="overflow:auto;display:none;">   
+					        tab2    
+					    </div>   
+					    <div title="执行中的调拨"  style="overflow:auto;display:none;">   
 					        tab2    
 					    </div>   
 					</div> 
