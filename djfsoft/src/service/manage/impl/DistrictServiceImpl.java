@@ -1,4 +1,4 @@
-package service.impl;
+package service.manage.impl;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import mapper.manage.DistrictMapper;
 import pojo.District;
-import service.DistrictService;
+import service.manage.DistrictService;
 
 @Service
 public class DistrictServiceImpl implements DistrictService {

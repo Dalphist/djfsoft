@@ -21,9 +21,9 @@ import pojo.manage.Product;
 import pojo.manage.ProductAttributeInfo;
 import pojo.manage.ProductAttributeValue;
 import pojo.manage.ProductInfo;
-import service.ProductAttributeService;
-import service.ProductAttributeValueService;
-import service.ProductService;
+import service.manage.ProductAttributeService;
+import service.manage.ProductAttributeValueService;
+import service.manage.ProductService;
 import util.DateUtil;
 import util.ParseUtil;
 

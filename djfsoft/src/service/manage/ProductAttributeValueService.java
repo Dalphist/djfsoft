@@ -1,4 +1,4 @@
-package service;
+package service.manage;
 
 import java.util.List;
 

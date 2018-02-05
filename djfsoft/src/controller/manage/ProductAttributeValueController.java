@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pojo.ResultBean;
 import pojo.manage.ProductAttributeValue;
-import service.ProductAttributeValueService;
+import service.manage.ProductAttributeValueService;
 import util.ParseUtil;
 import util.DateUtil;
 

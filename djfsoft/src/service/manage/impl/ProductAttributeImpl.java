@@ -1,15 +1,15 @@
-package service.impl;
+package service.manage.impl;
 
 import java.util.List;
 
 import pojo.manage.ProductAttribute;
 import pojo.manage.ProductAttributeInfo;
+import service.manage.ProductAttributeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mapper.manage.ProductAttributeMapper;
-import service.ProductAttributeService;
 
 @Service
 public class ProductAttributeImpl implements ProductAttributeService {

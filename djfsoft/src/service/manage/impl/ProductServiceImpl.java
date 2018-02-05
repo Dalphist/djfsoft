@@ -1,15 +1,15 @@
-package service.impl;
+package service.manage.impl;
 
 import java.util.List;
 
 import pojo.manage.Product;
 import pojo.manage.ProductInfo;
+import service.manage.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mapper.manage.ProductMapper;
-import service.ProductService;
 
 @Service
 public class ProductServiceImpl implements ProductService {

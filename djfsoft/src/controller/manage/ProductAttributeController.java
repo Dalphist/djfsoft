@@ -13,8 +13,8 @@ import pojo.ResultBean;
 import pojo.manage.ProductAttribute;
 import pojo.manage.ProductAttributeInfo;
 import pojo.manage.ProductAttributeValue;
-import service.ProductAttributeService;
-import service.ProductAttributeValueService;
+import service.manage.ProductAttributeService;
+import service.manage.ProductAttributeValueService;
 import util.ParseUtil;
 import util.DateUtil;
 

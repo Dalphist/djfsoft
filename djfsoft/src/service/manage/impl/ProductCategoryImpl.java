@@ -1,4 +1,4 @@
-package service.impl;
+package service.manage.impl;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import mapper.manage.ProductCategoryMapper;
 import pojo.Tree;
 import pojo.manage.ProductCategory;
-import service.ProductCategoryService;
+import service.manage.ProductCategoryService;
 
 
 @Service

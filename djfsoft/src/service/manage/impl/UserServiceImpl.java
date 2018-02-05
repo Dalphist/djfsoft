@@ -1,12 +1,11 @@
-package service.impl;
+package service.manage.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mapper.manage.UserMapper;
 import pojo.User;
-
-import service.UserService;
+import service.manage.UserService;
 
 
 @Service

@@ -17,9 +17,9 @@ import pojo.Tree;
 import pojo.User;
 import pojo.manage.ProductCategory;
 import pojo.manage.ProductInfo;
-import service.ProductCategoryService;
-import service.ProductService;
-import service.UserService;
+import service.manage.ProductCategoryService;
+import service.manage.ProductService;
+import service.manage.UserService;
 import util.DateUtil;
 import util.ParseUtil;
 

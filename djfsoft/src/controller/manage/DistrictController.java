@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pojo.District;
 import pojo.ResultBean;
-import service.DistrictService;
+import service.manage.DistrictService;
 
 @Controller
 @RequestMapping("district")

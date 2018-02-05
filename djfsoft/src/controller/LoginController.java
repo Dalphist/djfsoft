@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pojo.ResultBean;
 import pojo.User;
-import service.UserService;
+import service.manage.UserService;
 import util.Log;
 
 @Controller

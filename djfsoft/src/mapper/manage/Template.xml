@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.manage.TemplateMapper">
+	<insert id="addTemplate" parameterType="TemplateInfo">
+		<selectKey keyProperty='id' resultType='int' Template='AFTER'  >  
+	        select LAST_INSERT_ID();  
+	    </selectKey> 
+		INSERT INTO t_template
+		(name,gmt_create,effective_flag,type)
+		VALUES
+		(#{name},#{gmtCreate},#{effectiveFlag},#{type})
+	</insert>
+	
+	<insert id="addTemplateDetail" parameterType="TemplateDetailInfo">
+		INSERT INTO t_template_detail
+		(template_id,product_id,price,effective_flag)
+		VALUES
+		(#{templateId},#{productId},#{price},#{effectiveFlag})
+	</insert>
+
+	<delete id="delTemplate" parameterType="String">
+		delete from t_template where id= #{templateId}
+	</delete>
+	
+	<delete id="delTemplateDetail" parameterType="String">
+		delete from t_template_detail where template_id= #{templateId}
+	</delete>
+
+	<update id="updateTemplate" parameterType="Template">
+		update t_template
+		(name,gmt_modified,effective_flag,type)
+		VALUES
+		(#{name},#{gmtModified},#{effectiveFlag},#{type})
+		where id=#{id}
+	</update>
+
+	<select id="TemplateList" resultType="TemplateInfo">
+		select *
+		from t_template 
+	</select>
+	
+	<select id="getDetail" parameterType="String" resultType="TemplateDetailInfo">
+		select ptd.*,p.bar_code,p.product_code,p.product_name,p.product_unit 
+		from t_template_detail ptd
+		LEFT JOIN t_product p ON ptd.product_id = p.id 
+		WHERE ptd.purchase_template_id = #{templateId} 
+	</select>
+	
+</mapper>
