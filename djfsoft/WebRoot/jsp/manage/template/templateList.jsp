@@ -57,7 +57,7 @@
 		    	var select_tr = $("#tr"+template_id);
 		    	$("#win_template").window("open");
 		    	$("#input_template_name").textbox("setValue",(select_tr.find(".td_template_name").text().trim())); 
-		    	$("#input_effective_flag").prop("checked",select_tr.find(".td_effective_flag").text().trim() == "是");
+		    	$("#input_effective_flag").prop("checked",select_tr.find(".td_effective_flag").text().trim() == "可用");
 		    });
 		    
 		    //删除按钮

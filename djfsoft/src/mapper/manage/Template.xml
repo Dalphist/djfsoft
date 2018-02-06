@@ -54,6 +54,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*)
 		from t_template
 		WHERE name = #{name} and type = #{type}
+		<if test="id != null">  
+        and id != #{id}
+    	</if>
 	</select>
 	
 </mapper>
