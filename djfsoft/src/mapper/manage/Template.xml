@@ -5,9 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="mapper.manage.TemplateMapper">
 	<insert id="addTemplate" parameterType="TemplateInfo">
-		<selectKey keyProperty='id' resultType='int' Template='AFTER'  >  
+		<selectKey keyProperty='id' resultType='int' order='AFTER'  >  
 	        select LAST_INSERT_ID();  
-	    </selectKey> 
+	    </selectKey>
 		INSERT INTO t_template
 		(name,gmt_create,effective_flag,type)
 		VALUES
@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from t_template_detail where template_id= #{templateId}
 	</delete>
 
-	<update id="updateTemplate" parameterType="Template">
+	<update id="updateTemplate" parameterType="TemplateInfo">
 		update t_template
 		(name,gmt_modified,effective_flag,type)
 		VALUES
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where id=#{id}
 	</update>
 
-	<select id="TemplateList" resultType="TemplateInfo">
+	<select id="templateList" resultType="TemplateInfo">
 		select *
 		from t_template 
 	</select>

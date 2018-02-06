@@ -13,38 +13,53 @@ import pojo.ResultBean;
 import pojo.manage.TemplateDetailInfo;
 import pojo.manage.TemplateInfo;
 import service.manage.TemplateService;
+import util.ParseUtil;
+import util.enumSet.TemplateEnum;
 
 @Controller
-@RequestMapping("purchase/purchaseTemplate")
+@RequestMapping("manage/template")
 public class TemplateController {
 	@Autowired
-	TemplateService purchaseTemplateService;
+	TemplateService templateService;
 
 	@RequestMapping("index")
 	public ModelAndView productAttributeIndex() {
 		ModelAndView mav = new ModelAndView();
-		String url = "purchase/purchaseTemplate/index";
+		String url = "manage/template/index";
 		mav.setViewName(url);
 		return mav;
 	}
 	
 	@RequestMapping("list")
-	public ModelAndView productAttributeList() {
+	public ModelAndView templateList() {
 		ModelAndView mav = new ModelAndView();
 		List<TemplateInfo> list = new ArrayList<TemplateInfo>();
-		list = purchaseTemplateService.templateList();
-		String url = "purchase/purchaseTemplate/list";
+		list = templateService.templateList();
+		String url = "manage/template/templateList";
 		mav.setViewName(url);
 		mav.addObject("templateList", list);
 		return mav;
 	}
+	
+	@RequestMapping("saveTemplate")
+	@ResponseBody
+	public ResultBean<TemplateInfo> save(String templateStr) {
+		ResultBean<TemplateInfo> result = new ResultBean<TemplateInfo>();
+		TemplateInfo templateInfo = new TemplateInfo();
+		templateInfo = (TemplateInfo)ParseUtil.getBeanFromStr(templateStr, "pojo.manage.TemplateInfo");
+		templateInfo.setType(TemplateEnum.PurchaseTemplate.getType());
+		templateService.addTemplate(templateInfo);
+		result.setMsg("添加成功！");
+		return result;
+	}
+	
 	
 	@RequestMapping("getDetail")
 	@ResponseBody
 	public ResultBean<TemplateDetailInfo> getAllAttribute(String templateId) {
 		ResultBean<TemplateDetailInfo> result = new ResultBean<TemplateDetailInfo>();
 		List<TemplateDetailInfo> list = new ArrayList<TemplateDetailInfo>();
-		list = purchaseTemplateService.getDetail(templateId);
+		list = templateService.getDetail(templateId);
 		result.setDataList(list);
 		return result;
 	}

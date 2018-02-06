@@ -13,46 +13,46 @@ import service.manage.TemplateService;
 @Service
 public class TemplateServiceImpl implements TemplateService {
 	@Autowired
-	TemplateMapper purchaseTemplateMapper;
+	TemplateMapper templateMapper;
 
 	@Override
 	public void addTemplate(TemplateInfo purchaseTemplateInfo) {
-		purchaseTemplateMapper.addTemplate(purchaseTemplateInfo);
+		templateMapper.addTemplate(purchaseTemplateInfo);
 		return;
 	}
 
 	@Override
 	public void addTemplateDetail(TemplateDetailInfo purchaseTemplateDetailInfo) {
-		purchaseTemplateMapper.addTemplateDetail(purchaseTemplateDetailInfo);
+		templateMapper.addTemplateDetail(purchaseTemplateDetailInfo);
 		return;
 	}
 
 	@Override
 	public void delTemplate(String templateId) {
-		purchaseTemplateMapper.delTemplate(templateId);
+		templateMapper.delTemplate(templateId);
 		return;
 	}
 
 	@Override
 	public void delTemplateDetail(String templateId) {
-		purchaseTemplateMapper.delTemplateDetail(templateId);
+		templateMapper.delTemplateDetail(templateId);
 		return;
 	}
 
 	@Override
 	public void updateTemplate(TemplateInfo purchaseTemplateInfo) {
-		purchaseTemplateMapper.updateTemplate(purchaseTemplateInfo);
+		templateMapper.updateTemplate(purchaseTemplateInfo);
 		return;
 	}
 
 	@Override
 	public List<TemplateInfo> templateList() {
-		return purchaseTemplateMapper.templateList();
+		return templateMapper.templateList();
 	}
 
 	@Override
 	public List<TemplateDetailInfo> getDetail(String templateId) {
-		return purchaseTemplateMapper.getDetail(templateId);
+		return templateMapper.getDetail(templateId);
 	}
 
 	
