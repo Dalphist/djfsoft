@@ -88,15 +88,16 @@
 		});
 		
 		//获取规格信息，返回json
-		function gettemplateInfo(){
+		function getTemplateInfo(){
 			var templateInfo = {};
 			templateInfo.id = $("#input_select_template").val();
-			templateInfo.templateName = $("#input_template_name").val().trim();
+			templateInfo.type = $("#select_template_type").val();
+			templateInfo.name = $("#input_template_name").val().trim();
 			templateInfo.effectiveFlag = $("#input_effective_flag").prop("checked")?1:0;
 			return templateInfo;
 		}
 		
-		//校验规格信息
+		//校验模板信息
 		function validatetemplateInput(templateInfo){
 			var validation = {};
 			validation.fail = false;
@@ -106,11 +107,11 @@
 				return validation;
 			}
 			$.ajax({
-				url:"<%=projectName%>/manage/producttemplate/validatetemplate",
+				url:"<%=projectName%>/manage/template/validateTemplate",
 				type:"post",
 				async: false,
 				dataType:"json",
-                data:{"templateInfo":JSON.stringify(templateInfo)},
+                data:{"templateStr":JSON.stringify(templateInfo)},
                 success:function(result){
                 	if(result.code == 1){	//名称重复
                 		validation.fail = true;
@@ -123,27 +124,28 @@
 			return validation;
 		}
 		
-		//规格保存
-		function savettribute(){
-			var templateInfo = gettemplateInfo();
+		//模板保存
+		function saveTemplate(){
+			var templateInfo = getTemplateInfo();
 			var validation = validatetemplateInput(templateInfo);
 			if(validation.fail){
 				$.messager.alert('提示',validation.msg,'info');
 				return false;
+			}else{
+				$.ajax({
+					url:"<%=projectName%>/manage/template/saveTemplate/",
+					type:"post",
+					dataType:"json",
+	                data:{"templateStr":JSON.stringify(templateInfo)},
+	                success:function(result){
+	                	$.messager.alert('提示',result.msg,'info',function(){    
+					        location.reload(); 
+						});  
+	                },
+	                error:function(){
+	                }				
+				});
 			}
-			$.ajax({
-				url:"<%=projectName%>/manage/producttemplate/",
-				type:"post",
-				dataType:"json",
-                data:{"templateInfo":JSON.stringify(templateInfo)},
-                success:function(result){
-                	$.messager.alert('提示',result.msg,'info',function(){    
-				        location.reload(); 
-					});  
-                },
-                error:function(){
-                }				
-			});
 		};
 		
 		//获取规格对应的值列表
@@ -158,8 +160,9 @@
   <input id="input_select_template" type="text" style="display: none;"> 
   <div class="easyui-layout">
 	<div style="height:30px;background-color:#e0ecff">
-		<select>
-			<option>采购模板</option>
+		<select id="select_template_type">
+			<option value="1">采购模板</option>
+			<option value="2">销售模板</option>
 		</select>
 		<input id="input_template_add" type="button" value="新增"/>
 		<input id="input_template_saveAs" type="button" value="另存"/>
@@ -172,7 +175,8 @@
 				<tr>
 					<th style="display: none;">ID</th>
 					<th style="width: 40px;">序号</th>
-					<th>名称</th>
+					<th style="width: 100px;">模板类型</th>
+					<th>模板名称</th>
 					<th style="width: 50px;">状态</th>
 				</tr>
 			</thead>
@@ -181,11 +185,12 @@
 				    <tr id="tr${template.id}">
 				    	<td style="display: none;" class="td_template_id">${template.id}</td>
 				    	<td>${status.count}</td>
+				    	<td>${template.typeName}</td>
 				    	<td class="td_template_name">${template.name}</td>
 				    	<td class="td_effective_flag">
 				    		<c:choose> 
-							     <c:when test="${template.effectiveFlag == 1}">是 </c:when>      
-							     <c:otherwise>否</c:otherwise> 
+							     <c:when test="${template.effectiveFlag == 1}">可用 </c:when>      
+							     <c:otherwise>不可用</c:otherwise> 
 							</c:choose>
 				    	</td>
 				    </tr>
@@ -205,7 +210,7 @@
     	<div style="float:right;padding-right:10px;padding-top:10px;">
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#win_template').window('close');">取消</a>  
 		</div>
-    	<div style="float:right;padding-right:10px;padding-top:10px;" onclick="savettribute();">
+    	<div style="float:right;padding-right:10px;padding-top:10px;" onclick="saveTemplate();">
 	    	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">保存</a>  
     	</div>
     </div>

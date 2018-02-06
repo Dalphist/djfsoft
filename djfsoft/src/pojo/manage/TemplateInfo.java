@@ -11,6 +11,9 @@ public class TemplateInfo {
 	private Date gmtModified;
 	private Integer type;
 	
+	//info
+	private String typeName;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -46,6 +49,12 @@ public class TemplateInfo {
 	}
 	public void setType(Integer type) {
 		this.type = type;
+	}
+	public String getTypeName() {
+		return typeName;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 	
 }

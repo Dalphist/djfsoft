@@ -41,13 +41,26 @@ public class TemplateController {
 		return mav;
 	}
 	
+	
+	@RequestMapping("validateTemplate")
+	@ResponseBody
+	public ResultBean<String> validateTemplate(String templateStr) {
+		ResultBean<String> result = new ResultBean<String>();
+		TemplateInfo templateInfo = new TemplateInfo();
+		templateInfo = (TemplateInfo)ParseUtil.getBeanFromStr(templateStr, "pojo.manage.TemplateInfo");
+		int count = templateService.existTemplate(templateInfo);
+		result.setCode(count == 0?ResultBean.SUCCESS:ResultBean.FAIL);
+		String msg = (count == 0?"添加成功！":"该分类已有同名模板！");
+		result.setMsg(msg);
+		return result;
+	}
+	
 	@RequestMapping("saveTemplate")
 	@ResponseBody
-	public ResultBean<TemplateInfo> save(String templateStr) {
+	public ResultBean<TemplateInfo> saveTemplate(String templateStr) {
 		ResultBean<TemplateInfo> result = new ResultBean<TemplateInfo>();
 		TemplateInfo templateInfo = new TemplateInfo();
 		templateInfo = (TemplateInfo)ParseUtil.getBeanFromStr(templateStr, "pojo.manage.TemplateInfo");
-		templateInfo.setType(TemplateEnum.PurchaseTemplate.getType());
 		templateService.addTemplate(templateInfo);
 		result.setMsg("添加成功！");
 		return result;

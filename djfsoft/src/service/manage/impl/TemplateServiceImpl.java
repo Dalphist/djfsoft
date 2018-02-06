@@ -55,5 +55,10 @@ public class TemplateServiceImpl implements TemplateService {
 		return templateMapper.getDetail(templateId);
 	}
 
+	@Override
+	public int existTemplate(TemplateInfo templateInfo) {
+		return templateMapper.existTemplate(templateInfo);
+	}
+
 	
 }

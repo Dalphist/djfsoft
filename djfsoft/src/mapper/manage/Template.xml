@@ -38,8 +38,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<select id="templateList" resultType="TemplateInfo">
-		select *
-		from t_template 
+		select t.*,dtt.name as type_name
+		from t_template t
+		LEFT JOIN t_dict_template_type dtt ON t.type = dtt.id
 	</select>
 	
 	<select id="getDetail" parameterType="String" resultType="TemplateDetailInfo">
@@ -47,6 +48,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from t_template_detail ptd
 		LEFT JOIN t_product p ON ptd.product_id = p.id 
 		WHERE ptd.purchase_template_id = #{templateId} 
+	</select>
+	
+	<select id="existTemplate" parameterType="TemplateInfo" resultType="int">
+		select count(*)
+		from t_template
+		WHERE name = #{name} and type = #{type}
 	</select>
 	
 </mapper>

@@ -19,4 +19,6 @@ public interface TemplateService {
 	List<TemplateInfo> templateList();
 
 	List<TemplateDetailInfo> getDetail(String templateId);
+	
+	int existTemplate(TemplateInfo templateInfo);
 }
