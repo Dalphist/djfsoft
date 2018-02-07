@@ -14,7 +14,6 @@ import pojo.manage.TemplateDetailInfo;
 import pojo.manage.TemplateInfo;
 import service.manage.TemplateService;
 import util.ParseUtil;
-import util.enumSet.TemplateEnum;
 
 @Controller
 @RequestMapping("manage/template")
@@ -54,26 +53,36 @@ public class TemplateController {
 		result.setMsg(msg);
 		return result;
 	}
-	
+	/**
+	 * 模板的保存（包括新加和修改）
+	 * @param templateStr
+	 * @return
+	 */
 	@RequestMapping("saveTemplate")
 	@ResponseBody
 	public ResultBean<TemplateInfo> saveTemplate(String templateStr) {
 		ResultBean<TemplateInfo> result = new ResultBean<TemplateInfo>();
 		TemplateInfo templateInfo = new TemplateInfo();
 		templateInfo = (TemplateInfo)ParseUtil.getBeanFromStr(templateStr, "pojo.manage.TemplateInfo");
-		templateService.addTemplate(templateInfo);
-		result.setMsg("添加成功！");
+		if(templateInfo.getId() == null){	//新加
+			templateService.addTemplate(templateInfo);
+			result.setMsg("添加成功！");
+		}else{
+			templateService.updateTemplate(templateInfo);
+			result.setMsg("修改成功！");
+		}
 		return result;
 	}
 	
 	
 	@RequestMapping("getDetail")
-	@ResponseBody
-	public ResultBean<TemplateDetailInfo> getAllAttribute(String templateId) {
-		ResultBean<TemplateDetailInfo> result = new ResultBean<TemplateDetailInfo>();
+	public ModelAndView getDetail(String templateId) {
+		ModelAndView mav = new ModelAndView();
 		List<TemplateDetailInfo> list = new ArrayList<TemplateDetailInfo>();
 		list = templateService.getDetail(templateId);
-		result.setDataList(list);
-		return result;
+		String url = "manage/template/detailList";
+		mav.setViewName(url);
+		mav.addObject("detailList", list);
+		return mav;
 	}
 }

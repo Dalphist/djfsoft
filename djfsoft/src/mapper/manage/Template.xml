@@ -31,10 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="updateTemplate" parameterType="TemplateInfo">
 		update t_template
-		(name,gmt_modified,effective_flag,type)
-		VALUES
-		(#{name},#{gmtModified},#{effectiveFlag},#{type})
-		where id=#{id}
+		SET name = #{name},gmt_modified = #{gmtModified},effective_flag = #{effectiveFlag},type = #{type}
+		where id = #{id}
 	</update>
 
 	<select id="templateList" resultType="TemplateInfo">
@@ -44,10 +42,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getDetail" parameterType="String" resultType="TemplateDetailInfo">
-		select ptd.*,p.bar_code,p.product_code,p.product_name,p.product_unit 
-		from t_template_detail ptd
-		LEFT JOIN t_product p ON ptd.product_id = p.id 
-		WHERE ptd.purchase_template_id = #{templateId} 
+		select td.*,p.bar_code,p.product_code,p.product_name,p.product_unit 
+		from t_template_detail td
+		LEFT JOIN t_product p ON td.product_id = p.id 
+		WHERE td.template_id = #{templateId} 
 	</select>
 	
 	<select id="existTemplate" parameterType="TemplateInfo" resultType="int">

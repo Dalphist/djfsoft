@@ -31,7 +31,7 @@
 			   $(this).siblings().find(":checkbox").prop("checked",false); 
 			   var template_id = $(this).find(".td_template_id").text().trim();
 			   $("#input_select_template").val(template_id);
-			   gettemplateValues(template_id);
+			   getTemplateValues(template_id);
 			}); 
 			//双击行
 			$("#table_template_list tbody tr").dblclick(function() {  
@@ -149,9 +149,9 @@
 		};
 		
 		//获取规格对应的值列表
-		function gettemplateValues(template_id){
-			$("#iframe_product_template_value",window.parent.document)
-			.attr("src", "<%=projectName%>/manage/producttemplateValue/getValueListBytemplate?templateId="+template_id);
+		function getTemplateValues(template_id){
+			$("#iframe_template_detail",window.parent.document)
+			.attr("src", "<%=projectName%>/manage/template/getDetail?templateId="+template_id);
 		}
 		
 	</script>
