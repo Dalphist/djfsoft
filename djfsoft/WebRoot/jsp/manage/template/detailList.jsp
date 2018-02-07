@@ -58,66 +58,6 @@
 		    
 		});
 		
-		//获取规格信息，返回json
-		function getValueInfo(){
-			var valueInfo = {};
-			valueInfo.id = $("#input_select_value").val();
-			valueInfo.attributeId = parseInt($("#input_attribute_id").val().trim());
-			valueInfo.attributeValueName = $("#input_value_name").val().trim();
-			valueInfo.effectiveFlag = $("#input_effective_flag").prop("checked")?1:0;
-			return valueInfo;
-		}
-		
-		//校验规格信息
-		function validateValueInput(valueInfo){
-			var validation = {};
-			validation.fail = false;
-			if(valueInfo.attributeName == ""){
-				validation.fail = true;
-				validation.msg = "名称不能为空!";
-				return validation;
-			}
-			$.ajax({
-				url:"<%=projectName%>/manage/productAttributeValue/validateAttributeValue",
-				type:"post",
-				async: false,
-				dataType:"json",
-                data:{"valueInfo":JSON.stringify(valueInfo)},
-                success:function(result){
-                	if(result.code == 1){	//名称重复
-                		validation.fail = true;
-						validation.msg = result.msg;
-						return validation;
-                	}
-                }				
-			})
-			
-			return validation;
-		}
-		
-		//规格保存
-		function savettribute(){
-			var valueInfo = getValueInfo();
-			var validation = validateValueInput(valueInfo);
-			if(validation.fail){
-				$.messager.alert('提示',validation.msg,'info');
-				return false;
-			}
-			$.ajax({
-				url:"<%=projectName%>/manage/productAttributeValue/saveAttributeValue",
-				type:"post",
-				dataType:"json",
-                data:{"valueInfo":JSON.stringify(valueInfo)},
-                success:function(result){
-                	$.messager.alert('提示',result.msg,'info',function(){    
-				        location.reload(); 
-					});  
-                },
-                error:function(){
-                }				
-			});
-		};
-		//******************************************************
 		function openWinProduct(){
 			$("#win_product").window("open");
 		}
@@ -147,30 +87,75 @@
 	                success:function(result){
 	                	var productList = result.dataList;
 	                	$.each(productList,function(i,product){
-	                		var tr = "<tr>"
-	                				+ "<td>"+ (len*1+i*1+1) +"</td>"
-	                				+ "<td class='td_product_id' style='display:none;'>"+ product.id +"</td>"
-	                				+ "<td>"+ product.productName +"</td>"
-	                				+ "<td>"+ product.productCode +"</td>"
-	                				+ "<td>"+ product.productUnit +"</td>"
-	                				+ "<td><input class='number_text unit_price' data-options='min:0,precision:2'/></td>"
-	                				+ "</tr>";
-							tbody.append(tr);
+	                		if($("#tr"+product.id).length == 0){
+		                		var tr = "<tr id='tr"+ product.id +"'>"
+		                				+ "<td></td>"
+		                				+ "<td>"+ product.productName +"</td>"
+		                				+ "<td>"+ product.productCode +"</td>"
+		                				+ "<td>"+ product.productUnit +"</td>"
+		                				+ "<td><input class='number_text price' data-options='min:0,precision:2'/></td>"
+		                				+ "<td class='td_product_id' style='display:none;'>"+ product.id +"</td>"
+		                				+ "</tr>";
+								tbody.append(tr);
+	                		}
 		     			});
-		     			//先将回显数据全部清除  
-		       			$("#tt").treegrid("clearChecked");
+		     			tableSort();
+		     			//先将前一次选择数据全部清除  
+		       			//$("#tt").treegrid("clearChecked");
 	                }				
 				});
 			}
 		}
+		//删除商品行
 		function delProduct(){
 			$("#table_template_detail tbody").find(".select_tr").remove();
-			//重排序号
+			tableSort();
+		}
+		//重新排序
+		function tableSort(){
 			var trs = $("#table_template_detail tbody").find("tr");
 			trs.each(function(i,tr){
-				$(this).find("td").eq(1).html(i*1+1);
+				$(this).find("td").eq(0).html(i*1+1);
 			});
 		}
+		
+		//获取所有模板详情
+		function getDetail(){
+			var productListInfo = [];
+			var trs = $("#table_template_detail tbody").find("tr");
+			var b = true;
+			trs.each(function(){
+				var productInfo = {};
+				var product_id = $(this).find(".td_product_id").text().trim();
+				var price = $(this).find(".price").val().trim();
+				if(price == 0 || price == "" ){
+					b = false;
+					return;
+				}
+				productInfo.productId = product_id;
+				productInfo.price = price;
+				productListInfo.push(productInfo);
+			});
+			if(!b){
+				alert("商品价格不能为0");
+				return false;
+			}
+			return productListInfo;
+		}
+		
+		//保存
+		function saveDetail(){
+			var productListInfo = getDetail();
+			var templateId = $(window.parent.frames["iframe_template"].document).find("#input_select_template").val();
+			$.ajax({
+				url:"<%=projectName%>/manage/template/saveTemplateDetail",
+				type:"post",
+                data:{"productListInfo":JSON.stringify(productListInfo),"templateId":templateId},
+                success:function(result){
+                }				
+			});
+		}
+		
 	</script>
   </head>
   <body style="margin: 0px;">
@@ -179,8 +164,8 @@
   <div class="easyui-layout">
 	<div style="height:30px;background-color:#e0ecff">
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="openWinProduct();">选择商品</a>
-		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" onclick="del();">删除商品</a>
-		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="openWinProduct();">保存</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" onclick="delProduct();">删除商品</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveDetail();">保存</a>
 	</div>
 	<div>
 		<table id="table_template_detail" class="table_list" cellspacing="0">

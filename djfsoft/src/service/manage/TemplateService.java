@@ -6,9 +6,9 @@ import pojo.manage.TemplateDetailInfo;
 import pojo.manage.TemplateInfo;
 
 public interface TemplateService {
-	void addTemplate(TemplateInfo purchaseTemplateInfo);
+	void addTemplate(TemplateInfo templateInfo);
 
-	void addTemplateDetail(TemplateDetailInfo purchaseTemplateDetailInfo);
+	void addTemplateDetail(TemplateDetailInfo templateDetailInfo);
 
 	void delTemplate(String templateId);
 

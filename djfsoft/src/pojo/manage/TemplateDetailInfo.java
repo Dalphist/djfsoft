@@ -3,7 +3,7 @@ package pojo.manage;
 public class TemplateDetailInfo {
 	private Integer id;
 	private Integer templateId;
-	private Integer product_id;
+	private Integer productId;
 	private Double price;
 	private Integer effectiveFlag;
 	
@@ -25,11 +25,11 @@ public class TemplateDetailInfo {
 	public void setTemplateId(Integer templateId) {
 		this.templateId = templateId;
 	}
-	public Integer getProduct_id() {
-		return product_id;
+	public Integer getProductId() {
+		return productId;
 	}
-	public void setProduct_id(Integer product_id) {
-		this.product_id = product_id;
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 	public Double getPrice() {
 		return price;

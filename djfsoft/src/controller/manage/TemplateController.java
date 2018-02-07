@@ -85,4 +85,21 @@ public class TemplateController {
 		mav.addObject("detailList", list);
 		return mav;
 	}
+	
+	/**
+	 * 保存模板详情的商品价格信息
+	 * @param templateStr
+	 * @return
+	 */
+	@RequestMapping("saveTemplateDetail")
+	@ResponseBody
+	public ResultBean<String> saveTemplateDetail(String productListInfo,String templateId) {
+		ResultBean<String> result = new ResultBean<String>();
+		List<TemplateDetailInfo> list = ParseUtil.getBeanListFromStr(productListInfo, "pojo.manage.TemplateDetailInfo");
+		for(TemplateDetailInfo detail : list){
+			detail.setTemplateId(Integer.parseInt(templateId));
+			templateService.addTemplateDetail(detail);
+		}
+		return result;
+	}
 }

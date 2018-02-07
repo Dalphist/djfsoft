@@ -25,7 +25,7 @@
 		<div data-options="region:'north'" style="height:51px">
 		</div>
 		<div data-options="region:'west'" title="模板" style="width: 40%;">
-			<iframe id="iframe_template" src="<%=projectName%>/manage/template/list" style="width: 99%;height: 99%;"></iframe>
+			<iframe id="iframe_template" name="iframe_template" src="<%=projectName%>/manage/template/list" style="width: 99%;height: 99%;"></iframe>
 		</div>
 		<div data-options="region:'center'" title="商品价格">
 			<iframe id="iframe_template_detail"  style="width: 99%;height: 99%;"></iframe>
