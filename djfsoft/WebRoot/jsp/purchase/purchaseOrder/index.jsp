@@ -71,19 +71,21 @@
                 success:function(result){
                 	var productList = result.dataList;
                 	$.each(productList,function(i,product){
-                		var tr = "<tr>"
-                				+ "<td><input type='checkbox'></td>"
-                				+ "<td>"+ (len*1+i*1+1) +"</td>"
-                				+ "<td class='td_product_id' style='display:none;'>"+ product.id +"</td>"
-                				+ "<td>"+ product.productCode +"</td>"
-                				+ "<td>"+ product.barCode +"</td>"
-                				+ "<td>"+ product.productName +"</td>"
-                				+ "<td>"+ product.productUnit +"</td>"
-                				+ "<td><input class='number_text unit_price' data-options='min:0,precision:2'/></td>"
-                				+ "<td><input class='number_text quantity' data-options='min:0,precision:2'/></td>"
-                				+ "<td><input class='number_text cost' data-options='min:0,precision:2' value='0'/></td>"
-                				+ "</tr>";
-						tbody.append(tr);
+                		if($("#tr"+product.id).length == 0){
+	                		var tr = "<tr id='tr"+ product.id +"'>"
+	                				+ "<td><input type='checkbox'></td>"
+	                				+ "<td>"+ (len*1+i*1+1) +"</td>"
+	                				+ "<td class='td_product_id' style='display:none;'>"+ product.id +"</td>"
+	                				+ "<td>"+ product.productCode +"</td>"
+	                				+ "<td>"+ product.barCode +"</td>"
+	                				+ "<td>"+ product.productName +"</td>"
+	                				+ "<td>"+ product.productUnit +"</td>"
+	                				+ "<td><input class='number_text unit_price' data-options='min:0,precision:2'/></td>"
+	                				+ "<td><input class='number_text quantity' data-options='min:0,precision:2'/></td>"
+	                				+ "<td><input class='number_text cost' data-options='min:0,precision:2' value='0'/></td>"
+	                				+ "</tr>";
+							tbody.append(tr);
+                		}
 	     			});
 	     			//先将回显数据全部清除  
 	       			$("#tt").treegrid("clearChecked");

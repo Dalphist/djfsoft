@@ -67,6 +67,7 @@ public class TemplateController {
 		templateInfo = (TemplateInfo)ParseUtil.getBeanFromStr(templateStr, "pojo.manage.TemplateInfo");
 		if(templateInfo.getId() == null){	//新加
 			templateInfo.setGmtCreate(DateUtil.getNowDateTime());
+			templateInfo.setGmtModified(DateUtil.getNowDateTime());
 			templateService.addTemplate(templateInfo);
 			result.setMsg("添加成功！");
 		}else{		//修改
@@ -108,12 +109,29 @@ public class TemplateController {
 		return result;
 	}
 	
+	/**
+	 * 获取某一类型的所有模板
+	 * @param type
+	 * @return
+	 */
 	@RequestMapping("getTemplateByType")
 	@ResponseBody
 	public ResultBean<TemplateInfo> getTemplateByType(String type) {
 		ResultBean<TemplateInfo> result = new ResultBean<TemplateInfo>();
 		List<TemplateInfo> list = templateService.templateListByType(Integer.parseInt(type));
 		result.setDataList(list);
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param selectProductIds
+	 * @return
+	 */
+	@RequestMapping("SetPriceWithTemplate")
+	@ResponseBody
+	public ResultBean<TemplateDetailInfo> SetPriceWithTemplate(String selectProductIds,String templateId) {
+		ResultBean<TemplateDetailInfo> result = new ResultBean<TemplateDetailInfo>();
 		return result;
 	}
 	

@@ -6,6 +6,8 @@ $(function(){
 	    height:"100%" 
 	});  
 	getNewOrderCode();
+	getPurchaseTemplate();
+	
 	//全选/取消全选
 	$("#checkAll").on("click",function(event){
 	   	if($("#checkAll").prop("checked")){
@@ -180,7 +182,8 @@ function getProductList(){
 }
 //删除货品
 function delProduct(){
-	$("#table_order_detail tbody").find(".select_tr").remove();
+	var selectProducts = getSelectTr();
+	selectProducts.remove();
 	//重排序号
 	var trs = $("#table_order_detail tbody").find("tr");
 	trs.each(function(i,tr){
@@ -205,15 +208,46 @@ function reset(){
 }
 //获取采购模板列表
 function getPurchaseTemplate(){
+	$('#win_template').window('close');
 	$.ajax({
 		url:"<%=projectName%>/manage/template/getTemplateByType",
 		data:{"type":1},
 		type:"get",
         success:function(result){
         	var templateList = result.dataList;
+        	$.each(templateList,function(i,template){
+        		var option = "<option value='"+ template.id +"'>"
+        					+ template.name 
+        					+ "</option>"
+        		$("#select_template").append(option);
+        	});
         	
         }				
 	});
+}
+
+//获取详情中选中的商品
+function getSelectTr(){
+	var selectProducts = $("#table_order_detail tbody").find('input:checkbox:checked').parents("tr");
+	return selectProducts;
+}
+
+function chooseTemplate(){
+	var selectProducts = getSelectTr();
+	var selectProductIds = [];
+	selectProducts.each(function(){
+		var productId = $(this).find(".td_product_id").text().trim();
+		selectProductIds.push(productId);
+	});
+	$.ajax({
+		url:"<%=projectName%>/manage/template/SetPriceWithTemplate",
+		data:{"selectProductIds":JSON.stringify(selectProductIds)},
+		type:"post",
+        success:function(result){
+			        	
+        }				
+	});
+	
 }
 </script>
  <div id="layout_addOrder" class="easyui-layout">   
@@ -255,7 +289,7 @@ function getPurchaseTemplate(){
     <div data-options="region:'center',title:'货品信息'">
     	<div style="height:30px;background-color:#e0ecff;padding-top: 2px;">
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="openWinProduct();">选择商品</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="chooseModel();">套用模板</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="chooseTemplate();">套用模板</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clear'" onclick="delProduct();">删除商品</a>
 		</div>
 		<div>
@@ -297,15 +331,12 @@ function getPurchaseTemplate(){
 		</div>
     </div>   
 </div> 
-<div id="win_product" class="easyui-window" title="采购模板" style="width:220px;height:110px" data-options="iconCls:'icon-save',modal:true">   
+<div id="win_template" class="easyui-window" title="采购模板" style="width:220px;height:110px" data-options="iconCls:'icon-save',modal:true">   
 	<div style="padding-top: 10px;padding-left: 30px;">
-	    <select id="select_template">
-	    	<option>aa</option>
-	    	<option>bb</option>
-	    </select> 
+	    <select id="select_template"></select> 
 	</div>
     <div style="margin-top: 10px;">
-    	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="$('#win_product').window('close');">
+    	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="$('#win_template').window('close');">
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>  
 		</div>
     	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="importProduct();">
