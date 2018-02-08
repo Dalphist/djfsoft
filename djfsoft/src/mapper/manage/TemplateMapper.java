@@ -18,6 +18,8 @@ public interface TemplateMapper {
 
 	public List<TemplateInfo> templateList();
 
+	public List<TemplateInfo> templateListByType(int type);
+	
 	public List<TemplateDetailInfo> getDetail(String templateId);
 	
 	public int existTemplate(TemplateInfo templateInfo);

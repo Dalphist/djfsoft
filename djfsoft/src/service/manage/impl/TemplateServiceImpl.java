@@ -49,6 +49,11 @@ public class TemplateServiceImpl implements TemplateService {
 	public List<TemplateInfo> templateList() {
 		return templateMapper.templateList();
 	}
+	
+	@Override
+	public List<TemplateInfo> templateListByType(int type) {
+		return templateMapper.templateListByType(type);
+	}
 
 	@Override
 	public List<TemplateDetailInfo> getDetail(String templateId) {

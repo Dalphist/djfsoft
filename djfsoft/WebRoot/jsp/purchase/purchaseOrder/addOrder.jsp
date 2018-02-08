@@ -39,6 +39,9 @@ $(function(){
 	$("#input_extraPrice").on("blur",function(){
 	   	calTableCost();
 	}); 
+	
+	//获取所有采购模板
+	
 })
 function openWinProduct(){
 	$("#win_product").window("open");
@@ -200,6 +203,18 @@ function reset(){
 	calTableCost();
 	getNewOrderCode();
 }
+//获取采购模板列表
+function getPurchaseTemplate(){
+	$.ajax({
+		url:"<%=projectName%>/manage/template/getTemplateByType",
+		data:{"type":1},
+		type:"get",
+        success:function(result){
+        	var templateList = result.dataList;
+        	
+        }				
+	});
+}
 </script>
  <div id="layout_addOrder" class="easyui-layout">   
     <div data-options="region:'north',title:'基本信息'" style="height:165px;">
@@ -281,6 +296,22 @@ function reset(){
 			</table>
 		</div>
     </div>   
+</div> 
+<div id="win_product" class="easyui-window" title="采购模板" style="width:220px;height:110px" data-options="iconCls:'icon-save',modal:true">   
+	<div style="padding-top: 10px;padding-left: 30px;">
+	    <select id="select_template">
+	    	<option>aa</option>
+	    	<option>bb</option>
+	    </select> 
+	</div>
+    <div style="margin-top: 10px;">
+    	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="$('#win_product').window('close');">
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>  
+		</div>
+    	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="importProduct();">
+	    	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">确定</a>  
+    	</div>
+    </div>
 </div> 
 <style type="text/css">
 	#table_basicInfo td{

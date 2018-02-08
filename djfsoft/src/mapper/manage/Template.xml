@@ -41,6 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN t_dict_template_type dtt ON t.type = dtt.id
 	</select>
 	
+	<select id="templateListByType" parameterType="int" resultType="TemplateInfo">
+		select t.*,dtt.name as type_name
+		from t_template t
+		LEFT JOIN t_dict_template_type dtt ON t.type = dtt.id
+		where t.type = #{type}
+	</select>
+	
 	<select id="getDetail" parameterType="String" resultType="TemplateDetailInfo">
 		select td.*,p.bar_code,p.product_code,p.product_name,p.product_unit 
 		from t_template_detail td

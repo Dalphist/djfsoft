@@ -107,4 +107,14 @@ public class TemplateController {
 		result.setMsg("保存成功！");
 		return result;
 	}
+	
+	@RequestMapping("getTemplateByType")
+	@ResponseBody
+	public ResultBean<TemplateInfo> getTemplateByType(String type) {
+		ResultBean<TemplateInfo> result = new ResultBean<TemplateInfo>();
+		List<TemplateInfo> list = templateService.templateListByType(Integer.parseInt(type));
+		result.setDataList(list);
+		return result;
+	}
+	
 }
