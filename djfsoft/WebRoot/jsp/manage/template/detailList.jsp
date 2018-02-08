@@ -152,6 +152,9 @@
 				type:"post",
                 data:{"productListInfo":JSON.stringify(productListInfo),"templateId":templateId},
                 success:function(result){
+                	$.messager.alert('提示',result.msg,'info',function(){    
+				        location.reload(); 
+					});
                 }				
 			});
 		}
@@ -180,17 +183,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="value" items="${ValueList}" varStatus="status">  
-				    <tr id="tr${value.id}">
-				    	<td style="display: none;" class="td_value_id">${value.id}</td>
+				<c:forEach var="product" items="${detailList}" varStatus="status">  
+				    <tr id="tr${product.id}">
 				    	<td>${status.count}</td>
-				    	<td class="td_value_name">${value.attributeValueName}</td>
-				    	<td class="td_effective_flag">
-				    		<c:choose> 
-							     <c:when test="${value.effectiveFlag == 1}">是 </c:when>      
-							     <c:otherwise>否</c:otherwise> 
-							</c:choose>
-				    	</td>
+				    	<td>${product.productName}</td>
+				    	<td>${product.productCode}</td>
+				    	<td>${product.productUnit}</td>
+				    	<td><input class='number_text price' data-options='min:0,precision:2' value = "${product.price}"/></td>
+				    	<td style="display: none;" class="td_product_id">${product.id}</td>
 				    </tr>
 				</c:forEach> 
 			</tbody>

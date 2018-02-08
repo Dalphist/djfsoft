@@ -13,6 +13,7 @@ import pojo.ResultBean;
 import pojo.manage.TemplateDetailInfo;
 import pojo.manage.TemplateInfo;
 import service.manage.TemplateService;
+import util.DateUtil;
 import util.ParseUtil;
 
 @Controller
@@ -65,9 +66,11 @@ public class TemplateController {
 		TemplateInfo templateInfo = new TemplateInfo();
 		templateInfo = (TemplateInfo)ParseUtil.getBeanFromStr(templateStr, "pojo.manage.TemplateInfo");
 		if(templateInfo.getId() == null){	//新加
+			templateInfo.setGmtCreate(DateUtil.getNowDateTime());
 			templateService.addTemplate(templateInfo);
 			result.setMsg("添加成功！");
-		}else{
+		}else{		//修改
+			templateInfo.setGmtModified(DateUtil.getNowDateTime());
 			templateService.updateTemplate(templateInfo);
 			result.setMsg("修改成功！");
 		}
@@ -96,10 +99,12 @@ public class TemplateController {
 	public ResultBean<String> saveTemplateDetail(String productListInfo,String templateId) {
 		ResultBean<String> result = new ResultBean<String>();
 		List<TemplateDetailInfo> list = ParseUtil.getBeanListFromStr(productListInfo, "pojo.manage.TemplateDetailInfo");
+		templateService.delTemplateDetail(templateId);
 		for(TemplateDetailInfo detail : list){
 			detail.setTemplateId(Integer.parseInt(templateId));
 			templateService.addTemplateDetail(detail);
 		}
+		result.setMsg("保存成功！");
 		return result;
 	}
 }
