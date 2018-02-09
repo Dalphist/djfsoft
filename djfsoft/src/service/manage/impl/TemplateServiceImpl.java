@@ -44,6 +44,11 @@ public class TemplateServiceImpl implements TemplateService {
 		templateMapper.updateTemplate(purchaseTemplateInfo);
 		return;
 	}
+	
+	@Override
+	public TemplateDetailInfo getPriceDetail(TemplateDetailInfo detail) {
+		return templateMapper.getPriceDetail(detail);
+	}
 
 	@Override
 	public List<TemplateInfo> templateList() {
@@ -65,5 +70,4 @@ public class TemplateServiceImpl implements TemplateService {
 		return templateMapper.existTemplate(templateInfo);
 	}
 
-	
 }

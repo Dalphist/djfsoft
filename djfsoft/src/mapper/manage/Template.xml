@@ -35,6 +35,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where id = #{id}
 	</update>
 
+	<select id="getPriceDetail" parameterType="TemplateDetailInfo" resultType="TemplateDetailInfo">
+		SELECT * 
+		from t_template_detail 
+		WHERE template_id = #{templateId} and product_id = #{productId}
+		limit 1
+	</select>
+	
 	<select id="templateList" resultType="TemplateInfo">
 		select t.*,dtt.name as type_name
 		from t_template t

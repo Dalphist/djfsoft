@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import interceptor.Authority;
 import pojo.ResultBean;
-import pojo.User;
 import pojo.sales.SalesOrder;
 import pojo.sales.SalesOrderDetailInfo;
 import pojo.sales.SalesOrderInfo;

@@ -183,14 +183,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="product" items="${detailList}" varStatus="status">  
-				    <tr id="tr${product.id}">
+				<c:forEach var="detail" items="${detailList}" varStatus="status">  
+				    <tr id="tr${detail.productId}">
 				    	<td>${status.count}</td>
-				    	<td>${product.productName}</td>
-				    	<td>${product.productCode}</td>
-				    	<td>${product.productUnit}</td>
-				    	<td><input class='number_text price' data-options='min:0,precision:2' value = "${product.price}"/></td>
-				    	<td style="display: none;" class="td_product_id">${product.id}</td>
+				    	<td>${detail.productName}</td>
+				    	<td>${detail.productCode}</td>
+				    	<td>${detail.productUnit}</td>
+				    	<td><input class='number_text price' data-options='min:0,precision:2' value = "${detail.price}"/></td>
+				    	<td style="display: none;" class="td_product_id">${detail.productId}</td>
 				    </tr>
 				</c:forEach> 
 			</tbody>

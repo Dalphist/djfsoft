@@ -15,6 +15,8 @@ public interface TemplateService {
 	void delTemplateDetail(String templateId);
 
 	void updateTemplate(TemplateInfo purchaseTemplateInfo);
+	
+	TemplateDetailInfo getPriceDetail(TemplateDetailInfo detail);
 
 	List<TemplateInfo> templateList();
 	

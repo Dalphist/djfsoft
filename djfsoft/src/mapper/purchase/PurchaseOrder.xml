@@ -35,6 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		pay_type_id = #{payTypeId},operater_id = #{operaterId},operate_date = #{operateDate},effective_flag = #{effectiveFlag}
 		where id=#{id}
 	</update>
+	
+	<update id="updateState" parameterType="String">
+		update t_purchase_order
+		set state_flag = #{state}
+		where id=#{orderId}
+	</update>
 
 	<select id="orderList" resultType="PurchaseOrderInfo">
 		select po.*,dps.name as order_state,
@@ -49,6 +55,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_purchase_order_detail pod 
 		JOIN t_product p ON pod.product_id = p.id 
 		WHERE pod.purchase_order_id = #{orderId} 
+	</select>
+	
+	<select id="getNewCode" parameterType="String" resultType="String">
+		select IFNULL(CONCAT(#{preStr},LPAD(SUBSTR(max(order_code),-1,3)+1,3,0)),CONCAT(#{preStr},'001')) 
+		from t_purchase_order
+		where SUBSTR(order_code,1,10) = #{preStr} 
 	</select>
 	
 	

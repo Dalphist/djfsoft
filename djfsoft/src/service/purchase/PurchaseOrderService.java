@@ -20,5 +20,9 @@ public interface PurchaseOrderService {
 	List<PurchaseOrderInfo> orderList();
 
 	List<PurchaseOrderDetailInfo> getDetail(String orderId);
+	
+	String getNewCode(String preStr);
+	
+	void updateState(String orderId,String state);
 
 }

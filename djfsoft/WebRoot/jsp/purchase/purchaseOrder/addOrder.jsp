@@ -6,7 +6,7 @@ $(function(){
 	    height:"100%" 
 	});  
 	getNewOrderCode();
-	getPurchaseTemplate();
+	getPurchaseTemplate();	//获取所有采购模板
 	
 	//全选/取消全选
 	$("#checkAll").on("click",function(event){
@@ -41,8 +41,6 @@ $(function(){
 	$("#input_extraPrice").on("blur",function(){
 	   	calTableCost();
 	}); 
-	
-	//获取所有采购模板
 	
 })
 function openWinProduct(){
@@ -123,7 +121,7 @@ function saveOrder(){
 		return false;
 	}
 	$.ajax({
-		url:"<%=projectName%>/sales/salesOrder/saveSalesOrder",
+		url:"<%=projectName%>/purchase/purchaseOrder/savePurchaseOrder",
 		type:"post",
         data:{"productListInfo":JSON.stringify(productListInfo),"basicInfo":JSON.stringify(basicInfo)},
         success:function(result){
@@ -190,9 +188,10 @@ function delProduct(){
 		$(this).find("td").eq(1).html(i*1+1);
 	});
 }
+
 function getNewOrderCode(){
 	$.ajax({
-		url:"<%=projectName%>/sales/salesOrder/getNewOrderCode",
+		url:"<%=projectName%>/purchase/purchaseOrder/getNewOrderCode",
 		type:"get",
         success:function(result){
         	var code = result.data;
@@ -234,19 +233,42 @@ function getSelectTr(){
 
 function chooseTemplate(){
 	var selectProducts = getSelectTr();
+	if(selectProducts.length > 0){
+		$('#win_template').window('open');
+	}else{
+		$.messager.alert('提示',"请勾选要套用模板的商品",'info',function(){    
+	        return false;
+		});
+	}
+	
+	
+}
+
+//套模板价格
+function setPrice(){
+	var selectProducts = getSelectTr();
 	var selectProductIds = [];
 	selectProducts.each(function(){
 		var productId = $(this).find(".td_product_id").text().trim();
 		selectProductIds.push(productId);
 	});
+	var templateId = $("#select_template").val();
 	$.ajax({
 		url:"<%=projectName%>/manage/template/SetPriceWithTemplate",
-		data:{"selectProductIds":JSON.stringify(selectProductIds)},
+		data:{"selectProductIds":JSON.stringify(selectProductIds),"templateId":templateId},
 		type:"post",
         success:function(result){
-			        	
-        }				
-	});
+			var detailList = result.dataList;
+			$.each(detailList,function(i,detail){
+				if($("#tr"+detail.productId).length > 0){
+					$("#tr"+detail.productId).find(".unit_price").val(detail.price);
+					calByUnitPrice($("#tr"+detail.productId));	//重新计算此行
+				}
+			});
+			$('#win_template').window('close');
+			calTableCost();
+        }	
+     });			
 	
 }
 </script>
@@ -339,7 +361,7 @@ function chooseTemplate(){
     	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="$('#win_template').window('close');">
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>  
 		</div>
-    	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="importProduct();">
+    	<div style="float: right;padding-right: 10px;padding-top: 5px;" onclick="setPrice();">
 	    	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">确定</a>  
     	</div>
     </div>

@@ -15,6 +15,8 @@ public interface TemplateMapper {
 	public void delTemplateDetail(String templateId);
 
 	public void updateTemplate(TemplateInfo templateInfo);
+	
+	public TemplateDetailInfo getPriceDetail(TemplateDetailInfo detail);
 
 	public List<TemplateInfo> templateList();
 

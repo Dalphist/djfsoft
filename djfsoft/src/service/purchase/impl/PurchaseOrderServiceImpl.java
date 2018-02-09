@@ -56,5 +56,16 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	public List<PurchaseOrderDetailInfo> getDetail(String orderId) {
 		return purchaseOrderMapper.getDetail(orderId);
 	}
+
+	@Override
+	public String getNewCode(String preStr) {
+		return purchaseOrderMapper.getNewCode(preStr);
+	}
+
+	@Override
+	public void updateState(String orderId, String state) {
+		purchaseOrderMapper.updateState(orderId, state);
+		return;
+	}
 	
 }

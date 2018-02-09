@@ -124,7 +124,7 @@ public class TemplateController {
 	}
 	
 	/**
-	 * 
+	 * 将商品按模板套价
 	 * @param selectProductIds
 	 * @return
 	 */
@@ -132,6 +132,19 @@ public class TemplateController {
 	@ResponseBody
 	public ResultBean<TemplateDetailInfo> SetPriceWithTemplate(String selectProductIds,String templateId) {
 		ResultBean<TemplateDetailInfo> result = new ResultBean<TemplateDetailInfo>();
+		List<TemplateDetailInfo> list = new ArrayList<TemplateDetailInfo>();
+		List<String> productIdList =  ParseUtil.parseFromStrArray(selectProductIds);
+		for(String productId : productIdList){
+			//通过商品id和模板id获取到该模板下此商品的套价
+			TemplateDetailInfo temp = new TemplateDetailInfo();
+			temp.setProductId(Integer.parseInt(productId));
+			temp.setTemplateId(Integer.parseInt(templateId));
+			TemplateDetailInfo detail = templateService.getPriceDetail(temp);
+			if(detail != null){
+				list.add(detail);
+			}
+		}
+		result.setDataList(list);
 		return result;
 	}
 	

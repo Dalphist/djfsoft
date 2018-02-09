@@ -2,10 +2,10 @@ package pojo.purchase;
 
 public class PurchaseOrderDetailInfo {
 	private Integer id;
-	private Integer purchase_order_id;
-	private Integer product_id;
+	private Integer purchaseOrderId;
+	private Integer productId;
 	private Double quantity;
-	private Double unit_price;
+	private Double unitPrice;
 	private Double cost;
 	//info
 	private String productCode;
@@ -18,29 +18,11 @@ public class PurchaseOrderDetailInfo {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getPurchase_order_id() {
-		return purchase_order_id;
-	}
-	public void setPurchase_order_id(Integer purchase_order_id) {
-		this.purchase_order_id = purchase_order_id;
-	}
-	public Integer getProduct_id() {
-		return product_id;
-	}
-	public void setProduct_id(Integer product_id) {
-		this.product_id = product_id;
-	}
 	public Double getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(Double quantity) {
 		this.quantity = quantity;
-	}
-	public Double getUnit_price() {
-		return unit_price;
-	}
-	public void setUnit_price(Double unit_price) {
-		this.unit_price = unit_price;
 	}
 	public Double getCost() {
 		return cost;
@@ -72,12 +54,23 @@ public class PurchaseOrderDetailInfo {
 	public void setProductUnit(String productUnit) {
 		this.productUnit = productUnit;
 	}
-	@Override
-	public String toString() {
-		return "PurchaseOrderDetailInfo [id=" + id + ", purchase_order_id=" + purchase_order_id + ", product_id="
-				+ product_id + ", quantity=" + quantity + ", unit_price=" + unit_price + ", cost=" + cost
-				+ ", productCode=" + productCode + ", barCode=" + barCode + ", productName=" + productName
-				+ ", productUnit=" + productUnit + "]";
+	public Integer getPurchaseOrderId() {
+		return purchaseOrderId;
 	}
-
+	public void setPurchaseOrderId(Integer purchaseOrderId) {
+		this.purchaseOrderId = purchaseOrderId;
+	}
+	public Integer getProductId() {
+		return productId;
+	}
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+	public Double getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	
 }
