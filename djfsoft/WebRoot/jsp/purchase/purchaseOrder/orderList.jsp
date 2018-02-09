@@ -171,6 +171,26 @@
 				$.messager.alert('提示','没有选择任何订单','info');
 			}
 		}
+		
+		//采购订单入库
+		function stockIn(){
+			var selectOrderIds = getSelectOrder();
+			if(selectOrderIds.length == 0){
+				$.messager.alert('提示','没有选择任何订单','info');
+				return false;
+			}else{
+				$.ajax({
+					url:"<%=projectName%>/sales/salesStockOutOrder/toStockOut",
+					type:"post",
+			        data:{"selectOrderIds":JSON.stringify(selectOrderIds)},
+			        success:function(result){
+			        	$.messager.alert('提示',result.msg,'info',function(){    
+					        parent.window.location="<%=projectName%>/sales/salesStockOutOrder/index";
+						});
+			        }				
+				});
+			}
+		}
 	</script>
   </head>
   <body style="margin: 0px;">
@@ -179,7 +199,7 @@
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">手动添加</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="delOrder();">删除订单</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="check();">订单审核</a>
-		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="stockOut();">订单出库</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="stockIn();">订单入库</a>
 		<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 	</div>
 	<div id="layout_order_list" class="easyui-layout" style="height: 560px;">
