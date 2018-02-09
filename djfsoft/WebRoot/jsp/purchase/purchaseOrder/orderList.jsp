@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*,djfsoft.pojo.*" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -64,7 +65,7 @@
 		function getorderDetail(order_id){
 			$("#table_order_detail tbody").empty();
 			$.ajax({
-				url:"<%=projectName%>/sales/salesOrder/getOrderDetail",
+				url:"<%=projectName%>/purchase/purchaseOrder/getOrderDetail",
 				type:"get",
 		        data:{"orderId":order_id},
 		        success:function(result){
@@ -144,6 +145,32 @@
 			});
 			return selectOrderIds;
 		}
+		
+		//采购订单审核
+		function check(){
+			var selectOrderIds = getSelectOrder();
+			if(selectOrderIds.length > 0){
+				$.messager.confirm('确认','您确认同意审核所选订单吗？',function(r){    
+				    if (r){    
+				        $.ajax({
+							url:"<%=projectName%>/purchase/purchaseOrder/checkOrder",
+							type:"post",
+							dataType:"json",
+			                data:{"selectOrderIds":JSON.stringify(selectOrderIds)},
+			                success:function(result){
+			                	$.messager.alert('提示',result.msg,'info',function(){    
+							        location.reload(); 
+								});  
+			                },
+			                error:function(){
+			                }				
+						})
+				    }    
+				});
+			}else{
+				$.messager.alert('提示','没有选择任何订单','info');
+			}
+		}
 	</script>
   </head>
   <body style="margin: 0px;">
@@ -151,6 +178,7 @@
 	<div style="height:28px;background-color:#e0ecff;padding-top: 1px;">
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">手动添加</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="delOrder();">删除订单</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="check();">订单审核</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="stockOut();">订单出库</a>
 		<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 	</div>
@@ -215,9 +243,7 @@
 											<th style="width: 127px;">总价</th>
 										</tr>
 									</thead>
-									<tbody>
-									
-									</tbody>
+									<tbody></tbody>
 								</table>
 							</div>    
 					    </div>   

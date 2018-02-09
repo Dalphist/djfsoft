@@ -19,6 +19,7 @@ import service.purchase.PurchaseOrderService;
 import util.DateUtil;
 import util.ParseUtil;
 import util.SessionUtil;
+import util.enumSet.PurchaseStateEnum;
 
 @Controller
 @RequestMapping("purchase/purchaseOrder")
@@ -44,14 +45,13 @@ public class PurchaseOrderController {
 		return mav;
 	}
 	
-	@RequestMapping("orderDetail")
-	public ModelAndView orderDetail(String orderId) {
+	@RequestMapping("getOrderDetail")
+	@ResponseBody
+	public ResultBean<PurchaseOrderDetailInfo> orderDetail(String orderId) {
+		ResultBean<PurchaseOrderDetailInfo> result = new ResultBean<PurchaseOrderDetailInfo>();
 		List<PurchaseOrderDetailInfo> list = purchaseOrderService.getDetail(orderId);
-		ModelAndView mav = new ModelAndView();
-		String url = "purchase/purchaseOrder/orderDetail";
-		mav.setViewName(url);
-		mav.addObject("detailList", list);
-		return mav;
+		result.setDataList(list);
+		return result;
 	}
 	
 	@RequestMapping("getNewOrderCode")
@@ -93,6 +93,19 @@ public class PurchaseOrderController {
 		return result;
 	}
 	
+	
+	
+	@RequestMapping("checkOrder")
+	@ResponseBody
+	public ResultBean<String> checkOrder(String selectOrderIds) {
+		ResultBean<String> result = new ResultBean<String>();
+		List<String> idList = ParseUtil.parseFromStrArray(selectOrderIds);
+		for(String id : idList){
+			purchaseOrderService.updateState(id, PurchaseStateEnum.CHECKED.getState());
+		}
+		result.setMsg("审核完成!");
+		return result;
+	}
 	
 
 }
