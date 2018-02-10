@@ -1,8 +1,6 @@
 package interceptor;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,8 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import com.google.gson.Gson;
 
 import pojo.User;
 import util.enumSet.AuthorityType;
@@ -42,8 +38,6 @@ public class AuthorityAnnotationInterceptor extends HandlerInterceptorAdapter {
 					} else if (isClzAnnotation) {
 						authority = clazz.getAnnotation(Authority.class);
 					}
-					int code = -1;
-					String msg = "";
 					if (authority != null) {
 						if (AuthorityType.NoValidate == authority.value()) {
 							// 标记为不验证,放行

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mapper.stock.StockMapper;
-import pojo.stock.StockInInfo;
+import pojo.stock.StockInOrderInfo;
 import pojo.stock.StockInfo;
 import pojo.stock.StockOutOrderDetailInfo;
 import service.stock.StockService;
@@ -27,8 +27,8 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
-	public void stockIn(StockInInfo stockInInfo) {
-		stockMapper.stockIn(stockInInfo);
+	public void stockIn(StockInOrderInfo stockInOrderInfo) {
+		stockMapper.stockIn(stockInOrderInfo);
 		return;
 	}
 

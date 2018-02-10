@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 public class ParseUtil {
 	/**
@@ -46,6 +45,7 @@ public class ParseUtil {
 		return list;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static <T> List<T> getBeanListFromStr(String beanListStr,String className){
 		List<T> list = new ArrayList<T>();
 		try {
