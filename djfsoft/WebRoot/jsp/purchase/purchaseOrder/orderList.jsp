@@ -180,12 +180,12 @@
 				return false;
 			}else{
 				$.ajax({
-					url:"<%=projectName%>/sales/salesStockOutOrder/toStockOut",
+					url:"<%=projectName%>/purchase/purchaseStockInOrder/saveOrder",
 					type:"post",
-			        data:{"selectOrderIds":JSON.stringify(selectOrderIds)},
+			        data:{"selectOrderIds":JSON.stringify(selectOrderIds),"typeId":"1"},
 			        success:function(result){
 			        	$.messager.alert('提示',result.msg,'info',function(){    
-					        parent.window.location="<%=projectName%>/sales/salesStockOutOrder/index";
+					        parent.window.location="<%=projectName%>/purchase/purchaseStockInOrder/index";
 						});
 			        }				
 				});

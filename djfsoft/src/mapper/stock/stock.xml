@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update t_stock set normal_quantity = normal_quantity - #{normalQuantity}
 		where product_id=#{productId}
 	</update>
-	<update id="stockIn" parameterType="StockInInfo">
+	<update id="stockIn" parameterType="StockInOrderInfo">
 		update t_stock set normal_quantity = normal_quantity + #{normalQuantity}
 		where product_id=#{id}
 	</update>
