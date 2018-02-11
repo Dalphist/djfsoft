@@ -32,6 +32,7 @@
 			$("#table_order_list tbody tr").click(function() {  
 			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
 			   var order_id = $(this).find(".td_order_id").text().trim();
+			   $(this).find(":checkbox").prop("checked",true);
 			   $("#input_order_id").val(order_id);
 			   getorderDetail(order_id);
 			}); 
@@ -49,7 +50,7 @@
 		function getorderDetail(order_id){
 			$("#table_order_detail tbody").empty();
 			$.ajax({
-				url:"<%=projectName%>/sales/salesStockOutOrder/getOrderDetail",
+				url:"<%=projectName%>/purchase/purchaseStockInOrder/getOrderDetail",
 				type:"get",
 		        data:{"orderId":order_id},
 		        success:function(result){
@@ -57,7 +58,7 @@
 		        	$.each(detailList,function(i,detail){
 		        		var tr = "<tr>"
 		        				+ "<td>"+ (i+1) +"</td>"
-		        				+ "<td>"+ detail.salesOrderCode +"</td>"
+		        				+ "<td>"+ detail.purchaseOrderCode +"</td>"
 		        				+ "<td>"+ detail.productName +"</td>"
 		        				+ "<td>"+ detail.productCode +"</td>"
 		        				+ "<td>"+ detail.barCode +"</td>"
@@ -78,7 +79,7 @@
 			$.messager.confirm('确认','您确认想要删除所选商品吗？',function(r){    
 			    if (r){    
 			        $.ajax({
-						url:"<%=projectName%>/sales/salesStockOutOrder/delOrder",
+						url:"<%=projectName%>/purchase/purchaseStockInOrder/delOrder",
 						type:"post",
 				        data:{"orderId":order_id},
 				        success:function(result){
@@ -90,17 +91,68 @@
 			    }    
 			});
 		}
+		
+		//入库操作
+		function toStockIn(){
+			var trs = getSelectRr();
+			var selectOrderIds = [];
+			var flag = true;	//是否可以入库操作
+			trs.each(function(){
+				var state = $(this).find(".td_state_flag").text().trim();
+				if(state != 0){
+					flag = false;
+					return false;
+				}
+				var orderId = $(this).find(".td_order_id").text().trim();
+				selectOrderIds.push(orderId);
+			});
+			if(!flag){
+				$.messager.alert('提示',"不能选择已入库单",'info',function(){    
+			        return false;
+				});
+			}
+			if(selectOrderIds.length == 0){
+				$.messager.alert('提示',"没有选择入库单",'info',function(){    
+			        return false;
+				});
+			}
+			$.messager.confirm('确认','您确认要将所选入库单进行入库吗？',function(r){    
+			    if (r){    
+			        $.ajax({
+						url:"<%=projectName%>/purchase/purchaseStockInOrder/toStockIn",
+						type:"post",
+				        data:{"selectOrderIds":JSON.stringify(selectOrderIds)},
+				        success:function(result){
+				        	$.messager.alert('提示',result.msg,'info',function(){    
+						        location.reload(); 
+							});
+				        }				
+					});
+			    }    
+			});
+		};
+		
+		
+		//获取选中的订单
+		function getSelectRr(){
+			var trs = $("#table_order_list tbody").find("input:checkbox:checked").parents("tr");
+			return trs;
+		}
+		
+		
 		//销售订单导入成出库订单
-		function importSalesOrder(){
-			parent.window.location="<%=projectName%>/sales/salesOrder/index";
+		function importPurchaseOrder(){
+			parent.window.location="<%=projectName%>/purchase/purchaseOrder/index";
 		}
 	</script>
   </head>
   <body style="margin: 0px;">
   <input id="input_order_id" style="display: none;">
 	<div style="height:30px;background-color:#e0ecff;padding-top: 3px;">
-		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="importSalesOrder();">销售导入</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="importPurchaseOrder();">销售导入</a>
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addOrder();">手动添加</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="toStockIn();">货品入库</a>
+		
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="delOrder();">删除订单</a>
 		<input type="button" value="导出" style="position:absolute;top:5px;right:10px;"/>
 	</div>
@@ -117,22 +169,27 @@
 									<th style="width:10px;"><input id="checkAll" type="checkbox"/></th>
 									<th style="width:30px;">序号</th>
 									<th>出库单号</th>
-									<th>操作人</th>
-									<th>订单时间</th>
-									<th>出库时间</th>
-									<th>出库时间</th>
 									<th>状态</th>
+									<th>操作人员</th>
+									<th>订单时间</th>
+									<th>入库审核人员</th>
+									<th>入库时间</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="order" items="${orderList}" varStatus="status">  
 								    <tr>
-								    	<td style="display: none;" class="td_order_id">${order.id}</td>
 								    	<td class="td_checkbox"><input type="checkbox"/></td>
 								    	<td>${status.count}</td>
 								    	<td>${order.orderCode}</td>
+								    	<td>${order.stateName}</td>
 								    	<td>${order.operaterName}</td>
 								    	<td><fmt:formatDate value="${order.operateDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+								    	<td>${order.confirmName}</td>
+								    	<td><fmt:formatDate value="${order.confirmDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+								    	<!-- 备用信息-->
+								    	<td style="display: none;" class="td_order_id">${order.id}</td>
+								    	<td style="display: none;" class="td_state_flag">${order.stateFlag}</td>
 								    </tr>
 								</c:forEach> 
 							</tbody>

@@ -17,7 +17,7 @@
 								<ul class="sub-menu">
 									<li><a>采购计划</a></li>
 									<li><a href="<%=projectName%>/purchase/purchaseOrder/index">采购订单</a></li>
-									<li><a>采购入库</a></li>
+									<li><a href="<%=projectName%>/purchase/purchaseStockInOrder/index">采购入库</a></li>
 									<li><a>采购退货</a></li>
 								</ul>
 							</li>

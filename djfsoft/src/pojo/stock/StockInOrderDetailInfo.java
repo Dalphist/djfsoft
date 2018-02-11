@@ -10,7 +10,7 @@ public class StockInOrderDetailInfo {
 	private Double normalQuantity;
 	private Double defectQuantity;
 	private Double uselessQuantity;
-	private Double rackCode;
+	private String rackCode;
 	
 	//info
 	private String warehouseName;
@@ -58,10 +58,10 @@ public class StockInOrderDetailInfo {
 	public void setUselessQuantity(Double uselessQuantity) {
 		this.uselessQuantity = uselessQuantity;
 	}
-	public Double getRackCode() {
+	public String getRackCode() {
 		return rackCode;
 	}
-	public void setRackCode(Double rackCode) {
+	public void setRackCode(String rackCode) {
 		this.rackCode = rackCode;
 	}
 	public String getWarehouseName() {

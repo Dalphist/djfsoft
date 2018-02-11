@@ -39,13 +39,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<select id="orderList" resultType="StockInOrderInfo">
-		select sio.id,sio.order_code,user.user_name as operater_name,sio.operate_date
+		select sio.id,sio.order_code,user1.user_name as operater_name,sio.operate_date,
+		user2.user_name as confirm_name,sio.confirm_date,state.name as state_name,sio.state_flag
 		from t_stock_in_order sio
-		LEFT JOIN t_user user ON sio.operater_id = user.id
+		LEFT JOIN t_user user1 ON sio.operater_id = user1.id
+		LEFT JOIN t_user user2 ON sio.confirm_id = user2.id
+		LEFT JOIN t_dict_stock_in_state state ON sio.state_flag = state.nid
 	</select>
 	
 	<select id="getDetail" parameterType="String" resultType="StockInOrderDetailInfo">
-		select siod.*,p.bar_code,p.product_code,p.product_name,p.product_unit,so.order_code,w.name as warehouse_name
+		select siod.id,siod.stock_in_order_id,siod.product_id,siod.product_id,siod.normal_quantity,siod.warehouse_id,IFNULL(siod.rack_code,'') as rack_code,
+		p.bar_code,p.product_code,p.product_name,p.product_unit,so.order_code as purchase_order_code,IFNULL(w.name,'') as warehouse_name
 		from t_stock_in_order_detail siod 
 		JOIN t_product p ON siod.product_id = p.id 
 		JOIN t_purchase_order so ON siod.purchase_order_id = so.id 

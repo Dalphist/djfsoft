@@ -115,26 +115,24 @@ public class PurchaseStockInOrderController {
 	@RequestMapping("toStockIn")
 	@ResponseBody
 	public ResultBean<String> toStockIn(String selectOrderIds,HttpSession session) {
-		//保存出库单
-		StockInOrderInfo stockInOrder = new StockInOrderInfo();
-		stockInOrder.setOperaterId(SessionUtil.getUserId(session));
-		stockInOrder.setOrderCode(getCode());
-		stockInOrder.setOperateDate(DateUtil.getNowDateTime());
-		purchaseStockInOrderService.addOrder(stockInOrder);
-		int stockInOrderId = stockInOrder.getId();
 		//遍历所选销售订单
 		List<String> ids = ParseUtil.parseFromStrArray(selectOrderIds);
-		for(String purchaseOrderId : ids){
-			//保存出库单详情
-			saveStockInOrderDetail(stockInOrderId, purchaseOrderId);
+		for(String stockInOrderId : ids){
+			//入库修改库存
+			stockIn(stockInOrderId);
 			//修改销售订单的状态 -- 已出库
-			purchaseOrderService.updateState(purchaseOrderId, PurchaseStateEnum.STOCKIN.getState());
+//			purchaseOrderService.updateState(purchaseOrderId, PurchaseStateEnum.STOCKIN.getState());
 		}
 		
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);
 		result.setMsg("出库成功！");
 		return result;
+	}
+	
+	private void stockIn(String stockInOrderId) {
+		List<StockInOrderDetailInfo> details = purchaseStockInOrderService.getDetail(stockInOrderId);
+		
 	}
 
 	private void saveStockInOrderDetail(int stockInOrderId, String purchaseOrderId) {

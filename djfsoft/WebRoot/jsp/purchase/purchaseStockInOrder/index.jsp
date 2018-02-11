@@ -20,7 +20,7 @@
 		$(function(){
 			$('#tabs').tabs({
 				onSelect: function(title){
-					if(title == '销售单导入'){
+					if(title == '采购单导入'){
 						$("#layout_addOrder").layout("resize",{  
 						    width:"100%",  
 						    height:"100%" 
@@ -51,10 +51,10 @@
 		</div>
 		<div data-options="region:'center'">
 			<div id="tabs" class="easyui-tabs" style="width:100%;height:100%;">
-			    <div title="出库单列表" style="display:none;">   
+			    <div title="人库单列表" style="display:none;">   
 			        <iframe id="iframe_order_list" name="iframe_order_list" style="width: 99%;height: 99%;"></iframe>    
 			    </div>   
-			    <div title="销售单导入" style="display:none;">   
+			    <div title="采购单导入" style="display:none;">   
 			        <%@ include file="addOrder.jsp"%> 
 			    </div>   
 			</div> 

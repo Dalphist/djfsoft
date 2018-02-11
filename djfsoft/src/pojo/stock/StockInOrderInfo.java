@@ -10,7 +10,9 @@ public class StockInOrderInfo {
 	private Integer confirmId;
 	private Date confirmDate;
 	private Integer typeId;
+	private Integer stateFlag;
 	// info
+	private String stateName;
 	private String operaterName;
 	private String confirmName;
 	public Integer getId() {
@@ -67,5 +69,16 @@ public class StockInOrderInfo {
 	public void setConfirmName(String confirmName) {
 		this.confirmName = confirmName;
 	}
-
+	public Integer getStateFlag() {
+		return stateFlag;
+	}
+	public void setStateFlag(Integer stateFlag) {
+		this.stateFlag = stateFlag;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
 }
