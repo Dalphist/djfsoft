@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getOrderById" parameterType="String" resultType="StockInOrderInfo">
 		SELECT *
 		from t_stock_in_order
-		WHERE stock_in_order_id = #{stockInOrderId}
+		WHERE id = #{stockInOrderId}
 	</select>
 	
 	

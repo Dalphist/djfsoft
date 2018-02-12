@@ -15,6 +15,7 @@ import pojo.ResultBean;
 import pojo.purchase.PurchaseOrderDetailInfo;
 import pojo.stock.StockInOrderDetailInfo;
 import pojo.stock.StockInOrderInfo;
+import pojo.stock.StockOutOrderDetailInfo;
 import service.purchase.PurchaseOrderService;
 import service.purchase.PurchaseStockInOrderService;
 import service.stock.StockService;
@@ -158,7 +159,12 @@ public class PurchaseStockInOrderController {
 	StockService stockService;
 	private void stockIn(String stockInOrderId) {
 		List<StockInOrderDetailInfo> details = purchaseStockInOrderService.getDetail(stockInOrderId);
-		
+		for(StockInOrderDetailInfo detail : details){
+			StockInOrderDetailInfo in = new StockInOrderDetailInfo();
+			in.setProductId(detail.getProductId());
+			in.setNormalQuantity(detail.getNormalQuantity());
+			stockService.stockIn(in);
+		}
 	}
 
 	private void saveStockInOrderDetail(int stockInOrderId, String purchaseOrderId) {
