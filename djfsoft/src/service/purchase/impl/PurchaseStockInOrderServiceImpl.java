@@ -59,5 +59,15 @@ public class PurchaseStockInOrderServiceImpl implements PurchaseStockInOrderServ
 		return purchaseStockInOrderMapper.getNewCode(preStr);
 	}
 
+	@Override
+	public List<String> getPurchaseIdList(String stockInOrderId) {
+		return purchaseStockInOrderMapper.getPurchaseIdList(stockInOrderId);
+	}
+
+	@Override
+	public StockInOrderInfo getOrderById(String stockInOrderId) {
+		return purchaseStockInOrderMapper.getOrderById(stockInOrderId);
+	}
+
 
 }

@@ -22,6 +22,7 @@ import util.DateUtil;
 import util.ParseUtil;
 import util.SessionUtil;
 import util.enumSet.PurchaseStateEnum;
+import util.enumSet.StockInStateEnum;
 
 
 @Controller
@@ -89,7 +90,7 @@ public class PurchaseStockInOrderController {
 		
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);
-		result.setMsg("已生成出库单！");
+		result.setMsg("已生成入库单！");
 		return result;
 	}
 	
@@ -107,11 +108,6 @@ public class PurchaseStockInOrderController {
 	 * 入库操作
 	 */
 	
-	@Autowired
-	StockService stockService;
-	@Autowired
-	PurchaseOrderService purchaseOrderService;
-	
 	@RequestMapping("toStockIn")
 	@ResponseBody
 	public ResultBean<String> toStockIn(String selectOrderIds,HttpSession session) {
@@ -120,16 +116,46 @@ public class PurchaseStockInOrderController {
 		for(String stockInOrderId : ids){
 			//入库修改库存
 			stockIn(stockInOrderId);
-			//修改销售订单的状态 -- 已出库
-//			purchaseOrderService.updateState(purchaseOrderId, PurchaseStateEnum.STOCKIN.getState());
+			//修改采购订单的状态 -- 已入库
+			updatePurchaseOrderState(stockInOrderId,PurchaseStateEnum.STOCKIN.getState());
+			//修改入库单的状态  -- 入库
+			updateStockInOrderState(stockInOrderId,StockInStateEnum.STOCKIN.getState());
 		}
 		
 		ResultBean<String> result = new ResultBean<String>();
 		result.setCode(ResultBean.SUCCESS);
-		result.setMsg("出库成功！");
+		result.setMsg("入库成功！");
 		return result;
 	}
 	
+	/**
+	 * 修改入库单状态
+	 * @param stockInOrderId
+	 * @param state
+	 */
+	private void updateStockInOrderState(String stockInOrderId, String state) {
+		StockInOrderInfo order = purchaseStockInOrderService.getOrderById(stockInOrderId);
+		order.setStateFlag(Integer.parseInt(state));
+		purchaseStockInOrderService.updateOrder(order);
+	}
+
+	/**
+	 * 修改入库单对应的采购订单的状态
+	 */
+	@Autowired
+	PurchaseOrderService purchaseOrderService;
+	private void updatePurchaseOrderState(String stockInOrderId,String state) {
+		List<String> purchaseIdList = purchaseStockInOrderService.getPurchaseIdList(stockInOrderId);
+		for(String purchaseOrderId : purchaseIdList){
+			purchaseOrderService.updateState(purchaseOrderId, state);
+		}
+	}
+	
+	/**
+	 * 修改库存
+	 */
+	@Autowired
+	StockService stockService;
 	private void stockIn(String stockInOrderId) {
 		List<StockInOrderDetailInfo> details = purchaseStockInOrderService.getDetail(stockInOrderId);
 		
@@ -144,8 +170,6 @@ public class PurchaseStockInOrderController {
 			in.setNormalQuantity(detail.getQuantity());
 			in.setPurchaseOrderId(Integer.parseInt(purchaseOrderId));
 			purchaseStockInOrderService.addOrderDetail(in);
-			//出库减库存
-//			stockService.stockIn(in);
 		}
 	}
 	

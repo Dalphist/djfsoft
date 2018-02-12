@@ -21,4 +21,8 @@ public interface PurchaseStockInOrderMapper {
 	public List<StockInOrderDetailInfo> getDetail(String orderId);
 	
 	public String getNewCode(String preStr);
+	
+	public List<String> getPurchaseIdList(String stockInOrderId);
+	
+	public StockInOrderInfo getOrderById(String stockInOrderId);
 }

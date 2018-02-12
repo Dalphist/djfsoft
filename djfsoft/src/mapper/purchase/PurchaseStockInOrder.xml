@@ -33,8 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="updateOrder" parameterType="StockInOrderInfo">
 		update t_stock_in_order
-		set product_price = #{productPrice},transport_fare = #{transportFare},extra_price = #{extraPrice},total_price = #{totalPrice},
-		pay_type_id = #{payTypeId},operater_id = #{operaterId},operate_date = #{operateDate},effective_flag = #{effectiveFlag}
+		set order_code = #{orderCode},operater_id = #{operaterId},operate_date = #{operateDate},confirm_id = #{confirmId},
+		confirm_date = #{confirmDate},type_id = #{typeId},state_flag = #{stateFlag}
 		where id=#{id}
 	</update>
 
@@ -61,6 +61,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select IFNULL(CONCAT(#{preStr},LPAD(SUBSTR(max(order_code),-1,3)+1,3,0)),CONCAT(#{preStr},'001')) 
 		from t_stock_in_order
 		where SUBSTR(order_code,1,12) = #{preStr} 
+	</select>
+	
+	<select id="getPurchaseIdList" parameterType="String" resultType="String">
+		SELECT purchase_order_id
+		from t_stock_in_order_detail
+		WHERE stock_in_order_id = #{stockInOrderId}
+		GROUP BY purchase_order_id
+	</select>
+	
+	<select id="getOrderById" parameterType="String" resultType="StockInOrderInfo">
+		SELECT *
+		from t_stock_in_order
+		WHERE stock_in_order_id = #{stockInOrderId}
 	</select>
 	
 	

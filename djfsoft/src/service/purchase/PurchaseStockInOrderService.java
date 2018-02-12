@@ -21,5 +21,9 @@ public interface PurchaseStockInOrderService {
 	List<StockInOrderDetailInfo> getDetail(String orderId);
 	
 	String getNewCode(String preStr);
+	
+	List<String> getPurchaseIdList(String stockInOrderId);
+	
+	StockInOrderInfo getOrderById(String stockInOrderId);
 
 }
