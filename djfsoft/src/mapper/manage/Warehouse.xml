@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.manage.WarehouseMapper">
+    <insert id="addWarehouse" parameterType="WarehouseInfo" >
+        insert into t_warehouse
+        (name) 
+        values 
+        (#{name})    
+    </insert>
+     
+    <delete id="deleteWarehouse" parameterType="String" >
+        delete from t_warehouse where id= #{warehouseId}
+    </delete>
+     
+    <update id="updateWarehouse" parameterType="WarehouseInfo" >
+        update t_warehouse 
+        set name=#{name}
+        where id=#{id}    
+    </update>
+    
+    <select id="getWarehouseInfo" parameterType="WarehouseInfo" resultType="WarehouseInfo">
+        select * from t_warehouse where name = #{name} 
+        <if test="id != null">  
+        and id != #{id}
+    	</if>
+    </select>  
+    
+    <select id="getWarehouseInfoList" resultType="WarehouseInfo">
+        select * from t_warehouse 
+    </select>
+      
+    <!-- 货位号 -->
+    <insert id="addRackCode" parameterType="RackCodeInfo" >
+        insert into t_rack_code
+        (warehouse_id,effective_flag,rack_code) 
+        values 
+        (#{warehouseId},#{effectiveFlag},#{rackCode})    
+    </insert>
+     
+    <delete id="deleteRackCode" parameterType="String" >
+        delete from t_rack_code where warehouse_id= #{warehouseId}
+    </delete>
+     
+    <select id="getRackCodeInfo" parameterType="RackCodeInfo" >
+        select * from t_rack_code 
+        where warehouse_id = #{warehouseId}    
+    </select>
+    
+    <select id="getRackCodeInfoList" resultType="RackCodeInfo">
+        select * from t_rack_code 
+        where warehouse_id = #{warehouseId} 
+        and rack_code = #{rackCode}
+        <if test="id != null">  
+        and id != #{id}
+    	</if>
+    </select>  
+    
+</mapper>

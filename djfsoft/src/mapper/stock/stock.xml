@@ -9,8 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where product_id=#{productId}
 	</update>
 	<update id="stockIn" parameterType="StockInOrderDetailInfo">
-		update t_stock set normal_quantity = normal_quantity + #{normalQuantity}
-		where product_id=#{productId}
+		insert into t_stock 
+		(product_id,normal_quantity,warehouse_id,rack_code)
+		values
+		(#{productId},#{normalQuantity},#{warehouseId},#{rackCode})
 	</update>
 	<select id="getStockList" resultType="StockInfo">
 		select p.id,p.product_name,p.bar_code,p.product_code,p.product_unit,p.stock_warn,
