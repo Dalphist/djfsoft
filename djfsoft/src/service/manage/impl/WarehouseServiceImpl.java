@@ -61,8 +61,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 	}
 
 	@Override
-	public List<RackCodeInfo> getRackCodeInfoList() {
-		return warehouseMapper.getRackCodeInfoList();
+	public List<RackCodeInfo> getRackCodeInfoList(String warehouseId) {
+		return warehouseMapper.getRackCodeInfoList(warehouseId);
 	}
 
 }

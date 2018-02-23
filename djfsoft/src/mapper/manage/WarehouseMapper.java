@@ -25,6 +25,6 @@ public interface WarehouseMapper {
         
     public RackCodeInfo getRackCodeInfo(RackCodeInfo rackCodeInfo);
     
-    public List<RackCodeInfo> getRackCodeInfoList();
+    public List<RackCodeInfo> getRackCodeInfoList(String warehouseId);
     
 }

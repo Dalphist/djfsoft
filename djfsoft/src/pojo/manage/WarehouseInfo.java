@@ -3,6 +3,7 @@ package pojo.manage;
 public class WarehouseInfo {
 	private Integer id;
 	private String name;
+	private Integer effectiveFlag;
 	public Integer getId() {
 		return id;
 	}
@@ -14,5 +15,11 @@ public class WarehouseInfo {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public Integer getEffectiveFlag() {
+		return effectiveFlag;
+	}
+	public void setEffectiveFlag(Integer effectiveFlag) {
+		this.effectiveFlag = effectiveFlag;
 	}
 }

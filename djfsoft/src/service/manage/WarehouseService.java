@@ -23,6 +23,6 @@ public interface WarehouseService {
         
     RackCodeInfo getRackCodeInfo(RackCodeInfo rackCodeInfo);
     
-    List<RackCodeInfo> getRackCodeInfoList();
+    List<RackCodeInfo> getRackCodeInfoList(String warehouseId);
 
 }

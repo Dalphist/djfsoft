@@ -6,9 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="mapper.manage.WarehouseMapper">
     <insert id="addWarehouse" parameterType="WarehouseInfo" >
         insert into t_warehouse
-        (name) 
+        (name,effective_flag) 
         values 
-        (#{name})    
+        (#{name},#{effectiveFlag})    
     </insert>
      
     <delete id="deleteWarehouse" parameterType="String" >
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      
     <update id="updateWarehouse" parameterType="WarehouseInfo" >
         update t_warehouse 
-        set name=#{name}
+        set name=#{name},effective_flag = #{effectiveFlag}
         where id=#{id}    
     </update>
     
@@ -49,13 +49,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where warehouse_id = #{warehouseId}    
     </select>
     
-    <select id="getRackCodeInfoList" resultType="RackCodeInfo">
+    <select id="getRackCodeInfoList" parameterType="String" resultType="RackCodeInfo">
         select * from t_rack_code 
         where warehouse_id = #{warehouseId} 
-        and rack_code = #{rackCode}
-        <if test="id != null">  
-        and id != #{id}
-    	</if>
     </select>  
     
 </mapper>

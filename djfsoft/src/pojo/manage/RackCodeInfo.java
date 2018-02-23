@@ -2,9 +2,9 @@ package pojo.manage;
 
 public class RackCodeInfo {
 	private Integer id;
-	private Integer warehouse_id;
-	private String rack_code;
-	private Integer effective_flag;
+	private Integer warehouseId;
+	private String rackCode;
+	private Integer effectiveFlag;
 	//info
 	private String warehouseName;
 	public Integer getId() {
@@ -13,23 +13,23 @@ public class RackCodeInfo {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getWarehouse_id() {
-		return warehouse_id;
+	public Integer getWarehouseId() {
+		return warehouseId;
 	}
-	public void setWarehouse_id(Integer warehouse_id) {
-		this.warehouse_id = warehouse_id;
+	public void setWarehouseId(Integer warehouseId) {
+		this.warehouseId = warehouseId;
 	}
-	public String getRack_code() {
-		return rack_code;
+	public String getRackCode() {
+		return rackCode;
 	}
-	public void setRack_code(String rack_code) {
-		this.rack_code = rack_code;
+	public void setRackCode(String rackCode) {
+		this.rackCode = rackCode;
 	}
-	public Integer getEffective_flag() {
-		return effective_flag;
+	public Integer getEffectiveFlag() {
+		return effectiveFlag;
 	}
-	public void setEffective_flag(Integer effective_flag) {
-		this.effective_flag = effective_flag;
+	public void setEffectiveFlag(Integer effectiveFlag) {
+		this.effectiveFlag = effectiveFlag;
 	}
 	public String getWarehouseName() {
 		return warehouseName;
@@ -37,6 +37,5 @@ public class RackCodeInfo {
 	public void setWarehouseName(String warehouseName) {
 		this.warehouseName = warehouseName;
 	}
-	
 	
 }
