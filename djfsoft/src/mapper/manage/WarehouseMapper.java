@@ -22,6 +22,8 @@ public interface WarehouseMapper {
     public void addRackCode(RackCodeInfo rackCodeInfo);  
     
     public void deleteRackCode(String warehouseId);  
+    
+    public void updateRackCode(RackCodeInfo rackCodeInfo);   
         
     public RackCodeInfo getRackCodeInfo(RackCodeInfo rackCodeInfo);
     

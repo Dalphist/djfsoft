@@ -54,6 +54,12 @@ public class WarehouseServiceImpl implements WarehouseService {
 		warehouseMapper.deleteRackCode(warehouseId);
 		return;
 	}
+	
+	@Override
+	public void updateRackCode(RackCodeInfo rackCodeInfo) {
+		warehouseMapper.updateRackCode(rackCodeInfo);
+		return;
+	}
 
 	@Override
 	public RackCodeInfo getRackCodeInfo(RackCodeInfo rackCodeInfo) {

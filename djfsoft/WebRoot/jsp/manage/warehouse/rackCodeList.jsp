@@ -42,14 +42,14 @@
 		    
 			//修改按钮
 		    $("#input_rackCode_update").click(function(){
-		    	var attribute_id = $("#input_select_rackCode").val();
-		    	if(attribute_id == ""){
+		    	var rackCode_id = $("#input_select_rackCode").val();
+		    	if(rackCode_id == ""){
 		    		$.messager.alert('提示','请选择要修改的行','info');
 					return false;
 		    	}
-		    	var select_tr = $("#tr"+attribute_id);
+		    	var select_tr = $("#tr"+rackCode_id);
 		    	$("#win_attribute").window("open");
-		    	$("#input_rackCode_name").textbox("setrackCode",(select_tr.find(".td_rackCode_name").text().trim())); 
+		    	$("#input_warehouse_name").textbox("setValue",(select_tr.find(".td_rackCode_name").text().trim())); 
 		    	$("#input_effective_flag").prop("checked",select_tr.find(".td_effective_flag").text().trim() == "是");
 		    });
 		    
@@ -63,7 +63,7 @@
 		    	$.messager.confirm('确认','您确认想要删除所选内容吗？',function(r){    
 				    if (r){    
 				        $.ajax({
-							url:"<%=projectName%>/manage/warehouse/delrackCode",
+							url:"<%=projectName%>/manage/warehouse/delRackCode",
 							type:"post",
 							dataType:"json",
 			                data:{"rackCodeId":rackCode_id},
@@ -84,8 +84,8 @@
 		function getrackCodeInfo(){
 			var rackCodeInfo = {};
 			rackCodeInfo.id = $("#input_select_rackCode").val();
-			rackCodeInfo.attributeId = parseInt($("#input_attribute_id").val().trim());
-			rackCodeInfo.RackCodeName = $("#input_rackCode_name").val().trim();
+			rackCodeInfo.warehouseId = parseInt($("#input_warehouse_id").val().trim());
+			rackCodeInfo.rackCode = $("#input_rackCode").val().trim();
 			rackCodeInfo.effectiveFlag = $("#input_effective_flag").prop("checked")?1:0;
 			return rackCodeInfo;
 		}
@@ -143,7 +143,7 @@
 	</script>
   </head>
   <body style="margin: 0px;">
-  <input id="input_attribute_id" type="text" value="${attributeId}" style="display: none;"> 
+  <input id="input_warehouse_id" type="text" value="${warehouseId}" style="display: none;"> 
   <input id="input_select_rackCode" type="text" style="display: none;"> 
   <div class="easyui-layout">
 	<div style="height:30px;background-color:#e0ecff">
@@ -183,7 +183,7 @@
 <div id="win_attribute" class="easyui-window" title="货位" style="width:300px;height:140px;"   
         data-options="iconCls:'icon-save',modal:true,closed:true">   
     <div style="margin-left:20px;margin-top: 12px;">
-		货位名称:<input id="input_rackCode_name" class="easyui-textbox" style="width:150px;height:30px">
+		货位名称:<input id="input_rackCode" class="easyui-textbox" style="width:150px;height:30px">
 		<input id="input_effective_flag" type="checkbox" checked="checked">可用
 	</div>
     <div>
@@ -193,7 +193,6 @@
     	<div style="float: right;padding-right: 10px;padding-top: 10px;" onclick="savettribute();">
 	    	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >保存</a>  
     	</div>
-    	
     </div>
 </div> 
 </body>

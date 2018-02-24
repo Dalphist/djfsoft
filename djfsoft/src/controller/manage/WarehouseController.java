@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pojo.ResultBean;
-import pojo.manage.ProductAttributeValue;
 import pojo.manage.RackCodeInfo;
 import pojo.manage.WarehouseInfo;
 import service.manage.WarehouseService;
@@ -125,29 +124,49 @@ public class WarehouseController {
 		String url = "manage/warehouse/rackCodeList";
 		mav.setViewName(url);
 		mav.addObject("rackCodeList", list);
+		mav.addObject("warehouseId", warehouseId);
 		return mav;
 	}
-//	
-//	/**
-//	 * @Title: productAttributeValueByAttributeId
-//	 * @Description: 根据属性ID获取对应属性值
-//	 * @param: @param attributeId
-//	 * @param: @return   
-//	 * @return: ModelAndView   
-//	 * @throws
-//	 */
-//	/*@RequestMapping("getAttributeValue")
-//	public ModelAndView getproductAttributeValueByAttributeId(String attributeId) {
-//		ModelAndView mav = new ModelAndView();
-//		List<ProductAttributeValue> list = new ArrayList<ProductAttributeValue>();
-////		list = productAttributeService.getProductAttributes();
-//		String url = "manage/productAttribute/list";
-//		mav.setViewName(url);
-//		mav.addObject("productAttributeList", list);
-//		return mav;
-//	}*/
-//	
-
-//	
+	
+	@RequestMapping("validateRackCode")
+	@ResponseBody
+	public ResultBean<String> validateRackCode(String rackCodeInfo) {
+		RackCodeInfo rackCode = new RackCodeInfo();
+		rackCode = (RackCodeInfo)ParseUtil.getBeanFromStr(rackCodeInfo, "pojo.manage.RackCodeInfo");
+		ResultBean<String> result = new ResultBean<String>();
+		if (warehouseService.getRackCodeInfo(rackCode) != null) {
+			result.setCode(ResultBean.FAIL);
+			result.setMsg("货位号重复！");
+		}
+		return result;
+	}
+	
+	@RequestMapping("saveRackCode")
+	@ResponseBody
+	public ResultBean<String> saveRackCode(String rackCodeInfo) {
+		RackCodeInfo rackCode = new RackCodeInfo();
+		rackCode = (RackCodeInfo)ParseUtil.getBeanFromStr(rackCodeInfo, "pojo.manage.RackCodeInfo");
+		ResultBean<String> result = new ResultBean<String>();
+		//添加
+		if(rackCode.getId() == null){
+			warehouseService.addRackCode(rackCode);
+			result.setMsg("添加成功！");
+		}else{	//修改
+			warehouseService.updateRackCode(rackCode);
+			result.setMsg("修改成功！");
+		}
+		result.setCode(ResultBean.SUCCESS);
+		return result;
+	}
+	
+	@RequestMapping("delRackCode")
+	@ResponseBody
+	public ResultBean<String> delRackCode(String rackCodeId) {
+		warehouseService.deleteRackCode(rackCodeId);
+		ResultBean<String> result = new ResultBean<String>();
+		result.setCode(ResultBean.SUCCESS);
+		result.setMsg("删除成功！");
+		return result;
+	}
 	
 }

@@ -27,8 +27,8 @@
 			//单击行
 			$("#table_warehouse_list tbody tr").click(function() {  
 			   $(this).addClass("select_tr").siblings().removeClass("select_tr"); 
-			   $(this).find(":checkbox").prop("checked",true);
-			   $(this).siblings().find(":checkbox").prop("checked",false); 
+// 			   $(this).find(":checkbox").prop("checked",true);
+// 			   $(this).siblings().find(":checkbox").prop("checked",false); 
 			   var warehouse_id = $(this).find(".td_warehouse_id").text().trim();
 			   $("#input_select_warehouse").val(warehouse_id);
 			   getRackCodeList(warehouse_id);

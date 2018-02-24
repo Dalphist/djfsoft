@@ -41,8 +41,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
      
     <delete id="deleteRackCode" parameterType="String" >
-        delete from t_rack_code where warehouse_id= #{warehouseId}
+        delete from t_rack_code where id= #{rackCodeId}
     </delete>
+    
+    <update id="updateRackCode" parameterType="RackCodeInfo" >
+        update t_rack_code
+        set rack_code=#{rackCode},effective_flag = #{effectiveFlag}
+        where id=#{id}    
+    </update>
      
     <select id="getRackCodeInfo" parameterType="RackCodeInfo" >
         select * from t_rack_code 

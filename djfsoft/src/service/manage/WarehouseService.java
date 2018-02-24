@@ -20,6 +20,8 @@ public interface WarehouseService {
     void addRackCode(RackCodeInfo rackCodeInfo);  
     
     void deleteRackCode(String warehouseId);  
+    
+    void updateRackCode(RackCodeInfo rackCodeInfo);  
         
     RackCodeInfo getRackCodeInfo(RackCodeInfo rackCodeInfo);
     
