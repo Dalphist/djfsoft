@@ -40,6 +40,15 @@ public class WarehouseController {
 		return mav;
 	}
 	
+	@RequestMapping("warehouseSelect")
+	@ResponseBody
+	public ResultBean<WarehouseInfo> warehouseSelect() {
+		ResultBean<WarehouseInfo> result = new ResultBean<WarehouseInfo>();
+		List<WarehouseInfo> list = warehouseService.getWarehouseInfoList();
+		result.setDataList(list);
+		return result;
+	}
+	
 	/**
 	 * @Title: validateWarehouse
 	 * @Description: 校验仓库名称是否重复，用在添加和修改仓库
@@ -126,6 +135,15 @@ public class WarehouseController {
 		mav.addObject("rackCodeList", list);
 		mav.addObject("warehouseId", warehouseId);
 		return mav;
+	}
+	
+	@RequestMapping("getRackCodeSelect")
+	@ResponseBody
+	public ResultBean<RackCodeInfo> getRackCodeSelect(String warehouseId) {
+		ResultBean<RackCodeInfo> result = new ResultBean<RackCodeInfo>();
+		List<RackCodeInfo> list = warehouseService.getRackCodeInfoList(warehouseId);
+		result.setDataList(list);
+		return result;
 	}
 	
 	@RequestMapping("validateRackCode")

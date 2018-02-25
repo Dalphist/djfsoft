@@ -209,9 +209,9 @@
 											<th style="width: 200px;">商品编号</th>
 											<th style="width: 200px;">商品条形码</th>
 											<th style="width: 40px;">单位</th>
-											<th style="width: 100px;">出库数量</th>
-											<th style="width: 100px;">出库仓库</th>
-											<th style="width: 100px;">出库货位号</th>
+											<th style="width: 100px;">人库数量</th>
+											<th style="width: 100px;">入库仓库</th>
+											<th style="width: 100px;">入库货位号</th>
 										</tr>
 									</thead>
 									<tbody>
