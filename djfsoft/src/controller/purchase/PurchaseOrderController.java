@@ -3,6 +3,8 @@ package controller.purchase;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import pojo.purchase.PurchaseOrderDetailInfo;
 import pojo.purchase.PurchaseOrderInfo;
 import service.purchase.PurchaseOrderService;
 import util.DateUtil;
+import util.PageInfo;
 import util.ParseUtil;
 import util.SessionUtil;
 import util.enumSet.PurchaseStateEnum;
@@ -36,12 +39,42 @@ public class PurchaseOrderController {
 	}
 	
 	@RequestMapping("orderList")
-	public ModelAndView orderList() {
+	public ModelAndView orderList(HttpServletRequest request, HttpServletResponse response) {
 		List<PurchaseOrderInfo> list = purchaseOrderService.orderList();
 		ModelAndView mav = new ModelAndView();
 		String url = "purchase/purchaseOrder/orderList";
 		mav.setViewName(url);
 		mav.addObject("orderList", list);
+		
+		//*************
+        int currentPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+        int pageSize = 3;
+        if (currentPage <= 0) {
+            currentPage = 1;
+        }
+        int currentResult = (currentPage - 1) * pageSize;
+
+        PageInfo page = new PageInfo();
+        page.setShowCount(pageSize);
+        page.setCurrentResult(currentResult);
+        
+        System.out.println(request.getRequestURI());
+        System.out.println(request.getQueryString());
+
+        int totalCount = page.getTotalResult();
+
+        int lastPage = 0;
+        if (totalCount % pageSize == 0) {
+            lastPage = totalCount % pageSize;
+        } else {
+            lastPage = 1 + totalCount / pageSize;
+        }
+
+        if (currentPage >= lastPage) {
+            currentPage = lastPage;
+        }
+        mav.addObject("list", list);
+		
 		return mav;
 	}
 	
