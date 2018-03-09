@@ -10,7 +10,7 @@
     <plugins>
     	<plugin interceptor="util.PagePlugin">
     		<property name="dialect" value="mysql"/>
-    		<property name="pageSqlId" value=".*List.*"/>
+<!--     		<property name="pageSqlId" value=".*List.*"/> -->
     	</plugin>
     </plugins>
 </configuration>  
